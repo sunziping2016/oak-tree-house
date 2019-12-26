@@ -1,0 +1,17 @@
+{
+  "name": "oak-tree-house",
+  "version": "0.1.0",
+  "description": "My New Personal Homepage",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sunziping2016/oak-tree-house.git"
+  },
+  "author": "Sun Ziping",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sunziping2016/oak-tree-house/issues"
+  },
+  "homepage": "https://github.com/sunziping2016/oak-tree-house#readme"
+}
