@@ -11,16 +11,21 @@ summary: 这篇学习笔记主要参考自MDN上的Learn Web Development。摘�
 <!--more-->
 
 ## 1 CSS笔记
+
 ### 1.1 简介
+
 #### 1.1.1 位置
+
 CSS 可以通过外部样式表（`<link rel="stylesheet" href="...">`）、内部样式表（`<style>...</style>`）和内联样式（`style="..."`，只有CSS声明，尽量避免）添加到HTML中。
 
 #### 1.1.2 语法
+
 属性（Properties）和值（Values）组成了CSS声明（CSS declaration，`property: value`）。若干条CSS声明组成了CSS声明块（`{declaration;...}`）。搭配上相应的选择器（Selectors），就组成了CSS规则（CSS Rulesets/CSS Rules）。对于CSS声明，若其属性不存在或其值不合法，都会被忽略。
 
 声明块的末尾分号可省略。一些声明块可嵌套（如@开头的规则）。空声明块完全合法。
 
 #### 1.1.3 选择器
+
 简单选择器有：
 
 - 元素选择器（`tag`）
@@ -76,6 +81,7 @@ CSS 可以通过外部样式表（`<link rel="stylesheet" href="...">`）、内�
 用`,`分割一个规则的多个选择器。
 
 #### 1.1.4 值和单位
+
 长度或大小的单位有：
 
 - 绝对单位：px、mm、cm、in、pt（1/72in）和pc（12pt）
@@ -92,7 +98,9 @@ CSS 可以通过外部样式表（`<link rel="stylesheet" href="...">`）、内�
 可以通过`#`后跟16进制表示颜色，也可通过`rgb()`，`hsl()`及包含透明通道的`rgba()`和`hsla()`构造颜色。
 
 ### 1.2 给文本添加样式
+
 ### 1.3 给盒框添加样式
+
 ### 1.4 布局
 
 （未完待续）

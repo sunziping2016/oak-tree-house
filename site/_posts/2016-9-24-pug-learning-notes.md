@@ -7,6 +7,7 @@ summary: 这篇博客是学习Pug的笔记。
 ---
 
 ## 1 文档类型（Doctype）
+
 通过`doctype html`可以声明一个文档是`html`，此外`html`还可以被替换为`xml`、`transitional`、`strict`、`frameset`、`1.1`、`basic`、`mobile`和`plist`。也可以自定义`doctype`。
 
 注意：`doctype`会进一步影响到文档的渲染。
@@ -14,6 +15,7 @@ summary: 这篇博客是学习Pug的笔记。
 <!--more-->
 
 ## 2 标签（Tags）
+
 以文字开头的一行表示一个标签，缩进表示嵌套。
 
 也可以通过`tag1: tag2`，在一行内创建嵌套的标签。
@@ -21,6 +23,7 @@ summary: 这篇博客是学习Pug的笔记。
 对于诸如`img`、`meta`、`link`等的自闭合标签，Pug会自动处理。也可通过后缀（属性之后）`/`强制闭合。
 
 ## 3 属性（Attributes）
+
 紧跟在标签后形如`(name=value, ...)`，其中value可以是任意JavaScript。分隔的`,`可省略。`value`会被转义，如果需要避免转义，用`!=`替代`=`。
 
 对于布尔属性，`value`也可以是布尔类型，属性真值同该布尔值。若完全省略`=value`则属性为真。对于`html`，Pug会采用简短形式（即不是`value="value"`而是`value`）。
@@ -46,11 +49,13 @@ tag (
 在普通的属性之后添加`&attributes(object)`，可以把`object`的属性名和值作为标签的属性名和值。注意：通过这种方式添加的属性不会被转义。
 
 ## 4 纯文本（Plain Text）
+
 `|`开头的行即为单行的纯文本。文本中可嵌入`html`。
 
 在属性后添加空格而后紧跟文本，可以在行内嵌入该文本；在标签后紧跟`.`和换行，而后所有缩进层次内的都将被作为内嵌的文本。
 
 ## 5 注释（Comments）
+
 `//`开头的行即为单行的注释，该注释会被转换成对应的`html`的注释。
 
 `//-`开头的行为单行的不会出现在`html`中的注释。
@@ -60,6 +65,7 @@ tag (
 Pug对于`html`条件注释没有特殊的支持。但是由于所有以`<`开头的行都会被作为纯文本，因而可直接嵌入`html`条件注释。
 
 ## 6 代码（Code）
+
 `-`开头的行即为单行的`JavaScript`代码，代码执行的结果不会出现在`html`中。
 
 `-`紧跟换行，而后所有缩进层次内的都将被作为代码。
@@ -69,6 +75,7 @@ Pug对于`html`条件注释没有特殊的支持。但是由于所有以`<`开�
 `!=`开头的行也为单行代码，但代码执行的结果会直接出现在`html`中。其位置也可以紧跟在属性后。
 
 ## 7 插值（Interpolation）
+
 纯文本中的`#{expression}`会被替换成`expression`转义后的值。如果纯文本中需要`#{`，可转义为`\#{`。
 
 纯文本中的`!{expression}`会被替换成`expression`的值（不转义）。
@@ -76,7 +83,9 @@ Pug对于`html`条件注释没有特殊的支持。但是由于所有以`<`开�
 标签插值的语法为`#[tag text]`。由于Pug会去除标签前后的空白字符，因而标签插值的语法对于需要控制空白字符的内联标签非常有用。
 
 ## 8 条件语句（Conditionals）
+
 ### 8.1 if-else语句
+
 if-else语句形如：
 
 ```pug
@@ -98,6 +107,7 @@ unless condition
 条件部分的括号，及`if`、`else`和`unless`前的`-`可省略。
 
 ### 8.2 case语句
+
 case语句形如：
 
 ```pug
@@ -114,6 +124,7 @@ case variable
 也可在`when value`和`default`后，紧跟`:`后跟上标签，在行内完成语句块。
 
 ## 9 循环语句（Iteration）
+
 each语句形如：
 
 ```pug
@@ -133,6 +144,7 @@ while condition
 ```
 
 ## 10 过滤器（Filters）
+
 过滤器，将纯文本作为输入，其输出的内容再被嵌入到Pug模板的输出中，所有的JSTransformer模块都可以作为过滤器，常见的过滤器有`:babel`、`:uglify-js`、`:scss`和`:markdown-it`。
 
 过滤器语法如下：
@@ -163,6 +175,7 @@ options.filters = {
 ```
 
 ## 11 包含文件（Includes）
+
 包含文件的语法如下：
 
 ```pug
@@ -172,6 +185,7 @@ include:filter file
 其中`:filter`可选。如果`file`是Pug模板文件，会被Pug处理。如果`file`是其他文本文件，则文本被原处保留。`file`的路径如果是绝对路径，由`options.basedir`制定更目录，否则则为想对于当前编译文件的路径。
 
 ## 12 复用块（Mixins）
+
 复用块的定义语法如下：
 
 ```pug
@@ -189,6 +203,7 @@ mixin name(parameters, ...restArguments)
 其中，, `...restArguments`可选，所有的实参列表和形参列表连同`()`也可选。使用语法下面的块可选。通过`block`，可以在定义处引用使用处的块。`attributes`为`=`连接，空格分割的键值对（值已经被转义），连同`()`也是可选的。通过`attributes`对象，可以引用使用处的`attributes`。
 
 ## 13 模板继承（Template Inheritance）
+
 声明一个可被派生模板修改的块的语法如下：
 
 ```pug

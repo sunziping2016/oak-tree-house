@@ -48,20 +48,21 @@ JS采用Unicode字符集，并且大小写敏感。语句使用`;`结束。一�
 共有8种数据类型：
 
 - 7种基础数据类型
-  -  `Boolean`：布尔
-  -  `null`
-  -  `undefined`
-  -  `Number`：数字
-  -  `BigInt`：高精度整数
-  -  `String`：字符串
-  -  `Symbol`：符号 (ECMA2015)
--  对象
+  - `Boolean`：布尔
+  - `null`
+  - `undefined`
+  - `Number`：数字
+  - `BigInt`：高精度整数
+  - `String`：字符串
+  - `Symbol`：符号 (ECMA2015)
+- 对象
 
 JavaScript是动态类型语言。
 
 字符串类型与数字类型进行`+`运算，数字类型转换为字符串类型。而其他的运算，字符串类型转换为数字类型。注意：可以通过一元`+`，将字符串转换为数字。
 
 有以下两个函数可以进行字符串到数字的转换：
+
 - `parseInt(string, radix)`：转换为整数
 - `parseFloat(value)`：转换为浮点数
 
@@ -72,6 +73,7 @@ JavaScript是动态类型语言。
 `true`和`false`是两种布尔类型的字面常量。不要混淆基础的布尔类型和布尔对象。
 
 整数字面常量有以下几种：
+
 - 10进制：非0开头的数字序列
 - 8进制：0开头，或0o（0O）开头
 - 16进制：0x（0X）开头
@@ -279,6 +281,7 @@ String对象是对String基础数据类型的一层封装。对于字符串字�
 String对象只有一个属性`length`。String对象和基础数据类型都是不可变的，对元素的赋值是无效的。
 
 String有如下方法：
+
 - `charAt`、`charCodeAt`和`codePointAt`：返回指定位置的字符或编码；
 - `indexOf`和`lastIndexOf`：返回子串的位置；
 - `startsWith`、`endsWith`和`includes`：返回字符串是否以子串开头、结尾或包含子串；
@@ -351,11 +354,9 @@ String有如下方法：
 - `u`：见上，`Unicode`编码；
 - `y`：sticky搜索（与`g`类似）。
 
-
 ### 6.3 正则表达式
 
 可以使用`/xxxx/`或者`new RegExp('xxxx')`定义正则表达式。前者是在脚本加载时编译，后者是运行时编译。
-
 
 ## 7 容器
 
@@ -370,6 +371,7 @@ String有如下方法：
 注意：不建议使用`for...in`遍历数组，因为属性也会被迭代。
 
 数组有如下方法：
+
 - `concat`：合并多个数组并将结果返回；
 - `join`：连接数组成字符串；
 - `push`和`pop`：在数组末尾插入或删除元素；
@@ -431,6 +433,7 @@ JavaScript对象是属性的集合，属性包含了键值对，值可能是个�
 可以对属性赋值，访问未赋值的属性会得到`undefined`。访问属性可以用`object.id`或`object[value]`，键不是合法标识符的属性只能通过方括号访问（包括空串）。键只能是字符串或`Symbol`类型，其他类型的键会被转化为字符串。
 
 ES5开始，有3种遍历属性的方式：
+
 - `for...in`：遍历所有的可枚举属性，包括原型链；
 - `Object.keys(o)`：返回所有属于该对象（不包括原型链）的可枚举属性的键的数组；
 - `Object.getOwnPropertyNames(o)`：返回所有属于该对象的键（包括不可枚举属性）的数组。
@@ -438,6 +441,7 @@ ES5开始，有3种遍历属性的方式：
 ### 8.2 构造
 
 创建对象有如下的方式：
+
 - 使用**对象初始化器**：`{property1: value1, ... }`，这里`property1`等可以是标识符、数字或字符串。如果是语句开始，需要加括号以避免和复合语句混淆。同样的对象初始化器产生的对象是不等的。所有对象字面表达式产生的对象都是`Object`的实例；
 - 使用**构造函数**：通过构造函数定义对象（构造函数首字母应当大写），再通过`new`创建实例。定义时，使用函数，其内部可以用`this`指代对象，通过对`this`的赋值即可创建属性；
 - 使用`Object.create`：它接受一个对象参数，返回新的对象，新对象的原型是该对象参数。
@@ -445,6 +449,7 @@ ES5开始，有3种遍历属性的方式：
 ### 8.3 继承
 
 JavaScript是基于原型的面向对象语言。JavaScript的所有对象都至少继承自另一个对象。被继承的对象称为**原型**。继承的属性都是来自构造函数的`prototype`对象。`this`指代调用对象。通过如下面所示的代码定义继承：
+
 ```JavaScript
 function Base() {
     this.a = ...;
@@ -461,6 +466,7 @@ Derived.prototype.constructor = Derived;
 ```
 
 其中的`Derived`函数也可以如下写，下面的`base`只是一个普通的名字：
+
 ```JavaScript
 function Derived() {
     this.base = Base;
@@ -478,6 +484,7 @@ function Derived() {
 ### 8.4 getter和setter
 
 对于对象字面量，可以通过如下方式构造getter和setter：
+
 ```JavaScript
 var o = {
     get b() {
@@ -490,6 +497,7 @@ var o = {
 ```
 
 也可以通过如下方式创建getter和setter：
+
 ```JavaScript
 Object.defineProperty(o, 'b', {
     get: function() { return ...; },
@@ -498,6 +506,7 @@ Object.defineProperty(o, 'b', {
 ```
 
 也可以通过`Object.defineProperties`定义，形式如下：
+
 ```JavaScript
 Object.defineProperties(o, {
     'b': { get: function() { return ,,,; } },
@@ -516,6 +525,7 @@ Object.defineProperties(o, {
 Promise用于异步函数回调，其构造函数接受一个函数，形如`(resolve, reject) => ...`，如果成功则调用resolve可以传递一个值；如果失败则调用reject也可以传递一个值。
 
 Promise拥有如下方法：
+
 - `then(onFulfilled, onRejected)`：调用指定的handler，返回一个新的promise用于形成链。如果`onFulfiled`不是函数，则以“Identity”替代；如果`onRejected`不是函数，则以“Thrower”替代。如果指定的handler
   - 返回一个值，则`then`返回的promise以该值resolve；
   - 不返回值，则`then`返回的promise以`undefined` resolve
@@ -526,6 +536,7 @@ Promise拥有如下方法：
 - `catch(onRejected)`：等价于`then(null, onRejected)`。
 
 ES2017加入了`async/await`语法糖，形如：
+
 ```JavaScript
 async function foo() {
     try {
@@ -540,6 +551,7 @@ async function foo() {
 `await`后面根一个promise，如果该promise resolve了，则返回resolve的值；如果reject了，则以异常抛出的形式抛出reject的值。`async`函数返回一个promise。
 
 当promise被reject时，会有以下两个消息中的一个发往全局对象（window）或者Worker（process）：
+
 - `rejectionhandled`：当一个promise reject，并被处理时发出；
 - `unhandledrejection`：当一个promise reject，但没有handler时发出。
 
@@ -548,6 +560,7 @@ async function foo() {
 注意：Node.js与上面描述的有些许不同。
 
 此外还有如下4个函数：
+
 - `Promise.resolve`和`Promise.reject`：创建一个已经resolve或已经reject的Promise；
 - `Promise.all`和`Promise.race`：执行数组所有的promise或竞争。
 
@@ -558,9 +571,9 @@ async function foo() {
 ### 10.1 迭代器
 
 所谓迭代器，就是有`next()`方法，返回一个有两个属性的对象：
+
 - `value`：序列中的下一个值，当`done`为`true`时可省略；
 - `done`：最后一个值是否已经被获取（`true`时，迭代器位于past the end）。
-
 
 可迭代对象是值实现了`Symbol.iterator`返回一个迭代器的对象。
 
@@ -569,6 +582,7 @@ async function foo() {
 ### 10.2 生成器
 
 生成器形如下面的代码，函数内可以yield多次：
+
 ```JavaScript
 function* foo() {
     ...
@@ -608,11 +622,13 @@ Reflect主要是将对象的操作变成函数，并与Proxy对象的方法一�
 使用`import { foo, bar } from 'path'`即可导入，其中`path`是相对或绝对（即相对于站点根目录）路径。
 
 使用了模块导入导出的主模块，需要按照如下方式导入HTML：
+
 ```html
 <script type="module" src="path"></script>
 ```
 
 注意，模块和标准脚本是不同的，不添加`type="module"`会使`import`和`export`语句报错。此外还有如下不同：
+
 - 在本地加载模块会遇到CORS错误，而标准脚本不会；
 - 模块默认是strict模式；
 - 默认为defer的；

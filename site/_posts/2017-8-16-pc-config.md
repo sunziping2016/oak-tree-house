@@ -79,9 +79,7 @@ sudo systemctl enable NetworkManager.service
 
 ### 1.2 显卡
 
-
 解开`/etc/pacman.conf`中`multilib`的注释。
-
 
 ```bash
 pacman -S bumblebee mesa nvidia xf86-video-intel lib32-virtualgl lib32-nvidia-utils bbswitch
@@ -128,6 +126,7 @@ blacklist pcspkr
 ```
 
 为解决休眠之后没有声音。编辑`/etc/default/grub`：
+
 ```
 ...
 GRUB_CMDLINE_LINUX_DEFAULT="quiet acpi_enforce_resources=lax"
@@ -410,6 +409,7 @@ sudo sh -c "ipset save > /etc/ipset.conf"
 ```
 
 ### 2.9 LNMP
+
 安装Nginx。
 
 ```bash

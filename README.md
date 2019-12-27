@@ -1,6 +1,6 @@
 # Oak Tree house
 
-This is my newer personal homepage. See https://szp15.com/ .
+This is my newer personal homepage. See <https://szp15.com/> .
 
 ## To Build It
 

@@ -1,5 +1,6 @@
 ---
 title: Python教程2 - 流程控制（施工中）
+author: 孙子平
 date: 2019-11-11 20:37:52
 categories: Python
 tags: [Python, 编程, 教程]
@@ -69,7 +70,7 @@ else:
 - `input()`：接受一个可选的字符串参数，打印这个字符串，然后读入一行新的字符串，返回读入的字符串（不包括换行）；
 - `int()`：接受一个字符串，返回字符串代表的整数。
 
-所以上面代码的第一行的含义是打印`Please enter an integer: `，读入一行输入，转成对应的整数，将整数存入变量`x`。
+所以上面代码的第一行的含义是打印`Please enter an integer:`，读入一行输入，转成对应的整数，将整数存入变量`x`。
 
 接下来的`if`和行末的`:`之间有一个表达式`x < 0`，这里涉及了**布尔类型**和**比较运算符**，我来介绍一下。
 
@@ -437,7 +438,6 @@ add(a, b)
 ```
 
 接下来我们来细致讲解函数定义的细节、准则和技巧。
-
 
 #### 2.1.1 形式参数（parameter）、实际参数（argument）与传参方式
 
@@ -897,7 +897,6 @@ TypeError: unhashable type: 'list'
 2. `**kwargs`用于将多余的关键字参数捕获成一个名叫`kwargs`的字典。
 
 这里`args`和`kwargs`是惯用的命名。此外`*args`必须出现在`**kwargs`之前，看例子：
-
 
 ```python
 def func(a, *args, **kwargs):

@@ -10,6 +10,7 @@ summary: 该学习笔记着重于Java相较于C++等编程语言的独特之处�
 <!--more-->
 
 ## 1 语言基础
+
 ### 1.1 变量
 
 **变量**分为以下4种类型，其中前2种合称为**字段**：
@@ -83,6 +84,7 @@ public static void arraycopy(Object src, int srcPos,
 语句分为两类**声明语句**和**流程控制语句**。
 
 只有以下4种表达式能作为**表达式语句**：
+
 - 赋值表达式；
 - 自增和自减；
 - 方法调用；
@@ -170,7 +172,6 @@ public static void arraycopy(Object src, int srcPos,
 
 下面的表展示了访问权限：
 
-
 | Modifier      | Class | Package | Subclass | World |
 |:--------------|:------|:--------|:---------|:------|
 | public        |Y      | Y       | Y        | Y     |
@@ -233,7 +234,6 @@ interface默认是static的。因而不存在局部接口。
 #### 2.4.4 匿名类
 
 通过`new <BaseClassOrInterfaceName>(<arguments>, ...) { <ClassDefinition> }`。匿名类在访问权限、成员限制等方面与局部类基本一致，此外匿名类无法定义构造函数。
-
 
 #### 2.4.5 lambda 表达式
 
@@ -376,12 +376,12 @@ Java中，最多只能继承自一个类，但可实现多个接口。
 
 `Object`的`clone()`方法在对象未实现`Cloneable`接口时会抛出`CloneNotSupportedException`异常；如果实现了，默认的`clone()`方法会创建一个与原对象拥有相同值的新对象，包括相同的对象引用。因此，对于含有对象引用的对象应当覆盖默认的`clone()`方法。
 
-
 `getClass()`方法返回一个`Class`对象，拥有`getSimpleName()`、`getSuperclass()`、`getInterfaces()`、`isAnnotation()`、`isInterface()`、`isEnum()`、`getFields()`、`getMethods()`等方法。
 
 如果两个对象相等，那它们的散列值必须相同。
 
 ### 4.3 final类和方法
+
 `final`变量初始化后不可改变其值，（对于对象的引用，引用不可改变，但对象可以改变）。`final`参数由函数传参初始化，类的`final`字段可在初始化快内或构造器内初始化。未初始化的`final`变量是个编译错误。
 
 **注意**：对于编译时已知的常量（编译期常量表达式初始化的`static final`字段），编译器会在原处展开其值。**若该常量定义处发生变更，需要对使用此常量的所有源文件重新进行编译。**
@@ -505,6 +505,7 @@ try {
 ```
 
 try-with-resources的格式如下，括号内结尾无分号，可以跟catch块，AutoClosable是：
+
 ```java
 try (
     AutoClosable name = new ;

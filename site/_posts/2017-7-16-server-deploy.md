@@ -11,8 +11,11 @@ summary: 这篇文章主要是关于自己VPS的配置的。
 <!--more-->
 
 ## Vultr VPS
+
 ### VPS 配置
+
 #### 基础配置
+
 初始操作系统为 Ubuntu 16.04 LTS amd64。初始密码在“产品消息”板块获取。
 
 首先完成用户及 SSH 配置。
@@ -64,6 +67,7 @@ sudo reboot
 ```
 
 #### 配置开发环境（zsh、vim 和 git）
+
 安装基本软件。
 
 ```bash
@@ -79,7 +83,7 @@ git config --global user.email sunziping2016@gmail.com
 
 而后将`.ssh/id_rsa.pub`提交到 GitHub 的 SSH 密钥处。
 
-然后依照 https://github.com/robbyrussell/oh-my-zsh 配置 zsh。
+然后依照 <https://github.com/robbyrussell/oh-my-zsh> 配置 zsh。
 
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
@@ -103,13 +107,14 @@ source .zshrc
 最后是 vim。由于服务端的 vim 使用频率较低，不再配置。
 
 #### 配置 Web 服务器与 SSL 证书
+
 安装必要的包。
 
 ```bash
 sudo apt install nginx letsencrypt
 ```
 
-根据 https://community.letsencrypt.org/t/how-to-nginx-configuration-to-enable-acme-challenge-support-on-all-http-virtual-hosts/5622 创建`/etc/nginx/snippets/letsencrypt-acme-challenge.conf`。
+根据 <https://community.letsencrypt.org/t/how-to-nginx-configuration-to-enable-acme-challenge-support-on-all-http-virtual-hosts/5622> 创建`/etc/nginx/snippets/letsencrypt-acme-challenge.conf`。
 
 ```
 location ^~ /.well-known/acme-challenge/ {
@@ -126,7 +131,7 @@ location / {
 }
 ```
 
-以下配置均参照 https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04 。先配置 Diffie-Hellman 。
+以下配置均参照 <https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04> 。先配置 Diffie-Hellman 。
 
 ```bash
 sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
@@ -301,9 +306,9 @@ sudo systemctl enable shadowsocks-server@server.service
 
 #### 配置 seafile 服务器
 
-以下步骤依照 https://manual.seafile.com/deploy/using_sqlite.html 。
+以下步骤依照 <https://manual.seafile.com/deploy/using_sqlite.html> 。
 
-从 https://www.seafile.com/en/download/#server 上寻找最新二进制版。
+从 <https://www.seafile.com/en/download/#server> 上寻找最新二进制版。
 
 ```bash
 sudo -s

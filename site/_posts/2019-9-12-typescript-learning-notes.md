@@ -10,6 +10,7 @@ summary: 这篇文章是TypeScript的学习笔记，主要内容来自TypeScript
 ## 1 基础类型
 
 TypeScript提供了如下类型：
+
 - `boolean`：**Bool**类型；
 - `number`：**数字**类型（包括整数和浮点数）；
 - `string`：**字符串**类型；
@@ -27,7 +28,6 @@ TypeScript提供了如下类型：
 ## 2 变量声明
 
 与JavaScript相同，`var`有函数级作用域，可被定义多次；而`let`有块作用域，不能屏蔽同作用域同名变量。`const`的变量不能修改，但可以修改其成员。TypeScript支持数组解构（包括`let [first, ...rest] = [1, 2, 3, 4];`或省略部分元素）、元组解构（类似于数组）和对象解构（支持`...`剩余语法、属性重命名`let { a: newName } = o;`、默认值`let { a = 1001 } = o`）。此外还支持解构相反的传播语法，如`[0, ...first, ...second, 5]`和`{ ...defaults, food: "rich" }`。
-
 
 ## 3 接口
 

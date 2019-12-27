@@ -4,7 +4,10 @@
   "description": "My New Personal Homepage",
   "scripts": {
     "build": "vuepress build site",
-    "dev": "vuepress dev site"
+    "dev": "vuepress dev site",
+    "lint": "npm run lint:js && npm run lint:md",
+    "lint:js": "eslint site --ext .js,.vue",
+    "lint:md": "markdownlint **/*.md --ignore node_modules"
   },
   "repository": {
     "type": "git",
@@ -18,8 +21,13 @@
   "homepage": "https://github.com/sunziping2016/oak-tree-house#readme",
   "devDependencies": {
     "@vuepress/plugin-blog": "^1.6.1",
-    "@vuepress/theme-default": "1.1.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-vue-libs": "^4.0.0",
     "vuepress": "^1.2.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "markdownlint": "^0.18.0",
+    "markdownlint-cli": "^0.20.0",
+    "vue-awesome": "^4.0.2"
+  }
 }
