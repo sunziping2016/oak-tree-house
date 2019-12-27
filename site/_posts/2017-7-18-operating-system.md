@@ -1,7 +1,7 @@
 ---
 title: 操作系统复习笔记
 date: 2017-7-18 12:00:00
-categories: OS
+category: OS
 tags: [操作系统]
 summary: 主要是操作系统的笔记。
 ---

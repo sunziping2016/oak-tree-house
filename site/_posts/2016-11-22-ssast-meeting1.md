@@ -1,7 +1,7 @@
 ---
 title: 科协技术部第一次会议
 date: 2016-11-22 12:00:00
-categories: SSAST
+category: SSAST
 tags: [SSAST]
 summary: 这篇文章主要记录科协的第一次会议内容。其中重点放在了学习小组的建立。
 ---

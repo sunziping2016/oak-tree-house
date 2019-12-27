@@ -1,7 +1,7 @@
 ---
 title: PC系统配置
 date: 2017-8-16 12:00:00
-categories: 配置
+category: 配置
 tags: [PC, 配置, ArchLinux]
 summary: 这篇文章主要是关于自己ArchLinux系统的配置的。
 ---

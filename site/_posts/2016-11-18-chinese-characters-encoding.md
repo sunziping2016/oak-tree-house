@@ -1,7 +1,7 @@
 ---
 title: 中文字符编码
 date: 2016-11-18 12:00:00
-categories: C++
+category: C++
 tags: [编码]
 summary: 这篇文章，针对字符编码，以C/C++程序员的角度，谈谈我的一些理解。
 ---

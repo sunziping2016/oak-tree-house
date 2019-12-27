@@ -2,11 +2,15 @@
 title: Python教程1 - 简介
 author: 孙子平
 date: 2019-11-01 01:43:44
-categories: Python
+category: Python
 tags: [Python, 编程, 教程]
 series: Python教程
 summary: 这是Python连载教程的第一期，内容是一些初始类型的介绍，内容主要来自Python官方教程第3章。
 next: /_posts/2019-11-11-python-tutorial2.html
+sidebarDepth: 3
+sidebar:
+  - /_posts/2019-11-01-python-tutorial1.html
+  - /_posts/2019-11-11-python-tutorial2.html
 ---
 
 这个系列的教程适用于Python新手，讲得相比其他教程可能会更深入一些，内容将依照[Python官方的中文教程](https://docs.python.org/zh-cn/3.7/tutorial/index.html)。我将在[我的博客](https://szp.io/)和[知乎专栏](https://zhuanlan.zhihu.com/sunziping2016)上同步发表这个系列的文章。

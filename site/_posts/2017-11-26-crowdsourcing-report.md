@@ -1,7 +1,7 @@
 ---
 title: 众包项目个人总结
 date: 2017-11-26 12:00:00
-categories: 项目
+category: 项目
 tags: [大作业]
 summary: 这篇博客主要是自己的众包大作业的一些心得。
 ---

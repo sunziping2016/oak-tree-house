@@ -1,7 +1,7 @@
 ---
 title: 微信抢票用户指南
 date: 2017-10-21 12:00:00
-categories: 项目
+category: 项目
 tags: [大作业]
 summary: 这主要是一些关于如何使用微信抢票系统的视频。
 ---

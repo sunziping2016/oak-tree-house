@@ -1,4 +1,10 @@
 module.exports = {
+  head: [
+    ['link', { rel: 'icon', sizes: '32x32',
+      href: `/assets/icons/favicon-32x32.png` }],
+    ['link', { rel: 'icon', sizes: '16x16',
+      href: `/assets/icons/favicon-16x16.png` }]
+  ],
   themeConfig: {
     nav: [
       { text: '主页', link: '/' },
@@ -15,7 +21,7 @@ module.exports = {
         {
           id: 'post',
           dirname: '_posts',
-          path: '/post/',
+          path: '/',
           itemPermalink: '/:year/:month/:day/:slug',
           pagination: {
             lengthPerPage: 10
@@ -25,7 +31,7 @@ module.exports = {
       frontmatters: [
         {
           id: 'tag',
-          keys: ['tag', 'tags'],
+          keys: ['tags'],
           path: '/tag/',
           frontmatter: {
             title: 'Tag',
@@ -37,7 +43,7 @@ module.exports = {
         },
         {
           id: 'category',
-          keys: ['category', 'categories'],
+          keys: ['category'],
           path: '/category/',
           frontmatter: {
             title: 'Category',
@@ -49,7 +55,7 @@ module.exports = {
         },
         {
           id: 'author',
-          keys: ['author', 'authors'],
+          keys: ['author'],
           path: '/author/',
           frontmatter: {
             title: 'Author',

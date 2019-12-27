@@ -1,7 +1,7 @@
 ---
 title: 匿名函数
 date: 2016-9-21 12:00:00
-categories: C++
+category: C++
 tags: [C++, 编程, 函数式]
 summary: 这篇文章是关于如何巧妙地运用模板在C++中复现boost::lambda库。
 ---

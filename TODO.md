@@ -3,16 +3,16 @@
 ## Tasks
 
 - [x] Post index based on tags, categories, author and groups
-- [ ] Transfer origin site
+- [x] Transfer origin site
+- [x] Post can be grouped
 - [ ] Embed videos and musics
 - [ ] Comment system based on Gitalk
 - [ ] Show the creation and modification time
 - [ ] Sidebar can display h1 to h4 toc (Wait for VuePress to release)
 - [ ] Search bar can search all text
 - [ ] Picture has fullscreen mode
-- [ ] Post can be grouped
 - [ ] Some answer part in my Python Tutorial can be hidden
-- [ ] PWA only loads app not content
+- [ ] <del>PWA only loads app not content</del> (not using PWA any more)
 - [ ] Can view the front matter of a post
 - [ ] Math equations can be displayed correctly
 - [ ] Has a link to the corresponding GitHub page

@@ -1,7 +1,7 @@
 ---
 title: Pug 学习笔记
 date: 2016-9-24 12:00:00
-categories: 前端
+category: 前端
 tags: [Pug, 编程, 前端]
 summary: 这篇博客是学习Pug的笔记。
 ---

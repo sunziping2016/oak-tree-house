@@ -1,7 +1,7 @@
 ---
 title: SSAST 第 1 讲：环境配置
 date: 2016-11-26 12:00:00
-categories: SSAST
+category: SSAST
 tags: [SSAST]
 summary: 这篇文章是科协技术部内部学习资料第1讲。
 ---

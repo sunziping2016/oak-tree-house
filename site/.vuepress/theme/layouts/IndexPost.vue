@@ -11,20 +11,25 @@
             class="post"
           >
             <h1 class="post-title">
-              <NavLink :item="{ link: page.path, text: page.title}" />
+              <NavLink :item="{ link: page.path, text: page.title}"/>
             </h1>
 
             <div
               v-if="page.frontmatter.author"
-              class="post-author"
+              class="post-tags"
+              title="作者"
             >
               <UserIcon />
-              <span>{{ page.frontmatter.author }}</span>
+              <NavLink
+                class="post-link"
+                :item="{ link: `/author/${page.frontmatter.author}/`, text: `${ page.frontmatter.author }` }"
+              />
             </div>
 
             <div
               v-if="page.frontmatter.date"
-              class="post-date"
+              class="post-tags"
+              title="发布时间"
             >
               <ClockIcon />
               <span>{{ new Date(page.frontmatter.date.trim()).toLocaleDateString('zh') }}</span>
@@ -33,15 +38,41 @@
             <div
               v-if="page.frontmatter.tags"
               class="post-tags"
+              title="标签"
             >
               <TagIcon />
               <NavLink
                 v-for="tag in page.frontmatter.tags"
                 :key="tag"
-                class="post-tag"
-                :item="{ link: `/tag/${tag}/`, text: `#${tag}` }"
+                class="post-link post-tag"
+                :item="{ link: `/tag/${tag}/`, text: `${tag}` }"
               />
             </div>
+
+            <div
+              v-if="page.frontmatter.category"
+              class="post-tags"
+              title="分类"
+            >
+              <FolderIcon />
+              <NavLink
+                class="post-link"
+                :item="{ link: `/category/${page.frontmatter.category}/`, text: `${ page.frontmatter.category }` }"
+              />
+            </div>
+
+            <div
+              v-if="page.frontmatter.series"
+              class="post-tags"
+              title="连载文章"
+            >
+              <ListIcon />
+              <NavLink
+                class="post-link"
+                :item="{ link: `/series/${page.frontmatter.series}/`, text: `${ page.frontmatter.series }` }"
+              />
+            </div>
+
             <p class="post-summary">
               {{ page.frontmatter.summary || page.summary }}
             </p>
@@ -63,10 +94,10 @@
 import Layout from '@theme/layouts/Layout.vue'
 import NavLink from '@theme/components/NavLink.vue'
 import { Pagination } from '@vuepress/plugin-blog/lib/client/components'
-import { UserIcon, ClockIcon, TagIcon } from 'vue-feather-icons'
+import { UserIcon, ClockIcon, TagIcon, FolderIcon, ListIcon } from 'vue-feather-icons'
 
 export default {
-  components: { Layout, Pagination, NavLink, UserIcon, ClockIcon, TagIcon },
+  components: { Layout, Pagination, NavLink, UserIcon, ClockIcon, TagIcon, FolderIcon, ListIcon },
   computed: {
     pages () {
       return this.$pagination.pages
@@ -81,7 +112,7 @@ export default {
     &-title
       font-size 1.8rem
       margin 0.2rem 0
-    &-author, &-date, &-tags
+    &-author, &-date, &-tags, &-category
       display inline-block
       font-size 16px
       color lighten($textColor, 25%)
@@ -89,11 +120,11 @@ export default {
         width 14px
         height 14px
         margin 0 -2px -1px 4px
-    &-tag
+    &-link
       color lighten($textColor, 25%)
     &-tag + &-tag
       padding-left 6px
-    &-author + &-date::before, &-date + &-tags::before
+    &-tags + &-tags::before
       content '·'
       padding 2px
     &-summary

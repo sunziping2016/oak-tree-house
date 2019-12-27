@@ -1,7 +1,7 @@
 ---
 title: HTML/CSS拾遗（未完待续）
 date: 2017-1-24 12:00:00
-categories: 前端
+category: 前端
 tags: [HTML, CSS, 前端]
 summary: 这篇学习笔记主要参考自MDN上的Learn Web Development。摘录的内容是我认为重要的，或是容易被遗忘的细节。
 ---

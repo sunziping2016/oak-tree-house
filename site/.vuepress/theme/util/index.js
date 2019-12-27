@@ -133,7 +133,7 @@ export function resolveSidebarItems (page, regularPath, site, localePath) {
     return resolveHeaders(page)
   }
 
-  const sidebarConfig = localeConfig.sidebar || themeConfig.sidebar
+  const sidebarConfig = page.frontmatter.sidebar || localeConfig.sidebar || themeConfig.sidebar
   if (!sidebarConfig) {
     return []
   } else {
