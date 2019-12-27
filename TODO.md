@@ -2,6 +2,7 @@
 
 ## Tasks
 
+- [ ] Transfer origin site
 - [ ] Embed videos and musics
 - [ ] Comment system based on Gitalk
 - [ ] Post index based on tags, categories and groups
@@ -16,3 +17,5 @@
 - [ ] Math equations can be displayed correctly
 - [ ] Has a link to the corresponding GitHub page
 - [ ] Theme has an independent repository
+- [ ] Support RSS subscription
+- [ ] Upgrade VuePress after they release a new version with [bug](https://github.com/vuejs/vuepress/issues/1950) fixes

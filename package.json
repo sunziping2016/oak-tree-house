@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "description": "My New Personal Homepage",
   "scripts": {
+    "build": "vuepress build site",
+    "dev": "vuepress dev site"
   },
   "repository": {
     "type": "git",
@@ -13,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/sunziping2016/oak-tree-house/issues"
   },
-  "homepage": "https://github.com/sunziping2016/oak-tree-house#readme"
+  "homepage": "https://github.com/sunziping2016/oak-tree-house#readme",
+  "devDependencies": {
+    "@vuepress/plugin-blog": "^1.6.1",
+    "@vuepress/theme-default": "1.1.0",
+    "vuepress": "^1.2.0"
+  },
+  "dependencies": {}
 }
