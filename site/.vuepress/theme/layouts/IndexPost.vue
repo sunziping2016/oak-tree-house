@@ -18,7 +18,7 @@
               v-if="page.frontmatter.author"
               class="post-author"
             >
-              <Icon name="user" />
+              <UserIcon />
               <span>{{ page.frontmatter.author }}</span>
             </div>
 
@@ -26,7 +26,7 @@
               v-if="page.frontmatter.date"
               class="post-date"
             >
-              <Icon name="clock" />
+              <ClockIcon />
               <span>{{ new Date(page.frontmatter.date.trim()).toLocaleDateString('zh') }}</span>
             </div>
 
@@ -34,7 +34,7 @@
               v-if="page.frontmatter.tags"
               class="post-tags"
             >
-              <Icon name="tag" />
+              <TagIcon />
               <NavLink
                 v-for="tag in page.frontmatter.tags"
                 :key="tag"
@@ -63,13 +63,10 @@
 import Layout from '@theme/layouts/Layout.vue'
 import NavLink from '@theme/components/NavLink.vue'
 import { Pagination } from '@vuepress/plugin-blog/lib/client/components'
-import Icon from 'vue-awesome/components/Icon'
-import 'vue-awesome/icons/user'
-import 'vue-awesome/icons/clock'
-import 'vue-awesome/icons/tag'
+import { UserIcon, ClockIcon, TagIcon } from 'vue-feather-icons'
 
 export default {
-  components: { Layout, Pagination, NavLink, Icon },
+  components: { Layout, Pagination, NavLink, UserIcon, ClockIcon, TagIcon },
   computed: {
     pages () {
       return this.$pagination.pages

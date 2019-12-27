@@ -23,11 +23,9 @@
     "@vuepress/plugin-blog": "^1.6.1",
     "eslint": "^6.8.0",
     "eslint-plugin-vue-libs": "^4.0.0",
-    "vuepress": "^1.2.0"
-  },
-  "dependencies": {
     "markdownlint": "^0.18.0",
     "markdownlint-cli": "^0.20.0",
-    "vue-awesome": "^4.0.2"
+    "vue-feather-icons": "^5.0.0",
+    "vuepress": "^1.2.0"
   }
 }

@@ -7,7 +7,7 @@ module.exports = {
   ],
 
   rules: {
-    indent: ['error', 2, { MemberExpression: 'off' }],
+    indent: ['error', 2, { MemberExpression: 'off', SwitchCase: 1 }],
 
     'no-undef': ['error'],
 

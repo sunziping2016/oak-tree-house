@@ -86,10 +86,21 @@ export default {
 
     shouldShowSidebar () {
       const { frontmatter } = this.$page
+      function getSidebarLength (items) {
+        let length = 0
+        for (const item of items) {
+          if (item.type === 'group') {
+            length += getSidebarLength(item.children)
+          } else {
+            ++length
+          }
+        }
+        return length
+      }
       return (
         !frontmatter.home
         && frontmatter.sidebar !== false
-        && this.sidebarItems.length
+        && getSidebarLength(this.sidebarItems)
       )
     },
 

@@ -4,6 +4,7 @@ author: 孙子平
 date: 2019-11-11 20:37:52
 categories: Python
 tags: [Python, 编程, 教程]
+series: Python教程
 summary: 这是Python连载教程的第二期，内容是Python的流程控制语句和函数定义语法。
 prev: /_posts/2019-11-01-python-tutorial1.html
 ---
