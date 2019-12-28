@@ -1,7 +1,6 @@
 import md5 from 'md5'
 
 function integrateGitalk (router) {
-
   const linkGitalk = document.createElement('link')
   linkGitalk.href = 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css'
   linkGitalk.rel = 'stylesheet'
@@ -30,6 +29,8 @@ function integrateGitalk (router) {
   function loadGitalk (to) {
     // eslint-disable-next-line no-undef
     if (typeof Gitalk !== 'undefined' && Gitalk instanceof Function) {
+      console.log(to.path)
+      console.log(md5(to.path))
       renderGitalk(md5(to.path))
     }
   }
