@@ -1,20 +1,24 @@
 function integrateGitalk (router) {
+  let scriptLoaded = false
   const linkGitalk = document.createElement('link')
   linkGitalk.href = 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css'
   linkGitalk.rel = 'stylesheet'
   document.body.appendChild(linkGitalk)
   const scriptGitalk = document.createElement('script')
   scriptGitalk.src = 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js'
+  scriptGitalk.addEventListener('load', () => {
+    scriptLoaded = true
+  })
   document.body.appendChild(scriptGitalk)
 
-  router.beforeEach(() => {
+  router.beforeEach((to, from, next) => {
     const commentsContainer = document.getElementById('gitalk-container')
-    if (!commentsContainer) {
-      return
+    if (commentsContainer) {
+      while (commentsContainer.firstChild) {
+        commentsContainer.removeChild(commentsContainer.firstChild)
+      }
     }
-    while (commentsContainer.firstChild) {
-      commentsContainer.removeChild(commentsContainer.firstChild)
-    }
+    next()
   })
 
   router.afterEach((to) => {
@@ -25,12 +29,12 @@ function integrateGitalk (router) {
     while (commentsContainer.firstChild) {
       commentsContainer.removeChild(commentsContainer.firstChild)
     }
-    if (scriptGitalk.onload) {
+    if (scriptLoaded) {
       loadGitalk(to)
     } else {
-      scriptGitalk.onload = () => {
+      scriptGitalk.addEventListener(() => {
         loadGitalk(to)
-      }
+      })
     }
   })
 
