@@ -1,5 +1,3 @@
-import md5 from 'md5'
-
 function integrateGitalk (router) {
   const linkGitalk = document.createElement('link')
   linkGitalk.href = 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css'
@@ -8,6 +6,16 @@ function integrateGitalk (router) {
   const scriptGitalk = document.createElement('script')
   scriptGitalk.src = 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js'
   document.body.appendChild(scriptGitalk)
+
+  router.beforeEach(() => {
+    const commentsContainer = document.getElementById('gitalk-container')
+    if (!commentsContainer) {
+      return
+    }
+    while (commentsContainer.firstChild) {
+      commentsContainer.removeChild(commentsContainer.firstChild)
+    }
+  })
 
   router.afterEach((to) => {
     const commentsContainer = document.getElementById('gitalk-container')
@@ -29,9 +37,7 @@ function integrateGitalk (router) {
   function loadGitalk (to) {
     // eslint-disable-next-line no-undef
     if (typeof Gitalk !== 'undefined' && Gitalk instanceof Function) {
-      console.log(to.path)
-      console.log(md5(to.path))
-      renderGitalk(md5(to.path))
+      renderGitalk(to.path)
     }
   }
   function renderGitalk (fullPath) {
