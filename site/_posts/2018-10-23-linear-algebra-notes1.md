@@ -10,7 +10,7 @@ summary: 这篇文章是我数学复习计划的一部分，内容参考清华�
 
 <!--more-->
 
-## 预备知识
+## 1 预备知识
 
 设$\mathbb{F}$是$\mathbb{C}$的子集，且满足：
 
@@ -21,7 +21,7 @@ summary: 这篇文章是我数学复习计划的一部分，内容参考清华�
 
 所有的数域都含有$\mathbb{Q}$。
 
-## 1 行列式
+## 2 行列式
 
 首先引入**$n$阶排列**、**逆序数**$\tau$、**奇排列**和**偶排列**的概念。
 
@@ -76,9 +76,9 @@ $$x_j = \frac{D_j}{D}$$
 
 对于齐次线性方程组系数行列式非0，则只有0解。
 
-## 2 矩阵
+## 3 矩阵
 
-### 2.1 高斯消元法
+### 3.1 高斯消元法
 
 **线性方程组的初等变换**有：
 
@@ -117,7 +117,7 @@ a_{m1}x_1 + a_{m2}x_2 + &\dots + a_{mn}x_n = 0, \\\\
 
 如果$m<n$，则一定有非零解。当$m=n$时，方程组有非0解$\Leftrightarrow$系数行列式$D=0$。
 
-### 2.2 矩阵的运算
+### 3.2 矩阵的运算
 
 引入了**矩阵**、**元素**、**零矩阵**、**单位矩阵**、**纯量矩阵**和**上（下）三角矩阵**的概念。
 
@@ -137,7 +137,7 @@ a_{m1}x_1 + a_{m2}x_2 + &\dots + a_{mn}x_n = 0, \\\\
 
 矩阵的多项式满足交换律：$f(\mathbf{A})g(\mathbf{A})=g(\mathbf{A})f(\mathbf{A})$。
 
-### 2.3 逆矩阵
+### 3.3 逆矩阵
 
 $\det(\mathbf{A}\mathbf{B})=\det\mathbf{A}\det\mathbf{B}$。
 
@@ -163,11 +163,11 @@ $$\mathbf{A}^{-1}=\frac{1}{\det\mathbf{A}}\mathbf{A}^*$$
 1. 若$\mathbf{A}$可逆，则$\mathbf{A}\vec{x}=\vec{b}$有唯一解$\mathbf{A}^{-1}\vec{b}$；
 2. $\mathbf{A}$不可逆$\Leftrightarrow \mathbf{A}\vec{x}=\vec{0}$有非0解。
 
-### 2.4 分块矩阵
+### 3.4 分块矩阵
 
 引入了**分块矩阵**的概念，并讨论了其加法、数乘、转置和乘法。对于乘法$\mathbf{A}\mathbf{B}$，$\mathbf{A}$的列划分需要与$\mathbf{B}$的行划分一致）。
 
-### 2.5 矩阵的初等变换
+### 3.5 矩阵的初等变换
 
 矩阵的行初等变换和矩阵的列初等变换统称为**矩阵的初等变换**。
 
@@ -204,9 +204,9 @@ $$\mathbf{A}^{-1}=\frac{1}{\det\mathbf{A}}\mathbf{A}^*$$
 
 同样分块矩阵也有初等变换。
 
-## 3 几何空间中的向量
+## 4 几何空间中的向量
 
-### 3.1 向量及其运算
+### 4.1 向量及其运算
 
 引入了**向量**（既有方向又有大小的几何解释）、向量的**相等**、**反向量**、**零向量**和**单位向量**的概念。
 
@@ -216,7 +216,7 @@ $\vec{\alpha},\vec{\beta}$共线$\Leftrightarrow$存在不全为0的数$\lambda,
 
 $\vec{\alpha},\vec{\beta},\vec{\gamma}$共线$\Leftrightarrow$存在不全为0的数$k_1,k_2,k_3$，使$k_1\vec{\alpha}+k_2\vec{\beta}+k_3\vec{\gamma}=0$。
 
-### 3.2 仿射坐标系
+### 4.2 仿射坐标系
 
 引入了**仿射坐标系**（三维）、**坐标向量**（又称**基础向量**，**基**）、**坐标轴**、**坐标平面**和**坐标轴**的概念。
 
@@ -231,7 +231,7 @@ z_1 & z_2 & z_3 \\\\
 **直角坐标系**是坐标向量两两垂直且是单位向量的仿射坐标系。引入了方向角和方向余弦的概念。三个方向角不独立，满足：
 $$\cos^2\alpha+\cos^2\beta+\cos^2\gamma=1$$
 
-### 3.3 数量积、向量积与混合积
+### 4.3 数量积、向量积与混合积
 
 定义**数量积**$\vec{\alpha}\cdot\vec{\beta}=|\vec{\alpha}| |\vec{\beta}| \cos\langle\vec{\alpha},\vec{\beta}\rangle$。满足：
 
@@ -280,23 +280,23 @@ y_1 & y_2 & y_3 \\\\
 z_1 & z_2 & z_3 \\\\
 \end{vmatrix}$$
 
-### 3.4 平面与直线
+### 4.4 平面与直线
 
 略
 
-### 3.5 距离
+### 4.5 距离
 
 略
 
-## 4 向量空间
+## 5 向量空间
 
-### 4.1 数域$\mathbb{F}$上的$n$维向量空间
+### 5.1 数域$\mathbb{F}$上的$n$维向量空间
 
 引入了**向量**（有序数组的抽象解释）、**分量**、**行向量**、**列向量**和**零向量的概念**。
 
 定义了向量的**相等**、**加法**和**数乘**，均满足线性空间的要求。
 
-### 4.2 向量组的线性相关性
+### 5.2 向量组的线性相关性
 
 定义了**线性组合**、**线性表出**、**线性相关**和**线性无关**。
 
@@ -312,7 +312,7 @@ z_1 & z_2 & z_3 \\\\
 - $\vec{\alpha_1},\vec{\alpha_2},\dots,\vec{\alpha_s}$线性相关$\Rightarrow \vec{\gamma_1},\vec{\gamma_2},\dots,\vec{\gamma_s}$线性相关；
 - $\vec{\gamma_1},\vec{\gamma_2},\dots,\vec{\gamma_s}$线性无关$\Rightarrow \vec{\alpha_1},\vec{\alpha_2},\dots,\vec{\alpha_s}$线性无关
 
-### 4.3 向量组的秩
+### 5.3 向量组的秩
 
 引入了向量组的线性表处、**向量组的等价**的概念。
 
@@ -330,7 +330,7 @@ z_1 & z_2 & z_3 \\\\
 1. $\vec{\alpha_1},\vec{\alpha_2},\dots,\vec{\alpha_s}$可由$\vec{\beta_1},\vec{\beta_2},\dots,\vec{\beta_t}$线性表出$\Rightarrow \operatorname{r}(\vec{\alpha_1},\vec{\alpha_2},\dots,\vec{\alpha_s})\leq\operatorname{r}(\vec{\beta_1},\vec{\beta_2},\dots,\vec{\beta_t})$；
 2. 等价的向量组的秩相等。
 
-### 4.4 矩阵的秩
+### 5.4 矩阵的秩
 
 引入了矩阵的**行秩**和**列秩**的概念。有如下的定理：
 
@@ -353,7 +353,7 @@ z_1 & z_2 & z_3 \\\\
 5. $\max\\{\operatorname{r}(\mathbf{A}),\operatorname{r}(\mathbf{B})\\}\leq\operatorname{r}\left(\begin{bmatrix}\mathbf{A}&\mathbf{B}\end{bmatrix}\right)\leq\operatorname{r}(\mathbf{A})+\operatorname{r}(\mathbf{B})$；
 6. 如$\operatorname{r}(\mathbf{A})=r$，则存在列满秩矩阵$\mathbf{G}\_{m\times r}$和行满秩矩阵$\mathbf{H}\_{r\times n}$，使$\mathbf{A}=\mathbf{G}\mathbf{H}$（**满秩分解**）。
 
-### 4.5 齐次线性方程组
+### 5.5 齐次线性方程组
 
 对于$n$个未知量的齐次线性方程组：
 
@@ -364,15 +364,15 @@ z_1 & z_2 & z_3 \\\\
 
 $\mathbf{A}\vec{x}=\vec{0}$的基础解系含有$n-\operatorname{r}(\mathbf{A})$个向量。
 
-### 4.6 非齐次线性方程组
+### 5.6 非齐次线性方程组
 
 $\mathbf{A}\vec{x}=\vec{b}$有解$\Leftrightarrow \operatorname{r}(\mathbf{A})=\operatorname{r}(\begin{bmatrix}\mathbf{A}&\vec{b}\end{bmatrix})$。
 
 非齐次线性方程组的通解为特解加上对应的齐次线性方程组基础解系的线性组合。
 
-## 5 线性空间
+## 6 线性空间
 
-### 5.1 数域$\mathbb{F}$上的线性空间
+### 6.1 数域$\mathbb{F}$上的线性空间
 
 引入了**线性空间**、**线性相关**、**线性无关**、**线性组合**、**线性表出**和**向量组的等价**的概念。有如下定理（自4.2和4.3复制过来）：
 
@@ -408,7 +408,7 @@ c_{n1} & c_{n2} & \cdots & c_{nn} \\\\
 
 - 设由基$\epsilon_1,\epsilon_2,\cdots,\epsilon_n$到基$\eta_1,\eta_2,\cdots,\eta_n$的过渡矩阵为$\mathbf{C}$，则$\mathbf{C}$可逆。如果一向量在两组基的坐标分别是$\vec{x},\vec{y}$，则$\vec{x}=\mathbf{C}\vec{y}$。
 
-### 5.2 线性子空间
+### 6.2 线性子空间
 
 引入了**子空间**、**平凡子空间**（**零子空间**和本身）、**解空间**（**化零空间**）$N$、**列空间**$R$、向量组**生成的子空间**的概念。有如下定理：
 
@@ -430,7 +430,7 @@ c_{n1} & c_{n2} & \cdots & c_{nn} \\\\
 1. $W_1+W_2$是直和$\Leftrightarrow$零向量表示方法唯一$\Leftrightarrow W_1\cap W_2=\\{\theta\\}\Leftrightarrow\operatorname{dim}W_1+\operatorname{dim}W_2=\operatorname{dim}(W_1+W_2)$（可推广到$n$个子空间的直和）；
 2. $W_1$是$V$的子空间，则必存在$V$的子空间$W_2$，使$V=W_1\oplus W_2$。
 
-### 5.3 线性空间的同构
+### 6.3 线性空间的同构
 
 保持线性关系的从一个线性空间到另一个线性空间的双射叫做**同构映射**，两个线性空间**同构**。同构映射有如下的性质：
 
@@ -445,7 +445,7 @@ c_{n1} & c_{n2} & \cdots & c_{nn} \\\\
 1. $n$维线性空间必同构于$\mathbb{F}$上的$n$维向量空间；
 2. 两个有限维线性空间同构$\Leftrightarrow$其维数相等。
 
-### 5.4 欧几里得空间
+### 6.4 欧几里得空间
 
 满足对称性、线性性和正定性的从两个向量到实数的映射称为**内积**$(\vec{\alpha},\vec{\beta})$，定义了内积的实线性空间称为**欧几里得空间**。
 
@@ -486,9 +486,9 @@ $$\begin{align}
 
 - 设$W$是$n$维欧几里得空间$V$的子空间，则$V=W\oplus W^\perp$。
 
-## 6 线性变换
+## 7 线性变换
 
-### 6.1 线性变换的定义和基本性质
+### 7.1 线性变换的定义和基本性质
 
 线性空间上保持线性关系的变换称为**线性变换**或**线性算子**，其集合记为$L(V)$。有如下的性质：
 
@@ -501,7 +501,7 @@ $$\begin{align}
 
 又引入了线性变换的**乘积**、**可逆**、**逆变换**和**多项式**的概念。
 
-### 6.2 线性变换的矩阵
+### 7.2 线性变换的矩阵
 
 有如下定理：
 
@@ -521,7 +521,7 @@ $n$阶矩阵$\mathbf{A}$叫做线性变换$\sigma$在基$\vec{\alpha_1},\vec{\al
 1. 设$\varphi:L(V)\rightarrow M_n(\mathbb{F})$为上述同构映射，则对$\sigma,\tau\in L(V)$，有$\varphi(\sigma\tau)=\varphi(\sigma)\varphi(\tau)$；
 2. 设$\sigma\in L(V),\varphi(\sigma)=\mathbf{A}$，$\sigma$可逆$\Leftrightarrow \mathbf{A}$可逆，且$\varphi(\sigma^{-1})=\mathbf{A}^{-1}$。
 
-### 6.3 线性变换的核与值域
+### 7.3 线性变换的核与值域
 
 全体像的集合称为**值域**，记作$\operatorname{Im}\sigma$。被映射成零向量的向量的集合称为**核**，记作$\operatorname{ker}\sigma$。它们都是子空间。$\operatorname{dim}\operatorname{Im}\sigma$称为**秩**，$\operatorname{dim}\operatorname{ker}\sigma$称为**零度**。
 
@@ -535,7 +535,7 @@ $n$阶矩阵$\mathbf{A}$叫做线性变换$\sigma$在基$\vec{\alpha_1},\vec{\al
 
 引入了**不变子空间**的概念。将$\sigma$的作用限制到$W$上记作$\sigma\Bigg|\_W$。不变子空间对于化简矩阵有着很重要的作用。
 
-### 6.4 特征值与特征向量
+### 7.4 特征值与特征向量
 
 设$\sigma\in L(V)$，对于$\mathbb{F}$中的数$\lambda$，存在非零向量$\vec{\xi}$，使得$\sigma\vec{\xi}=\lambda\vec{\xi}$，则$\lambda$是$\sigma$的**特征值**，$\vec{\xi}$是$\sigma$属于特征值$\lambda$的**特征向量**。
 
@@ -554,7 +554,7 @@ $n$阶矩阵$\mathbf{A}$叫做线性变换$\sigma$在基$\vec{\alpha_1},\vec{\al
 2. $n$阶方阵可逆$\Leftrightarrow$其$n$个特征值全不为零；
 3. Hamilton-Cayley定理：设$\mathbf{A}\in M_n(\mathbb{F}),f_A(\lambda)=|\lambda\mathbf{I}-\mathbf{A}|$是$\mathbf{A}$的特征多项式，则$f_A(\mathbf{A})=0$，对于线性变换也有类似的结论。
 
-### 6.5 相似矩阵
+### 7.5 相似矩阵
 
 $\mathbf{A},\mathbf{B}$是两个$n$阶方阵，如果存在$n$阶可逆矩阵$\mathbf{P}$，使得$\mathbf{P}^{-1}\mathbf{A}\mathbf{P}=\mathbf{B}$，则称$\mathbf{B}$**相似**于$\mathbf{A}$，记作$\mathbf{B}\sim\mathbf{A}$。
 
@@ -581,16 +581,16 @@ $\mathbf{A},\mathbf{B}$是两个$n$阶方阵，如果存在$n$阶可逆矩阵$\m
 2. $n$阶实对称阵$\mathbf{A}$，总存在正交阵$\mathbf{Q}$，使得$\mathbf{Q}^{-1}\mathbf{A}\mathbf{Q}$是对角阵；
 3. 实对称矩阵属于不同特征值的特征向量正交。
 
-## 7 二次型
+## 8 二次型
 
-### 7.1 二次型
+### 8.1 二次型
 
 $$Q(x_1,x_2,\cdots,x_n)=\sum_{i=1}^n\sum_{j=1}^na_{ij}x_ix_j, a_{ij}=a_{ji}=\vec{x}^\mathrm{T}\mathbf{A}\vec{x}$$
 如上形式称为$n$元**二次型**。$\mathbf{A}$是**二次型的矩阵**，它是对称矩阵。还引入了**实二次型**和**复二次型**的概念。
 
 $\mathbf{A},\mathbf{B}$是两个$n$阶方阵，如果存在$n$阶可逆矩阵$\mathbf{P}$，使得$\mathbf{B}=\mathbf{P}^\mathrm{T}\mathbf{A}\mathbf{P}$，则称$\mathbf{B}$与$\mathbf{A}$**相合**或**合同**。这是个等价关系。
 
-### 7.2 二次型的标准形
+### 8.2 二次型的标准形
 
 有下面3个方法化二次型为标准形：
 
@@ -600,7 +600,7 @@ $\mathbf{A},\mathbf{B}$是两个$n$阶方阵，如果存在$n$阶可逆矩阵$\m
 
 对于方法3，构造一个$2n\times n$的矩阵$\begin{bmatrix}\mathbf{A}\\\\\mathbf{I}\end{bmatrix}$，对$\begin{bmatrix}\mathbf{A}\\\\\mathbf{I}\end{bmatrix}$作一次列变换的同时，对$\mathbf{A}$作一次对应的行变换，当$\mathbf{A}$化作$\mathbf{P}^\mathrm{T}\mathbf{A}\mathbf{P}$时，$\mathbf{I}$就化作$\mathbf{P}$。
 
-### 7.3 惯性定理和二次型的规范形
+### 8.3 惯性定理和二次型的规范形
 
 形如$z_1^2+z_2^2+\cdots+z_r^2$的二次型称为复系数的二次型的**规范形**；形如$z_1^2+z_2^2+\cdots+z_p^2-z_{p+1}^2-\cdots-z_r^2$的二次型称为实二次型的**规范形**。$p$称为**正惯性指数**，$r-p$称为**负惯性指数**，差$p-(r-p)$称为**符号差**。
 
@@ -611,7 +611,7 @@ $\mathbf{A},\mathbf{B}$是两个$n$阶方阵，如果存在$n$阶可逆矩阵$\m
 3. **惯性定理**：任意一个实二次型，总可以经过一个适当的可逆线性替换，化为规范形，且规范形唯一；
 4. 任意实对称矩阵相合于对角阵$\begin{bmatrix}\mathbf{I}\_p&&\\\\&-\mathbf{I}\_{r-p}&\\\\&&\mathbf{0}\end{bmatrix}$，其中$r$是对称阵的秩。
 
-### 7.4 实二次型的正定性
+### 8.4 实二次型的正定性
 
 设$Q(\vec{\alpha})$是实二次型，对非零向量$\vec{\alpha}$，恒有$Q(\vec{\alpha})\gt0$，则称实二次型**正定**，其矩阵称为**正定矩阵**。
 

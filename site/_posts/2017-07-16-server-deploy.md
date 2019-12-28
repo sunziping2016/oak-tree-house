@@ -10,9 +10,9 @@ summary: 这篇文章主要是关于自己VPS的配置的。
 
 <!--more-->
 
-## Vultr VPS
+## 1 Vultr VPS
 
-### VPS 配置
+### 1.1 VPS 配置
 
 #### 基础配置
 

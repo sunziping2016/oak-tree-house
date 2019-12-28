@@ -30,27 +30,3 @@ Git 在需要的时候会对这些对象进行压缩，构成包文件（Pack fi
 索引是临时的用于描述整个仓库目整体结构的文件。它使得系统不断开发作出的微小改动（stage）和这些更改的提交分离（commit）。索引在分支合并（merge）的时候启到了关键作用：允许不同版本的文件被同时管理。
 
 ### 1.4 基于内容的
-
-## (To be deleted) 1 Git
-
-### 1.1 创建仓库
-
-#### 1.1.1 `git config`命令
-
-`git config <name> [<value>]`命令可用于设定一些配置，通过`--system`、`--global`、`--local`和`--file <filename>`指定配置作用的级别。默认情况下，配置从 system（`/etc/gitconfig`）、global（`~/.gitconfig`） 和 local（`.git/config`） 读入；配置写入至 local。通过`--int`和`--bool`设置 int 和 bool 类型的配置。
-
-在使用 git 前，需要设置`user.name`和`user.email`。建议设置在 global 下。
-
-#### 1.1.2 `git init`命令
-
-`git init [<directory>]`命令创建一个空的仓库，即创建`.git`目录。`.git`目录会包含文件对象、HEAD 引用、各个分支头节点的引用、各个标签的引用和模板`.git`目录中的其他文件（一些样例脚本，样例描述等等）。
-
-`--bare`参数用于指定仓库是否为裸仓库（bare repository）。裸仓库无工作区和暂缓区，也不存在`.git`子目录，而是相当于直接包含原先`.git`目录下的文件。一般情况下，裸仓库允许成为`git push`命令的接受方。所以，通常协同编程时，中心服务器上为裸仓库。
-
-#### 1.1.3 `git clone`命令
-
-`git clone <repository> [<directory>]`命令用于克隆一个仓库。对于远程仓库的每一个分支，都会创建一个本地的远程跟踪分支（remote-tracking branch）。
-
-补充“远程跟踪分支”：
-
-（放弃更新）

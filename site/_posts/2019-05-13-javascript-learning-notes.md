@@ -168,7 +168,7 @@ ES6支持默认形参，以及`...name`的方式声明剩余形参，其中`name
 - `encodeURI`、`decodeURI`：将URI中的某些字符（不改变URI本身的地址）转换为转义字符，和转换回去；
 - `encodeURIComponent`、`decodeURIComponent`：将整个URI的某些字符转换为转义字符，和转换回去。
 
-## 4. 运算符
+## 4 运算符
 
 与其他类C语言类似。
 

@@ -19,7 +19,7 @@
 - [x] Some answer part in my Python Tutorial can be hidden (Use detail bloclk)
 - [x] Can view the front matter of a post (Use GitHub)
 - [x] Support RSS subscription
-- [ ] Add more custom Markdown lint
-- [ ] Add some helper scripts to create posts
+- [x] Add more custom Markdown lint
+- [x] Add some helper scripts to create posts
 - [ ] Sidebar can display h1 to h4 toc (Wait for VuePress to release)
 - [ ] Search bar can search all text (Wait for Algolia to approve)

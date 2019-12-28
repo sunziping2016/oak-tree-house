@@ -10,7 +10,7 @@ const lowercaseIgnore = [
 const postsPath = 'site/_posts/'
 
 module.exports = {
-  names: ['verify-filename'],
+  names: ['check-filename'],
   description: 'Check whether filename is in kebab-case and contains correct date',
   tags: ['filename', 'frontmatter'],
   'function': function (params, onError) {
