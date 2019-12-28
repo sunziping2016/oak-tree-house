@@ -55,7 +55,8 @@ function integrateGitalk (router) {
       id: fullPath,
       body: `${location.protocol}//${location.host}${location.pathname}`,
       distractionFreeMode: false,
-      language: 'zh-CN'
+      language: 'zh-CN',
+      createIssueManually: true
     })
     gitalk.render('gitalk-container')
   }
