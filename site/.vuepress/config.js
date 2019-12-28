@@ -15,9 +15,15 @@ module.exports = {
       { text: '连载', link: '/series/' },
       { text: '关于', link: '/about.html' }
     ],
-    sidebar: 'auto'
+    sidebar: 'auto',
+    repo: 'sunziping2016/oak-tree-house',
+    docsDir: 'site',
+    editLinks: true,
+    editLinkText: '在 GitHub 上编辑此页',
+    lastUpdated: '上次更新'
   },
   plugins: [
+    ['@vuepress/last-updated'],
     ['mathjax', { target: 'svg' }],
     ['@vuepress/blog', {
       directories: [
