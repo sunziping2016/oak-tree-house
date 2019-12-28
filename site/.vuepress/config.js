@@ -26,7 +26,7 @@ module.exports = {
     ['@vuepress/last-updated'],
     ['mathjax', { target: 'svg' }],
     ['@vuepress/medium-zoom'],
-    [require('./vuepress-plugin-rss.js'),
+    [require('./plugins/vuepress-plugin-rss.js'),
       {
         base_url: '/',
         site_url: 'https://szp.io',

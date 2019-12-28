@@ -1,6 +1,6 @@
 ---
 title: Haskell学习笔记（未完待续）
-date: 2019-02-26 16:45:29
+date: 2019-02-26T08:45:29Z
 category: Haskell
 tags: [Haskell, 编程, 函数式]
 summary: 这篇文章是我Haskell的学习笔记，内容来自《Learn You a Haskell for Greate Good》中文版。

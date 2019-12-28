@@ -1,6 +1,6 @@
 ---
 title: TypeScipt学习笔记（未完待续）
-date: 2019-9-12 02:31:16
+date: 2019-09-11T18:31:16Z
 tags: [JavaScript, 编程, 前端]
 summary: 这篇文章是TypeScript的学习笔记，主要内容来自TypeScript官网的handbook。
 ---

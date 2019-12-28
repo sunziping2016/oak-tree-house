@@ -1,6 +1,6 @@
 ---
 title: Git & GitHub 学习笔记（放弃更新）
-date: 2016-11-28 12:00:00
+date: 2016-11-28T04:00:00Z
 category: Git
 tags: [Git, GitHub]
 summary: 这篇文章主要是对于man git的梳理。

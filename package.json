@@ -7,7 +7,7 @@
     "dev": "vuepress dev site",
     "lint": "npm run lint:js && npm run lint:md",
     "lint:js": "eslint site --ext .js,.vue",
-    "lint:md": "markdownlint **/*.md --ignore node_modules"
+    "lint:md": "markdownlint --ignore node_modules -r \"markdownlint/*.js\" \"**/*.md\""
   },
   "repository": {
     "type": "git",

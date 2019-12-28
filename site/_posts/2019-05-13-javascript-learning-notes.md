@@ -1,6 +1,6 @@
 ---
 title: JavaScript学习笔记
-date: 2019-5-13 00:12:11
+date: 2019-05-12T16:12:11Z
 category: JavaScript
 tags: [JavaScript, 编程]
 summary: 这篇文章是JavaScript的学习笔记。内容主要来自MDN的JavaScript Guide - JavaScript | MDN。

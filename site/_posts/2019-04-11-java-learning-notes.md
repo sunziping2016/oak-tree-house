@@ -1,6 +1,6 @@
 ---
 title: Java学习笔记
-date: 2019-04-11 22:08:45
+date: 2019-04-11T14:08:45Z
 tags: [Java, 编程]
 summary: 该学习笔记着重于Java相较于C++等编程语言的独特之处。内容主要来自The Java™ Tutorials和JAVA8 官网笔记教程。
 ---

@@ -2,7 +2,7 @@
 title: Python教程1 - 简介
 type: post
 author: 孙子平
-date: 2019-11-01 01:43:44
+date: 2019-10-31T17:43:44Z
 category: Python
 tags: [Python, 编程, 教程]
 series: Python教程

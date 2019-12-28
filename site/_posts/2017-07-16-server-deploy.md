@@ -1,6 +1,6 @@
 ---
 title: 服务器配置
-date: 2017-7-16 12:00:00
+date: 2017-07-16T04:00:00Z
 category: 配置
 tags: [配置, Ubuntu]
 summary: 这篇文章主要是关于自己VPS的配置的。
