@@ -1,4 +1,6 @@
 module.exports = {
+  title: '橡树屋',
+  description: '欢迎来到孙子平的博客',
   head: [
     ['link', { rel: 'icon', sizes: '32x32',
       href: `/assets/icons/favicon-32x32.png` }],
@@ -16,6 +18,7 @@ module.exports = {
     sidebar: 'auto'
   },
   plugins: [
+    ['mathjax', { target: 'svg' }],
     ['@vuepress/blog', {
       directories: [
         {
@@ -33,6 +36,7 @@ module.exports = {
           id: 'tag',
           keys: ['tags'],
           path: '/tag/',
+          scopeLayout: 'TagFrontmatterPagination',
           frontmatter: {
             title: 'Tag',
             name: '标签'
@@ -45,6 +49,7 @@ module.exports = {
           id: 'category',
           keys: ['category'],
           path: '/category/',
+          scopeLayout: 'CategoryFrontmatterPagination',
           frontmatter: {
             title: 'Category',
             name: '分类'
@@ -57,6 +62,7 @@ module.exports = {
           id: 'author',
           keys: ['author'],
           path: '/author/',
+          scopeLayout: 'AuthorFrontmatterPagination',
           frontmatter: {
             title: 'Author',
             name: '作者'
@@ -69,6 +75,7 @@ module.exports = {
           id: 'series',
           keys: ['series'],
           path: '/series/',
+          scopeLayout: 'SeriesFrontmatterPagination',
           frontmatter: {
             title: 'Series',
             name: '连载文章'

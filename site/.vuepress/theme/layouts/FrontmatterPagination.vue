@@ -13,24 +13,13 @@ import IndexPost from '@theme/layouts/IndexPost.vue'
 
 export default {
   components: { IndexPost },
+  props: {
+    title: { type: String, default: '' },
+    name: { type: String, default: '' }
+  },
   computed: {
     current () {
-      return this.$currentTag || this.$currentCategory
-        || this.$currentAuthor || this.$currentSeries
-    },
-    name () {
-      switch (this.current.scope) {
-        case 'tag':
-          return '标签'
-        case 'category':
-          return '分类'
-        case 'author':
-          return '作者'
-        case 'series':
-          return '连载文章'
-        default:
-          return '未知分类'
-      }
+      return this[`\$current${this.title}`] || { pages: [] }
     }
   }
 }
