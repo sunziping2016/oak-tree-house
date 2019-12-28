@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import FrontmatterPagination from './FrontmatterPagination';
+import FrontmatterPagination from './FrontmatterPagination'
 
 export default {
   components: { FrontmatterPagination }

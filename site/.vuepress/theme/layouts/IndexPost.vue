@@ -11,7 +11,7 @@
             class="post"
           >
             <h1 class="post-title">
-              <NavLink :item="{ link: page.path, text: page.title}"/>
+              <NavLink :item="{ link: page.path, text: page.title}" />
             </h1>
 
             <div

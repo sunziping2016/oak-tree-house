@@ -1,9 +1,10 @@
 <template>
   <Layout>
     <template #page-bottom>
-      <div id="gitalk-container"
-           class="content"
-      ></div>
+      <div
+        id="gitalk-container"
+        class="content"
+      />
     </template>
   </Layout>
 </template>
@@ -20,4 +21,9 @@ export default {
 .content
   max-width $contentWidth
   margin 0 auto
+  padding 0 2.5rem
+  @media (max-width: $MQNarrow)
+    padding 0 2rem
+  @media (max-width: $MQMobileNarrow)
+    padding 0 1.5rem
 </style>
