@@ -1,5 +1,6 @@
 ---
 title: Python教程1 - 简介
+type: post
 author: 孙子平
 date: 2019-11-01 01:43:44
 category: Python
