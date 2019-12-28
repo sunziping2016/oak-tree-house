@@ -1132,7 +1132,7 @@ def char_at(text: str, index: int) -> str:
 
 ## 4 PyCharm的使用
 
-先前我们介绍过
+先前我们介绍过JupyterLab。
 
 ## 5 复习
 
