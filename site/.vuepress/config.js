@@ -13,6 +13,13 @@ module.exports = {
       { text: '标签', link: '/tag/' },
       { text: '分类', link: '/category/' },
       { text: '连载', link: '/series/' },
+      { text: '项目', items: [
+        { text: '项目读我', link: '/readme/' },
+        { text: '计划列表', link: '/todo/' },
+        { text: '更新日志', link: '/changelog/' },
+        { text: '授权', link: '/license/' },
+        { text: 'Travis持续集成', link: 'https://travis-ci.com/sunziping2016/oak-tree-house' }
+      ] },
       { text: '关于', link: '/about.html' }
     ],
     sidebar: 'auto',
@@ -23,7 +30,11 @@ module.exports = {
     lastUpdated: '上次更新'
   },
   plugins: [
-    ['@vuepress/last-updated'],
+    ['@vuepress/last-updated', {
+      transformer (timestamp, lang) {
+        return new Date(timestamp).toLocaleString('zh-CN')
+      }
+    }],
     ['@vuepress/medium-zoom'],
     [require('./plugins/vuepress-plugin-rss.js'),
       {
@@ -32,6 +43,7 @@ module.exports = {
         count: 20
       }
     ],
+    [require('./plugins/additional-pages')],
     ['@vuepress/blog', {
       directories: [
         {
@@ -103,6 +115,7 @@ module.exports = {
   markdown: {
     extractHeaders: ['h2', 'h3', 'h4'],
     extendMarkdown: md => {
+      md.use(require('markdown-it-checkbox'))
       md.render = (src, env) => {
         const text = src
         const regex = /(\${1,2})((?:\\.|.)*)\1/g

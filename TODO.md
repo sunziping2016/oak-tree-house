@@ -21,6 +21,6 @@
 - [x] Vue Component that can hide Python prompt in code block
 - [x] Add git commit hook to run lint
 - [x] <del>Math equations can be displayed correctly</del>
-- [ ] Additional pages like CHANGELOG, README, TODO
+- [x] Additional pages like CHANGELOG, README, TODO
 - [ ] Sidebar can display h1 to h4 toc (Wait for VuePress to release)
 - [ ] Search bar can search all text (Wait for Algolia to approve)
