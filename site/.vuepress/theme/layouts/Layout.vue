@@ -130,6 +130,15 @@ export default {
     this.$router.afterEach(() => {
       this.isSidebarOpen = false
     })
+    // Detect Python interactive code blocks
+    const candidateBlocks = [...document.querySelectorAll('div.language-python')]
+    const blocks = candidateBlocks.filter(x => x.innerText.startsWith('>>> '))
+    for (const block of blocks) {
+      const copyButton = document.createElement('span')
+      copyButton.classList.add('copy-button')
+      copyButton.innerText = '>>>'
+      block.prepend(copyButton)
+    }
   },
 
   methods: {
@@ -160,3 +169,18 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus">
+.copy-button
+  position absolute
+  z-index 3
+  padding 0.8em 0.4em 0.2em
+  right 3em
+  font-size 0.75rem
+  color rgba(255,255,255,0.4)
+  cursor pointer
+  border-left 1px solid rgba(255,255,255,0.4)
+  border-right 1px solid rgba(255,255,255,0.4)
+  border-bottom 1px solid rgba(255,255,255,0.4)
+  border-radius 0 0 0.4em 0.4em
+</style>

@@ -11,31 +11,29 @@ function integrateGitalk (router) {
   })
   document.body.appendChild(scriptGitalk)
 
-  router.beforeEach((to, from, next) => {
-    const commentsContainer = document.getElementById('gitalk-container')
-    if (commentsContainer) {
+  let path
+
+  router.afterEach((to) => {
+    if (to.path === path) {
+      return
+    }
+    path = to.path
+    setTimeout(() => {
+      const commentsContainer = document.getElementById('gitalk-container')
+      if (!commentsContainer) {
+        return
+      }
       while (commentsContainer.firstChild) {
         commentsContainer.removeChild(commentsContainer.firstChild)
       }
-    }
-    next()
-  })
-
-  router.afterEach((to) => {
-    const commentsContainer = document.getElementById('gitalk-container')
-    if (!commentsContainer) {
-      return
-    }
-    while (commentsContainer.firstChild) {
-      commentsContainer.removeChild(commentsContainer.firstChild)
-    }
-    if (scriptLoaded) {
-      loadGitalk(to)
-    } else {
-      scriptGitalk.addEventListener(() => {
+      if (scriptLoaded) {
         loadGitalk(to)
-      })
-    }
+      } else {
+        scriptGitalk.addEventListener(() => {
+          loadGitalk(to)
+        })
+      }
+    })
   })
 
   function loadGitalk (to) {
