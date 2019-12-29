@@ -9,6 +9,7 @@ git:
   lfs_skip_smudge: true
 install:
   - git lfs pull
+  - yarn
 script:
   - npm run lint
   - npm run build
