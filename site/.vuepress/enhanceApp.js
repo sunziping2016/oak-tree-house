@@ -10,6 +10,13 @@ function integrateGitalk (router) {
     scriptLoaded = true
   })
   document.body.appendChild(scriptGitalk)
+  const scriptMathjaxConfig = document.createElement('script')
+  scriptMathjaxConfig.innerText = `MathJax = { tex: { inlineMath: [['$', '$']] } };`
+  document.body.append(scriptMathjaxConfig)
+  const scriptMathjax = document.createElement('script')
+  scriptMathjax.id = 'MathJax-script'
+  scriptMathjax.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  document.body.append(scriptMathjax)
 
   let path
 
@@ -19,6 +26,8 @@ function integrateGitalk (router) {
     }
     path = to.path
     setTimeout(() => {
+      // eslint-disable-next-line no-undef
+      window.hasOwnProperty('MathJax') && MathJax.typeset()
       const commentsContainer = document.getElementById('gitalk-container')
       if (!commentsContainer) {
         return

@@ -24,7 +24,6 @@ module.exports = {
   },
   plugins: [
     ['@vuepress/last-updated'],
-    ['mathjax', { target: 'svg' }],
     ['@vuepress/medium-zoom'],
     [require('./plugins/vuepress-plugin-rss.js'),
       {
@@ -102,6 +101,24 @@ module.exports = {
     }]
   ],
   markdown: {
-    extractHeaders: ['h2', 'h3', 'h4']
+    extractHeaders: ['h2', 'h3', 'h4'],
+    extendMarkdown: md => {
+      md.render = (src, env) => {
+        const text = src
+        const regex = /(\${1,2})((?:\\.|.)*)\1/g
+        let output = ''
+        let array
+        let lastIndex = 0
+        while ((array = regex.exec(text)) !== null) {
+          output += text.slice(lastIndex, array.index)
+          output += array[0]
+            .replace(/\\/g, '\\\\')
+            .replace(/_/g, '\\_')
+          lastIndex = array.index + array[0].length
+        }
+        output += text.slice(lastIndex, -1)
+        return md.renderer.render(md.parse(output, env), md.options, env)
+      }
+    }
   }
 }
