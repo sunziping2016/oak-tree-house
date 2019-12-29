@@ -29,7 +29,7 @@ function integrateGitalk (router) {
       if (scriptLoaded) {
         loadGitalk(to)
       } else {
-        scriptGitalk.addEventListener(() => {
+        scriptGitalk.addEventListener('load', () => {
           loadGitalk(to)
         })
       }

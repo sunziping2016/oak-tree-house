@@ -6,7 +6,6 @@
 - [ ] <del>Math equations can be displayed correctly</del> (Too hard)
 - [ ] <del>Theme has an independent repository</del>
 - [ ] <del>Embed videos and musics</del>
-- [ ] <del>Vue Component that can hide Python prompt in code block</del> (Hard to implement)
 - [ ] <del>Add git commit hook to run lint</del>
 - [x] Transfer origin site
 - [x] Post index based on tags, categories, author and groups
@@ -21,5 +20,6 @@
 - [x] Support RSS subscription
 - [x] Add more custom Markdown lint
 - [x] Add some helper scripts to create posts
+- [x] Vue Component that can hide Python prompt in code block
 - [ ] Sidebar can display h1 to h4 toc (Wait for VuePress to release)
 - [ ] Search bar can search all text (Wait for Algolia to approve)
