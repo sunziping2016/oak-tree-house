@@ -26,6 +26,7 @@
     "eslint": "^6.8.0",
     "eslint-plugin-vue-libs": "^4.0.0",
     "fs-extra": "^8.1.0",
+    "husky": "^3.1.0",
     "markdownlint": "^0.18.0",
     "markdownlint-cli": "^0.20.0",
     "rss": "^1.2.2",
@@ -33,5 +34,10 @@
     "vue-plyr": "^6.0.4",
     "vuepress": "^1.2.0",
     "vuepress-plugin-mathjax": "^1.2.8"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   }
 }
