@@ -5,9 +5,12 @@
   "scripts": {
     "build": "vuepress build site",
     "dev": "vuepress dev site",
-    "lint": "npm run lint:js && npm run lint:md",
+    "lint": "npm run lint:before && npm run lint:after",
+    "lint:before": "npm run lint:js && npm run lint:md:before",
+    "lint:after": "npm run lint:md:after",
     "lint:js": "eslint site --ext .js,.vue",
-    "lint:md": "markdownlint --ignore node_modules -r \"markdownlint/*.js\" \"**/*.md\""
+    "lint:md:before": "markdownlint --ignore node_modules -r \"markdownlint/before/*.js\" \"**/*.md\"",
+    "lint:md:after": "rm external-link-list.txt -f && markdownlint --ignore node_modules -r \"markdownlint/after/*.js\" \"**/*.md\""
   },
   "repository": {
     "type": "git",

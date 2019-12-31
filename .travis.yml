@@ -11,8 +11,9 @@ install:
   - git lfs pull
   - yarn
 script:
-  - npm run lint
+  - npm run lint:before
   - npm run build
+  - npm run lint:after
 addons:
   ssh_known_hosts: szp.io
 before_install:

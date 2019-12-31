@@ -3,3 +3,4 @@
 node_modules
 .ipynb_checkpoints
 /site/.vuepress/dist
+/external-link-list.txt

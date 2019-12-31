@@ -4,9 +4,9 @@ author: 孙子平
 date: 2019-09-07T00:57:54Z
 ---
 
-这是我的个人博客。我叫孙子平，清华大学软件工程系在读。这是我的[简历](https://file.szp.io/f/7d680c14b3aa48b6963d/)。
+这是我的个人博客。我叫孙子平，清华大学软件工程系在读。这是我的[简历](https://file.szp.io/f/5e8db6d2be5641a2abda/)。
 
-这个博客目前由这个[仓库](https://github.com/sunziping2016/blog-sunziping)维护。
+这个博客目前由这个[仓库](https://github.com/sunziping2016/oak-tree-house)维护。
 
 这已经是我的博客不知第几次大更改了。我现在的兴趣主要有编程和玩Minecraft。
 

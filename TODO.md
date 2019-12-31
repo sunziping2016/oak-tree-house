@@ -22,6 +22,7 @@
 - [x] Add git commit hook to run lint
 - [x] <del>Math equations can be displayed correctly</del>
 - [x] Additional pages like CHANGELOG, README, TODO
-- [ ] Add Markdown link checker
+- [x] Add Markdown link checker
+- [ ] Add copy button to code block
 - [ ] Sidebar can display h1 to h4 toc (Wait for VuePress to release)
 - [ ] Search bar can search all text (Wait for Algolia to approve)

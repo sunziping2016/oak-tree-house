@@ -26,7 +26,7 @@ summary: 这篇文章是科协技术部内部学习资料第1讲。
 
 #### 1.2.1 客户端下载
 
-<https://shadowsocks.org/en/download/clients.html> （2016-11-26）。
+`https://shadowsocks.org/en/download/clients.html` （2016-11-26）。
 
 #### 1.2.2 配置
 

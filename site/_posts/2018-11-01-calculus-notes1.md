@@ -308,8 +308,8 @@ $f$的**$n$阶导数**记作$f^{(n)},\frac{d^nf}{dx^n}$。若$f$ $n$阶可导且
 
 设$f:[a,b]\to\mathbb{R}$为函数：
 
-1. **分割**：称$P:a=x_0<x_1<\cdots<x_n=b$为$[a,b]$的分割，它将$[a,b]$分成内部不相交的小区间$\Delta_i=[x_{i-1},x_i](1\leq i\leq n)$。令$\Delta x_i:=x_i-x_{i-1}(1\leq i\leq n)$，步长$\lambda(P):=\max\limits_{1\leq i\leq n}\Delta x_i$；
-2. **取点**：称$\xi=\\{\xi_1,\xi_2,\cdots,\xi_n\\}$为分割$P$的取点，其中$\xi_i\in[x_{i-1},x_i](1\leq i\leq n)$。此时称$(P,\xi)$为$[a,b]$的**带点分割**；
+1. **分割**：称$P:a=x_0<x_1<\cdots<x_n=b$为$[a,b]$的分割，它将$[a,b]$分成内部不相交的小区间$\Delta_i=[x_{i-1},x_i] (1\leq i\leq n)$。令$\Delta x_i:=x_i-x_{i-1}(1\leq i\leq n)$，步长$\lambda(P):=\max\limits_{1\leq i\leq n}\Delta x_i$；
+2. **取点**：称$\xi=\\{\xi_1,\xi_2,\cdots,\xi_n\\}$为分割$P$的取点，其中$\xi_i\in[x_{i-1},x_i] (1\leq i\leq n)$。此时称$(P,\xi)$为$[a,b]$的**带点分割**；
 3. **Riemann和**：对$[a,b]$的带点分割$(P,\xi)$，令$\sigma(f;P,\xi)=\sum\limits_{i=1}^nf(\xi_i)\Delta x_i$，称为$f$关于带点分割$(P,\xi)$的Riemann和；
 4. **Riemann积分**：若$\exists I\in\mathbb{R},\forall\epsilon>0,\exists\delta>0$，对于$[a,b]$的任意带点分割$(P,\xi)$，当$\lambda(P)<\delta,|\sigma(f;P,\xi)-I|<\epsilon$。此时记$I=\lim\limits_{\lambda(P)\to 0}\sigma(f;P,\xi)=\lim\limits_{\lambda(P)\to 0}\sum\limits_{i=1}^nf(\xi_i)\Delta x_i$，称为$f$在$[a,b]$上的**定积分**，简记为$I=\int_a^bf(x)dx$，并且称$f$在$[a,b]$上可积，否则称之为不可积。
 
@@ -408,7 +408,7 @@ $；
 
 1. 定积分的换元积分公式：若$f\in C[a,b],\phi:[\alpha,\beta]\to[a,b]\in C^{(1)}$，则$\int_{\varphi(\alpha)}^{\varphi(\beta)}f(x)dx=\int_{\alpha}^{\beta}f(\phi(t))\phi'(t)dt$；
 2. 定积分的分部积分公式：若$u,v\in C^{(1)}[a,b]$，则$\int_a^bu(x)dv(x)=uv\Big|_a^b-\int_a^bv(x)du(x)$；
-3. 积分的对称性：$f\in R[-a,a](a>0)$，若$f$为奇函数，则$\int_{-a}^af(x)dx=0$；若$f$为偶函数，则$\int_{-a}^af(x)dx=2\int_0^af(x)dx$；
+3. 积分的对称性：$f\in R[-a,a] (a>0)$，若$f$为奇函数，则$\int_{-a}^af(x)dx=0$；若$f$为偶函数，则$\int_{-a}^af(x)dx=2\int_0^af(x)dx$；
 4. 周期连续函数的定积分：如果$f\in C(\mathbb{R})$是周期为$T>0$的周期函数，则$\forall a\in\mathbb{R},\int_a^{a+T}f(x)dx=\int_0^Tf(x)dx$；
 5. 定积分与数列极限：设$f\in R[a,b]$，而$\\{P_n\\}$为$[a,b]$的一列分割，使得$\lim\limits_{n\to\infty}\lambda(P_n)=0$，记$P_n=(x_i^{(n)})_{0\leq i\leq k_n}$，则对任意点$\xi_i^{(n)}\in[x_{i-1}^{(n)},x_i^{(n)}](1\leq i\leq k_n)$，均有$\lim\limits_{n\to\infty}\sum\limits_{i=1}^{k_n}f(\xi_i^{(n)})(x_i^{(n)}-x_{i-1}^{(n)})=\int_a^bf(x)dx$；
 6. 带积分余项的Taylor：设$n\in\mathbb{N}$，若$f\in C^{(n+1)}[a,b],x_0\in[a,b]$，则$\forall x\in[a,b],f(x)=\sum\limits_{k=0}^n\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k+\frac{1}{n!}\int_{x_0}^x(x-u)^nf^{(n+1)}(u)du$。
