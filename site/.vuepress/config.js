@@ -10,17 +10,24 @@ module.exports = {
   themeConfig: {
     nav: [
       { text: '主页', link: '/' },
-      { text: '标签', link: '/tag/' },
-      { text: '分类', link: '/category/' },
-      { text: '连载', link: '/series/' },
+      { text: '检索', items: [
+        { text: '作者', link: '/author/' },
+        { text: '标签', link: '/tag/' },
+        { text: '分类', link: '/category/' },
+        { text: '连载', link: '/series/' }
+      ] },
       { text: '项目', items: [
-        { text: '项目读我', link: '/readme/' },
+        { text: '读我', link: '/readme/' },
         { text: '计划列表', link: '/todo/' },
         { text: '更新日志', link: '/changelog/' },
         { text: '授权', link: '/license/' },
-        { text: 'Travis持续集成', link: 'https://travis-ci.com/sunziping2016/oak-tree-house' }
+        { text: 'Travis CI', link: 'https://travis-ci.com/sunziping2016/oak-tree-house' }
       ] },
-      { text: '关于', link: '/about.html' }
+      { text: '特殊页面', items: [
+        { text: '我的项目', link: '/2018/12/04/projects/' },
+        { text: '我的计划', link: '/plan.html' },
+        { text: '关于', link: '/about.html' }
+      ] }
     ],
     sidebar: 'auto',
     repo: 'sunziping2016/oak-tree-house',

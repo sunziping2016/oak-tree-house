@@ -8,27 +8,7 @@ date: 2019-09-07T00:57:54Z
 
 这个博客目前由这个[仓库](https://github.com/sunziping2016/blog-sunziping)维护。
 
-```js
-function People(name){
-  this.name = name
-  this.hobbits = []
-}
-
-People.prototype.addHobbit = function(h){
-  this.hobbits.push(h)
-  return this
-}
-const I = new People('Sun Ziping')
-I.addHobbit('coding');
-// Hmm, let me think... Oh yes, I have
-// another hobby. That's
-I.addHobbit('learning to code');
-// I've tried hard to add another hobbit,
-// but it seems impossible.
-Object.freeze(I.hobbits);
-```
-
-这已经是我的博客不知第几次大更改了。如上面的代码所示，我的兴趣几乎只有编程和学习编程。所以这整个博客也可能显得很乏味，除了技术和学习就没啥了。
+这已经是我的博客不知第几次大更改了。我现在的兴趣主要有编程和玩Minecraft。
 
 希望能和大家共同进步。
 
@@ -37,5 +17,5 @@ Object.freeze(I.hobbits);
 :::
 
 ::: warning
-站点更新导致部分数学公式显示异常，抱歉了。
+站点更新导致部分数学公式显示异常，抱歉了。（现在fix了绝大多的bug！2020/1/1）
 :::
