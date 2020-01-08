@@ -10,8 +10,8 @@ This is my newer personal homepage. See <https://szp.io/> .
 ```bash
 git clone git@github.com:sunziping2016/oak-tree-house.git
 cd oak-tree-house
-npm i
-npm run build
+yarn
+yarn build
 ```
 
 Then the blog is generated into `site/.vuepress/dist`.

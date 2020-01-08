@@ -20,9 +20,11 @@
 - [x] Add some helper scripts to create posts
 - [x] Vue Component that can hide Python prompt in code block
 - [x] Add git commit hook to run lint
-- [x] <del>Math equations can be displayed correctly</del>
+- [x] Math equations can be displayed correctly
 - [x] Additional pages like CHANGELOG, README, TODO
 - [x] Add Markdown link checker
+- [x] Search bar can search all text
+- [ ] Disable toggling checkbox
 - [ ] Add copy button to code block
+- [ ] Transfer video to Bilibili
 - [ ] Sidebar can display h1 to h4 toc (Wait for VuePress to release)
-- [ ] Search bar can search all text (Wait for Algolia to approve)

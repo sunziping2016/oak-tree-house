@@ -34,7 +34,11 @@ module.exports = {
     docsDir: 'site',
     editLinks: true,
     editLinkText: '在 GitHub 上编辑此页',
-    lastUpdated: '上次更新'
+    lastUpdated: '上次更新',
+    algolia: {
+      apiKey: '5eac05703da4f5923e426c2e44baa411',
+      indexName: 'szp'
+    }
   },
   plugins: [
     ['@vuepress/last-updated', {
