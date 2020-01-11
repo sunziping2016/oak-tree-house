@@ -24,6 +24,7 @@
 - [x] Additional pages like CHANGELOG, README, TODO
 - [x] Add Markdown link checker
 - [x] Search bar can search all text
+- [x] Unregister the old service worker
 - [ ] Disable toggling checkbox
 - [ ] Add copy button to code block
 - [ ] Transfer video to Bilibili

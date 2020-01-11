@@ -129,7 +129,7 @@ module.exports = {
       md.use(require('markdown-it-checkbox'))
       md.render = (src, env) => {
         const text = src
-        const regex = /(\${1,2})((?:\\.|.)*)\1/g
+        const regex = /(\${1,2})((?:\\.|.)*?)\1/g
         let output = ''
         let array
         let lastIndex = 0
@@ -138,6 +138,7 @@ module.exports = {
           output += array[0]
             .replace(/\\/g, '\\\\')
             .replace(/_/g, '\\_')
+            .replace(/\*/g, '\\*')
           lastIndex = array.index + array[0].length
         }
         output += text.slice(lastIndex, -1)

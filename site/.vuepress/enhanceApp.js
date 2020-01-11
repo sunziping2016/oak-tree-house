@@ -1,5 +1,9 @@
-function integrateGitalk (router) {
-  let scriptLoaded = false
+const pythonPromptStartHtml = '<span class="token operator">&gt;&gt;</span>'
+  + '<span class="token operator">&gt;</span> '
+
+function integrate (router) {
+  let scriptGitalkLoaded = false
+  let scriptMathJaxLoaded = false
   const linkGitalk = document.createElement('link')
   linkGitalk.href = 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css'
   linkGitalk.rel = 'stylesheet'
@@ -7,7 +11,7 @@ function integrateGitalk (router) {
   const scriptGitalk = document.createElement('script')
   scriptGitalk.src = 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js'
   scriptGitalk.addEventListener('load', () => {
-    scriptLoaded = true
+    scriptGitalkLoaded = true
   })
   document.body.appendChild(scriptGitalk)
   const scriptMathjaxConfig = document.createElement('script')
@@ -16,6 +20,9 @@ function integrateGitalk (router) {
   const scriptMathjax = document.createElement('script')
   scriptMathjax.id = 'MathJax-script'
   scriptMathjax.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  scriptMathjax.addEventListener('load', () => {
+    scriptMathJaxLoaded = true
+  })
   document.body.append(scriptMathjax)
 
   let path
@@ -26,8 +33,29 @@ function integrateGitalk (router) {
     }
     path = to.path
     setTimeout(() => {
-      // eslint-disable-next-line no-undef
-      window.hasOwnProperty('MathJax') && MathJax.typeset()
+      // Typeset MathJax
+      // Detect Python interactive code blocks
+      const candidateBlocks = [...document.querySelectorAll('div.language-python')]
+      const blocks = candidateBlocks.filter(x => x.innerText.startsWith('>>> '))
+      for (const block of blocks) {
+        const copyButton = document.createElement('span')
+        copyButton.classList.add('copy-button')
+        copyButton.innerText = '>>>'
+        block.prepend(copyButton)
+        const innerBlock = block.querySelector('code')
+        const innerHtmlWithPrompt = innerBlock.innerHTML
+        const innerHTMLWithoutPrompt = innerHtmlWithPrompt.split('\n')
+          .map(x => x.startsWith(pythonPromptStartHtml) ? x.slice(pythonPromptStartHtml.length) : '')
+          .filter(x => x)
+          .join('\n')
+        let promptOn = true
+        copyButton.addEventListener('click', () => {
+          promptOn = !promptOn
+          innerBlock.innerHTML = promptOn ? innerHtmlWithPrompt : innerHTMLWithoutPrompt
+          copyButton.classList.toggle('copy-button-off', !promptOn)
+        })
+      }
+      // Install Gitalk
       const commentsContainer = document.getElementById('gitalk-container')
       if (!commentsContainer) {
         return
@@ -35,11 +63,19 @@ function integrateGitalk (router) {
       while (commentsContainer.firstChild) {
         commentsContainer.removeChild(commentsContainer.firstChild)
       }
-      if (scriptLoaded) {
+      if (scriptGitalkLoaded) {
         loadGitalk(to)
       } else {
         scriptGitalk.addEventListener('load', () => {
           loadGitalk(to)
+        })
+      }
+      // eslint-disable-next-line no-undef
+      if (scriptMathJaxLoaded) {
+        window.MathJax.typeset()
+      } else {
+        scriptMathjax.addEventListener('load', () => {
+          window.MathJax.typeset()
         })
       }
     })
@@ -71,7 +107,7 @@ function integrateGitalk (router) {
 
 export default ({ Vue, options, router }) => {
   try {
-    document && integrateGitalk(router)
+    document && integrate(router)
   } catch (e) {
     // console.error(e.message)
   }

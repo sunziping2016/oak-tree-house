@@ -50,9 +50,6 @@ import Page from '@theme/components/Page.vue'
 import Sidebar from '@theme/components/Sidebar.vue'
 import { resolveSidebarItems } from '../util'
 
-const pythonPromptStartHtml = '<span class="token operator">&gt;&gt;</span>'
-  + '<span class="token operator">&gt;</span> '
-
 export default {
   name: 'Layout',
 
@@ -133,27 +130,6 @@ export default {
     this.$router.afterEach(() => {
       this.isSidebarOpen = false
     })
-    // Detect Python interactive code blocks
-    const candidateBlocks = [...document.querySelectorAll('div.language-python')]
-    const blocks = candidateBlocks.filter(x => x.innerText.startsWith('>>> '))
-    for (const block of blocks) {
-      const copyButton = document.createElement('span')
-      copyButton.classList.add('copy-button')
-      copyButton.innerText = '>>>'
-      block.prepend(copyButton)
-      const innerBlock = block.querySelector('code')
-      const innerHtmlWithPrompt = innerBlock.innerHTML
-      const innerHTMLWithoutPrompt = innerHtmlWithPrompt.split('\n')
-        .map(x => x.startsWith(pythonPromptStartHtml) ? x.slice(pythonPromptStartHtml.length) : '')
-        .filter(x => x)
-        .join('\n')
-      let promptOn = true
-      copyButton.addEventListener('click', () => {
-        promptOn = !promptOn
-        innerBlock.innerHTML = promptOn ? innerHtmlWithPrompt : innerHTMLWithoutPrompt
-        copyButton.classList.toggle('copy-button-off', !promptOn)
-      })
-    }
   },
 
   methods: {
@@ -194,10 +170,6 @@ export default {
   font-size 0.75rem
   color rgba(255,255,255,0.4)
   cursor pointer
-  border-left 1px solid rgba(255,255,255,0.4)
-  border-right 1px solid rgba(255,255,255,0.4)
-  border-bottom 1px solid rgba(255,255,255,0.4)
-  border-radius 0 0 0.4em 0.4em
   &-off
     text-decoration line-through
 </style>
