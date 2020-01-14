@@ -160,16 +160,3 @@ export default {
   }
 }
 </script>
-
-<style lang="stylus">
-.copy-button
-  position absolute
-  z-index 3
-  padding 0.8em 0.4em 0.2em
-  right 3em
-  font-size 0.75rem
-  color rgba(255,255,255,0.4)
-  cursor pointer
-  &-off
-    text-decoration line-through
-</style>

@@ -126,7 +126,7 @@ module.exports = {
   markdown: {
     extractHeaders: ['h2', 'h3', 'h4'],
     extendMarkdown: md => {
-      md.use(require('markdown-it-checkbox'))
+      md.use(require('markdown-it-task-checkbox'))
       md.render = (src, env) => {
         const text = src
         const regex = /(\${1,2})((?:\\.|.)*?)\1/g

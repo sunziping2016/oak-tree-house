@@ -24,24 +24,44 @@ function integrate (router) {
     scriptMathJaxLoaded = true
   })
   document.body.append(scriptMathjax)
+  const scriptFontawesome = document.createElement('script')
+  scriptFontawesome.src = 'https://kit.fontawesome.com/f413503533.js'
+  scriptFontawesome.crossOrigin = 'anonymous'
+  document.body.append(scriptFontawesome)
 
   let path
-
   router.afterEach((to) => {
     if (to.path === path) {
       return
     }
     path = to.path
     setTimeout(() => {
-      // Typeset MathJax
+      // Detect all code blocks
+      const codeblocks = [...document.querySelectorAll('div[class^="language-"]')]
+      for (const block of codeblocks) {
+        const copyButton = document.createElement('span')
+        copyButton.classList.add('copy-button')
+        copyButton.innerHTML = '<i class="far fa-clone"></i>'
+        block.prepend(copyButton)
+        copyButton.addEventListener('click', () => {
+          const innerBlock = block.querySelector('code')
+          const selection = window.getSelection()
+          const range = document.createRange()
+          range.selectNodeContents(innerBlock)
+          selection.removeAllRanges()
+          selection.addRange(range)
+          document.execCommand('Copy')
+          selection.removeAllRanges()
+        })
+      }
       // Detect Python interactive code blocks
       const candidateBlocks = [...document.querySelectorAll('div.language-python')]
       const blocks = candidateBlocks.filter(x => x.innerText.startsWith('>>> '))
       for (const block of blocks) {
-        const copyButton = document.createElement('span')
-        copyButton.classList.add('copy-button')
-        copyButton.innerText = '>>>'
-        block.prepend(copyButton)
+        const interactiveButton = document.createElement('span')
+        interactiveButton.classList.add('interactive-button')
+        interactiveButton.innerText = '>>>'
+        block.prepend(interactiveButton)
         const innerBlock = block.querySelector('code')
         const innerHtmlWithPrompt = innerBlock.innerHTML
         const innerHTMLWithoutPrompt = innerHtmlWithPrompt.split('\n')
@@ -49,10 +69,10 @@ function integrate (router) {
           .filter(x => x)
           .join('\n')
         let promptOn = true
-        copyButton.addEventListener('click', () => {
+        interactiveButton.addEventListener('click', () => {
           promptOn = !promptOn
           innerBlock.innerHTML = promptOn ? innerHtmlWithPrompt : innerHTMLWithoutPrompt
-          copyButton.classList.toggle('copy-button-off', !promptOn)
+          interactiveButton.classList.toggle('interactive-button-off', !promptOn)
         })
       }
       // Install Gitalk
@@ -70,7 +90,7 @@ function integrate (router) {
           loadGitalk(to)
         })
       }
-      // eslint-disable-next-line no-undef
+      // Typeset MathJax
       if (scriptMathJaxLoaded) {
         window.MathJax.typeset()
       } else {
