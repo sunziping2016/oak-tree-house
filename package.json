@@ -35,9 +35,9 @@
     "markdownlint-cli": "^0.21.0",
     "rss": "^1.2.2",
     "vue-feather-icons": "^5.0.0",
-    "vue-plyr": "^6.0.4",
     "vuepress": "^1.2.0",
-    "vuepress-plugin-mathjax": "^1.2.8"
+    "vuepress-plugin-mathjax": "^1.2.8",
+    "vuetify": "^2.2.3"
   },
   "husky": {
     "hooks": {

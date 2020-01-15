@@ -3,42 +3,49 @@ module.exports = {
   description: '欢迎来到孙子平的博客',
   head: [
     ['link', { rel: 'icon', sizes: '32x32',
-      href: `/assets/icons/favicon-32x32.png` }],
+      href: '/assets/icons/favicon-32x32.png' }],
     ['link', { rel: 'icon', sizes: '16x16',
-      href: `/assets/icons/favicon-16x16.png` }]
+      href: '/assets/icons/favicon-16x16.png' }],
+    ['link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900' }],
+    ['link', { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css' }]
   ],
   themeConfig: {
+    logo: '/assets/icons/icon-light.png',
     nav: [
-      { text: '主页', link: '/' },
-      { text: '检索', items: [
-        { text: '作者', link: '/author/' },
-        { text: '标签', link: '/tag/' },
-        { text: '分类', link: '/category/' },
-        { text: '连载', link: '/series/' }
+      { type: 'menu', text: '检索', items: [
+        { text: '检索页面', subheader: true },
+        { text: '作者', link: '/author/', icon: 'mdi-account' },
+        { text: '标签', link: '/tag/', icon: 'mdi-tag' },
+        { text: '分类', link: '/category/', icon: 'mdi-shape' },
+        { text: '连载文章', link: '/series/', icon: 'mdi-bookshelf' }
       ] },
-      { text: '项目', items: [
-        { text: '读我', link: '/readme/' },
-        { text: '计划列表', link: '/todo/' },
-        { text: '更新日志', link: '/changelog/' },
-        { text: '授权', link: '/license/' },
-        { text: 'Travis CI', link: 'https://travis-ci.com/sunziping2016/oak-tree-house' }
+      { type: 'menu', text: '项目', items: [
+        { text: '相关文档', subheader: true },
+        { text: '读我', link: '/readme/', icon: 'mdi-book' },
+        { text: '计划列表', link: '/todo/', icon: 'mdi-format-list-checks' },
+        { text: '更新日志', link: '/changelog/', icon: 'mdi-post' },
+        { text: '授权', link: '/license/', icon: 'mdi-license' },
+        { text: '项目链接', subheader: true },
+        { text: 'GitHub', link: 'https://github.com/sunziping2016/oak-tree-house', icon: 'mdi-github-face' },
+        { text: 'Travis CI', link: 'https://travis-ci.com/sunziping2016/oak-tree-house', icon: 'mdi-robot' }
       ] },
-      { text: '特殊页面', items: [
-        { text: '我的项目', link: '/2018/12/04/projects/' },
-        { text: '我的计划', link: '/plan.html' },
-        { text: '关于', link: '/about.html' }
+      { type: 'menu', text: '特殊页面', items: [
+        { text: '自我介绍', subheader: true },
+        { text: '我的项目', link: '/2018/12/04/projects/', icon: 'mdi-flag-triangle' },
+        { text: '我的计划', link: '/plan.html', icon: 'mdi-format-list-bulleted' },
+        { text: '关于', link: '/about.html', icon: 'mdi-account-card-details' }
       ] }
     ],
+    algolia: {
+      apiKey: '25626fae796133dc1e734c6bcaaeac3c',
+      indexName: 'docsearch'
+    },
     sidebar: 'auto',
     repo: 'sunziping2016/oak-tree-house',
     docsDir: 'site',
     editLinks: true,
     editLinkText: '在 GitHub 上编辑此页',
-    lastUpdated: '上次更新',
-    algolia: {
-      apiKey: '5eac05703da4f5923e426c2e44baa411',
-      indexName: 'szp'
-    }
+    lastUpdated: '上次更新'
   },
   plugins: [
     ['@vuepress/last-updated', {

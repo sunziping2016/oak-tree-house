@@ -1,3 +1,6 @@
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+
 const pythonPromptStartHtml = '<span class="token operator">&gt;&gt;</span>'
   + '<span class="token operator">&gt;</span> '
 
@@ -24,10 +27,10 @@ function integrate (router) {
     scriptMathJaxLoaded = true
   })
   document.body.append(scriptMathjax)
-  const scriptFontawesome = document.createElement('script')
-  scriptFontawesome.src = 'https://kit.fontawesome.com/f413503533.js'
-  scriptFontawesome.crossOrigin = 'anonymous'
-  document.body.append(scriptFontawesome)
+  // const scriptFontawesome = document.createElement('script')
+  // scriptFontawesome.src = 'https://kit.fontawesome.com/f413503533.js'
+  // scriptFontawesome.crossOrigin = 'anonymous'
+  // document.body.append(scriptFontawesome)
 
   let path
   router.afterEach((to) => {
@@ -125,10 +128,8 @@ function integrate (router) {
   }
 }
 
-export default ({ Vue, options, router }) => {
-  try {
-    document && integrate(router)
-  } catch (e) {
-    // console.error(e.message)
-  }
+export default ({ Vue, options, router, siteData }) => {
+  Vue.use(Vuetify)
+  options.vuetify = new Vuetify({})
+  integrate(router)
 }
