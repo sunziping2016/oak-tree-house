@@ -1,5 +1,4 @@
-import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css'
+import './theme/styles/index.scss'
 
 const pythonPromptStartHtml = '<span class="token operator">&gt;&gt;</span>'
   + '<span class="token operator">&gt;</span> '
@@ -128,8 +127,65 @@ function integrate (router) {
   }
 }
 
+import Vuetify, {
+  VApp,
+  VAppBar,
+  VAppBarNavIcon,
+  VImg,
+  VSpacer,
+  VResponsive,
+  VTextField,
+  VMenu,
+  VBtn,
+  VIcon,
+  VContent,
+  VList,
+  VDivider,
+  VSubheader,
+  VListItem,
+  VListItemAvatar,
+  VListItemIcon,
+  VListItemContent,
+  VListItemTitle,
+  VListItemSubtitle,
+  VChip
+} from 'vuetify/lib'
+
 export default ({ Vue, options, router, siteData }) => {
-  Vue.use(Vuetify)
-  options.vuetify = new Vuetify({})
+  Vue.use(Vuetify, {
+    components: {
+      VApp,
+      VAppBar,
+      VAppBarNavIcon,
+      VImg,
+      VSpacer,
+      VResponsive,
+      VTextField,
+      VMenu,
+      VBtn,
+      VIcon,
+      VContent,
+      VList,
+      VDivider,
+      VSubheader,
+      VListItem,
+      VListItemAvatar,
+      VListItemIcon,
+      VListItemContent,
+      VListItemTitle,
+      VListItemSubtitle,
+      VChip
+    }
+  })
+  options.vuetify = new Vuetify({
+    breakpoint: {
+      thresholds: {
+        xs: 420,
+        sm: 720,
+        md: 960,
+        lg: 1280
+      }
+    }
+  })
   integrate(router)
 }

@@ -26,18 +26,24 @@
     "@vuepress/plugin-blog": "^1.8.1",
     "@vuepress/plugin-medium-zoom": "^1.2.0",
     "chalk": "^3.0.0",
+    "deepmerge": "^4.2.2",
     "eslint": "^6.8.0",
     "eslint-plugin-vue-libs": "^4.0.0",
+    "fibers": "^4.0.2",
     "fs-extra": "^8.1.0",
     "husky": "^4.0.7",
     "markdown-it-task-checkbox": "^1.0.6",
     "markdownlint": "^0.18.0",
     "markdownlint-cli": "^0.21.0",
     "rss": "^1.2.2",
+    "sass": "^1.24.4",
+    "sass-loader": "^7.0.0",
     "vue-feather-icons": "^5.0.0",
     "vuepress": "^1.2.0",
     "vuepress-plugin-mathjax": "^1.2.8",
-    "vuetify": "^2.2.3"
+    "vuetify": "^2.2.3",
+    "vuetify-loader": "^1.4.3",
+    "webpack": "^4.0.0"
   },
   "husky": {
     "hooks": {

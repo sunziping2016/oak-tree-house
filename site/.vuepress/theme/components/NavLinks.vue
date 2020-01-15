@@ -95,7 +95,9 @@
         :href="isExternal(item.link) ? item.link : undefined"
         :target="!isExternal(item.link) || isMailto(item.link) || isTel(item.link) ? undefined : '_blank'"
         text
-      >{{ item.text }}</v-btn>
+      >
+        {{ item.text }}
+      </v-btn>
     </template>
   </nav>
 </template>

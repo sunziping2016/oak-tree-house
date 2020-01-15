@@ -63,7 +63,6 @@ export default {
           {},
           vm.$site.themeConfig.algolia,
           {
-            debug: true,
             inputSelector: '#search',
             handleSelected (input, event, suggestion) {
               const { pathname, hash } = new URL(suggestion.url)
@@ -74,7 +73,7 @@ export default {
       })
     },
     onBlur () {
-      // this.resetSearch()
+      this.resetSearch()
     },
     onEsc () {
       this.$refs.search.blur()
@@ -86,45 +85,71 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-.search-wrapper
-  overflow visible
+<style lang="scss">
+@import '~vuetify/src/styles/styles.sass';
 
-.v-input--is-focused>.v-input__control>.v-input__slot
-  background #fff !important
+.search-wrapper {
+  overflow: visible;
+}
 
-#search
-  width 10rem
-  transition width 0.3s cubic-bezier(0.25, 0.8, 0.5, 1)
+.v-input--is-focused>.v-input__control>.v-input__slot {
+  background: #fff !important;
+}
 
-@media (max-width: 960px)
-  .search-wrapper
-    .v-input__slot
-      padding 0 0 0 14px !important
-      background hsla(0,0%,100%,0) !important
-  #search
-    width 0
-    &:focus
-      width 10rem
+#search {
+  width: 10rem;
+  transition: width $primary-transition;
+}
 
-@media (max-width: 600px)
-  #search:focus
-    width 8rem
-  .search-wrapper
-    .ds-dropdown-menu
-      min-width calc(100vw - 32px) !important
-      max-width calc(100vw - 32px) !important
+@media #{map-get($display-breakpoints, 'sm-and-down')} {
+  .search-wrapper {
+    .v-input__slot {
+      padding: 0 0 0 14px !important;
+      background: hsla(0, 0%, 100%, 0) !important;
+    }
+  }
+  #search {
+    width: 0;
 
-#app
-  .algolia-docsearch-suggestion--title
-    margin-bottom: 0
-  .algolia-autocomplete
-    a
-      text-decoration: none !important
-    &>span
-      box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12) !important
-    &:before, &:after
-      display: none
-    .ds-dataset-1
-      border: none !important
+    &:focus {
+      width: 12rem;
+    }
+  }
+}
+
+@media #{map-get($display-breakpoints, 'xs-only')} {
+  #search:focus {
+    width: 8rem;
+  }
+  .search-wrapper {
+    .ds-dropdown-menu {
+      min-width: calc(100vw - 32px) !important;
+      max-width: calc(100vw - 32px) !important;
+    }
+  }
+}
+
+#app {
+  .algolia-docsearch-suggestion--title {
+    margin-bottom: 0;
+  }
+
+  .algolia-autocomplete {
+    a {
+      text-decoration: none !important;
+    }
+
+    & > span {
+      @include elevation(8)
+    }
+
+    &:before, &:after {
+      display: none;
+    }
+
+    .ds-dataset-1 {
+      border: none !important;
+    }
+  }
+}
 </style>

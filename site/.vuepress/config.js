@@ -152,5 +152,21 @@ module.exports = {
         return md.renderer.render(md.parse(output, env), md.options, env)
       }
     }
+  },
+  sass: {
+    implementation: require('sass'),
+    fiber: require('fibers'),
+    data: "@import '@theme/styles/variables.scss'"
+  },
+  scss: {
+    implementation: require('sass'),
+    fiber: require('fibers'),
+    data: "@import '@theme/styles/variables.scss';"
+  },
+  configureWebpack: (config, isServer) => {
+    config.plugins = config.plugins || []
+    config.plugins.push(
+      new (require('vuetify-loader/lib/plugin'))()
+    )
   }
 }
