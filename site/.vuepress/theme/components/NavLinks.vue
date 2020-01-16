@@ -31,59 +31,39 @@
           dense
           nav
         >
-          <template v-for="(menuItem, index) in item.items">
+          <template v-for="(subItem, index) in item.items">
             <v-divider
-              v-if="index !== 0 && menuItem.subheader"
-              :key="`${menuItem.text}-divider`"
+              v-if="index !== 0 && subItem.subheader"
+              :key="`${subItem.text}-divider`"
             />
             <v-subheader
-              v-if="menuItem.subheader"
-              :key="menuItem.text"
-              v-text="menuItem.text"
+              v-if="subItem.subheader"
+              :key="subItem.text"
+              v-text="subItem.text"
             />
             <v-list-item
               v-else
-              :key="menuItem.text"
-              :to="isExternal(menuItem.link) ? undefined : menuItem.link"
-              :href="isExternal(menuItem.link) ? menuItem.link : undefined"
-              :target="!isExternal(menuItem.link) || isMailto(menuItem.link) || isTel(menuItem.link) ? undefined : '_blank'"
+              :key="subItem.text"
+              :to="isExternal(subItem.link) ? undefined : subItem.link"
+              :href="isExternal(subItem.link) ? subItem.link : undefined"
+              :target="!isExternal(subItem.link) || isMailto(subItem.link) || isTel(subItem.link) ? undefined : '_blank'"
               color="primary"
               ripple
             >
-              <v-list-item-avatar
-                v-if="menuItem.avatar"
-                :color="menuItem.avatarColor"
-              >
-                <v-icon
-                  dark
-                  v-text="menuItem.avatar"
-                />
-              </v-list-item-avatar>
-              <v-list-item-icon v-else-if="menuItem.icon">
-                <v-icon v-text="menuItem.icon" />
+              <v-list-item-icon v-if="subItem.icon">
+                <v-icon v-text="subItem.icon" />
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title>
-                  <span v-text="menuItem.text" />
+                  <span v-text="subItem.text" />
                   <v-icon
-                    v-if="isExternal(menuItem.link)"
+                    v-if="isExternal(subItem.link)"
                     x-small
                   >
                     mdi-open-in-new
                   </v-icon>
                 </v-list-item-title>
-                <v-list-item-subtitle v-if="menuItem.subtext">
-                  <span v-text="menuItem.subtext" />
-                </v-list-item-subtitle>
               </v-list-item-content>
-              <v-chip
-                v-if="menuItem.chip"
-                :color="menuItem.chipColor"
-                x-small
-                text-color="white"
-              >
-                {{ chip }}
-              </v-chip>
             </v-list-item>
           </template>
         </v-list>

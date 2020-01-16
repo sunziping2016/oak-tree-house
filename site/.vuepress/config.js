@@ -16,25 +16,25 @@ module.exports = {
         { text: '检索页面', subheader: true },
         { text: '作者', link: '/author/', icon: 'mdi-account' },
         { text: '标签', link: '/tag/', icon: 'mdi-tag' },
-        { text: '分类', link: '/category/', icon: 'mdi-shape' },
+        { text: '分类', link: '/category/', icon: 'mdi-file-tree' },
         { text: '连载文章', link: '/series/', icon: 'mdi-bookshelf' }
-      ] },
+      ], icon: 'mdi-bookshelf' },
       { type: 'menu', text: '项目', items: [
         { text: '相关文档', subheader: true },
         { text: '读我', link: '/readme/', icon: 'mdi-book' },
         { text: '计划列表', link: '/todo/', icon: 'mdi-format-list-checks' },
-        { text: '更新日志', link: '/changelog/', icon: 'mdi-post' },
+        { text: '更新日志', link: '/changelog/', icon: 'mdi-file-document-box' },
         { text: '授权', link: '/license/', icon: 'mdi-license' },
         { text: '项目链接', subheader: true },
         { text: 'GitHub', link: 'https://github.com/sunziping2016/oak-tree-house', icon: 'mdi-github-face' },
         { text: 'Travis CI', link: 'https://travis-ci.com/sunziping2016/oak-tree-house', icon: 'mdi-robot' }
-      ] },
+      ], icon: 'mdi-bridge' },
       { type: 'menu', text: '特殊页面', items: [
         { text: '自我介绍', subheader: true },
         { text: '我的项目', link: '/2018/12/04/projects/', icon: 'mdi-flag-triangle' },
         { text: '我的计划', link: '/plan.html', icon: 'mdi-format-list-bulleted' },
         { text: '关于', link: '/about.html', icon: 'mdi-account-card-details' }
-      ] }
+      ], icon: 'mdi-post' }
     ],
     algolia: {
       apiKey: '25626fae796133dc1e734c6bcaaeac3c',

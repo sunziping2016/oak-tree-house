@@ -143,12 +143,11 @@ import Vuetify, {
   VDivider,
   VSubheader,
   VListItem,
-  VListItemAvatar,
   VListItemIcon,
   VListItemContent,
   VListItemTitle,
-  VListItemSubtitle,
-  VChip
+  VNavigationDrawer,
+  VListGroup
 } from 'vuetify/lib'
 
 export default ({ Vue, options, router, siteData }) => {
@@ -169,12 +168,11 @@ export default ({ Vue, options, router, siteData }) => {
       VDivider,
       VSubheader,
       VListItem,
-      VListItemAvatar,
       VListItemIcon,
       VListItemContent,
       VListItemTitle,
-      VListItemSubtitle,
-      VChip
+      VNavigationDrawer,
+      VListGroup
     }
   })
   options.vuetify = new Vuetify({
