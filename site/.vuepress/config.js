@@ -40,6 +40,7 @@ module.exports = {
       apiKey: '25626fae796133dc1e734c6bcaaeac3c',
       indexName: 'docsearch'
     },
+    smoothScroll: true,
     sidebar: 'auto',
     repo: 'sunziping2016/oak-tree-house',
     docsDir: 'site',

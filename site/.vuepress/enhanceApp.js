@@ -147,7 +147,8 @@ import Vuetify, {
   VListItemContent,
   VListItemTitle,
   VNavigationDrawer,
-  VListGroup
+  VListGroup,
+  VTreeview
 } from 'vuetify/lib'
 
 export default ({ Vue, options, router, siteData }) => {
@@ -172,7 +173,8 @@ export default ({ Vue, options, router, siteData }) => {
       VListItemContent,
       VListItemTitle,
       VNavigationDrawer,
-      VListGroup
+      VListGroup,
+      VTreeview
     }
   })
   options.vuetify = new Vuetify({
@@ -185,5 +187,7 @@ export default ({ Vue, options, router, siteData }) => {
       }
     }
   })
-  integrate(router)
+  if (typeof document !== 'undefined') {
+    integrate(router)
+  }
 }
