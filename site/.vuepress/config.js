@@ -19,9 +19,9 @@ module.exports = {
         { text: '分类', link: '/category/', icon: 'mdi-file-tree' },
         { text: '连载文章', link: '/series/', icon: 'mdi-bookshelf' }
       ], icon: 'mdi-bookshelf' },
-      { type: 'menu', text: '项目', items: [
+      { type: 'menu', text: '此网站', items: [
         { text: '相关文档', subheader: true },
-        { text: '读我', link: '/readme/', icon: 'mdi-book' },
+        { text: 'README', link: '/readme/', icon: 'mdi-book' },
         { text: '计划列表', link: '/todo/', icon: 'mdi-format-list-checks' },
         { text: '更新日志', link: '/changelog/', icon: 'mdi-file-document-box' },
         { text: '授权', link: '/license/', icon: 'mdi-license' },

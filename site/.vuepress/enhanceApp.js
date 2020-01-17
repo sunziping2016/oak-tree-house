@@ -26,10 +26,6 @@ function integrate (router) {
     scriptMathJaxLoaded = true
   })
   document.body.append(scriptMathjax)
-  // const scriptFontawesome = document.createElement('script')
-  // scriptFontawesome.src = 'https://kit.fontawesome.com/f413503533.js'
-  // scriptFontawesome.crossOrigin = 'anonymous'
-  // document.body.append(scriptFontawesome)
 
   let path
   router.afterEach((to) => {
@@ -79,18 +75,17 @@ function integrate (router) {
       }
       // Install Gitalk
       const commentsContainer = document.getElementById('gitalk-container')
-      if (!commentsContainer) {
-        return
-      }
-      while (commentsContainer.firstChild) {
-        commentsContainer.removeChild(commentsContainer.firstChild)
-      }
-      if (scriptGitalkLoaded) {
-        loadGitalk(to)
-      } else {
-        scriptGitalk.addEventListener('load', () => {
+      if (commentsContainer) {
+        while (commentsContainer.firstChild) {
+          commentsContainer.removeChild(commentsContainer.firstChild)
+        }
+        if (scriptGitalkLoaded) {
           loadGitalk(to)
-        })
+        } else {
+          scriptGitalk.addEventListener('load', () => {
+            loadGitalk(to)
+          })
+        }
       }
       // Typeset MathJax
       if (scriptMathJaxLoaded) {
@@ -148,7 +143,8 @@ import Vuetify, {
   VListItemTitle,
   VNavigationDrawer,
   VListGroup,
-  VTreeview
+  VTreeview,
+  VContainer
 } from 'vuetify/lib'
 
 export default ({ Vue, options, router, siteData }) => {
@@ -174,7 +170,8 @@ export default ({ Vue, options, router, siteData }) => {
       VListItemTitle,
       VNavigationDrawer,
       VListGroup,
-      VTreeview
+      VTreeview,
+      VContainer
     }
   })
   options.vuetify = new Vuetify({

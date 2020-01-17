@@ -1,5 +1,8 @@
 <template>
-  <v-list>
+  <v-list
+    class="sidebar-links"
+    dense
+  >
     <template v-for="item in $site.themeConfig.nav">
       <v-list-group
         v-if="item.type === 'menu'"
@@ -69,3 +72,14 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.sidebar-links {
+  .v-list-item {
+    min-height: 45px;
+  }
+  .v-list-item__title {
+    font-size: 1rem !important;
+  }
+}
+</style>
