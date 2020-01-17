@@ -1,3 +1,4 @@
+export const endingSlashRE = /\/$/
 export const outboundRE = /^[a-z]+:/i
 
 export function isExternal (path) {

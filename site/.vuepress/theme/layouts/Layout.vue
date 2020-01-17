@@ -9,7 +9,6 @@
         clipped-left
       >
         <v-app-bar-nav-icon
-          v-if="enableDrawer"
           class="hidden-md-and-up"
           @click="drawer = !drawer"
         />
@@ -36,11 +35,14 @@
         <v-divider v-if="$vuetify.breakpoint.smAndDown" />
         <!-- TOC -->
         <SidebarToc
+          v-if="enableToc"
           class="mt-4"
         />
       </v-navigation-drawer>
     </ClientOnly>
-    <MainContent />
+    <MainContent>
+      <slot />
+    </MainContent>
   </v-app>
 </template>
 
@@ -62,7 +64,7 @@ export default {
     MainContent
   },
   props: {
-    enableDrawer: {
+    enableToc: {
       type: Boolean,
       default: true
     }

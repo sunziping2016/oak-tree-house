@@ -175,6 +175,14 @@ export default ({ Vue, options, router, siteData }) => {
     }
   })
   options.vuetify = new Vuetify({
+    theme: {
+      themes: {
+        light: {
+          primary: '#6699FF',
+          accent: '#FF6699'
+        }
+      }
+    },
     breakpoint: {
       thresholds: {
         xs: 420,
