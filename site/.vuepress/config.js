@@ -41,7 +41,7 @@ module.exports = {
       indexName: 'docsearch'
     },
     smoothScroll: true,
-    sidebar: 'auto',
+    snackbarCloseText: '关闭',
     repo: 'sunziping2016/oak-tree-house',
     docsDir: 'site',
     editLinks: true,
@@ -63,6 +63,23 @@ module.exports = {
       }
     ],
     [require('./plugins/additional-pages')],
+    [require('./plugins/code-copy-button'), {
+      codeCopiedText: '成功复制代码片段'
+    }],
+    [require('./plugins/code-toggle-prompt')],
+    [require('./plugins/my-mathjax')],
+    [require('./plugins/my-gitalk'), {
+      config: {
+        clientID: 'bb23e02c8bd429ed1021',
+        clientSecret: 'bee29c595c6ce8ec5b5c85698872bda46c5da0d6',
+        repo: 'oak-tree-house',
+        owner: 'sunziping2016',
+        admin: ['sunziping2016'],
+        distractionFreeMode: false,
+        language: 'zh-CN',
+        createIssueManually: true
+      }
+    }],
     ['@vuepress/blog', {
       directories: [
         {

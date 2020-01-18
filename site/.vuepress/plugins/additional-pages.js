@@ -1,6 +1,7 @@
 const path = require('path')
 
 module.exports = {
+  name: 'additional-pages',
   additionalPages: [
     {
       path: '/readme/',

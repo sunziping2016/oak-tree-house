@@ -43,6 +43,10 @@
     <MainContent>
       <slot />
     </MainContent>
+    <ClientOnly>
+      <Snackbar ref="snackbar" />
+      <Fab />
+    </ClientOnly>
   </v-app>
 </template>
 
@@ -53,6 +57,8 @@ import NavLinks from '@theme/components/NavLinks.vue'
 import SidebarLinks from '@theme/components/SidebarLinks.vue'
 import SidebarToc from '@theme/components/SidebarToc.vue'
 import MainContent from '@theme/components/MainContent.vue'
+import Fab from '@theme/components/Fab.vue'
+import Snackbar from '@theme/components/Snackbar'
 
 export default {
   components: {
@@ -61,7 +67,9 @@ export default {
     NavLinks,
     SidebarLinks,
     SidebarToc,
-    MainContent
+    MainContent,
+    Snackbar,
+    Fab
   },
   props: {
     enableToc: {
@@ -71,7 +79,15 @@ export default {
   },
   data: () => ({
     drawer: false
-  })
+  }),
+  mounted () {
+    this.$emit('ready')
+  },
+  methods: {
+    openSnackbar (text) {
+      this.$refs.snackbar.openSnackbar(text)
+    }
+  }
 }
 </script>
 

@@ -5,20 +5,20 @@
 .copy-button {
   position: absolute;
   z-index: 3;
-  top: 0.8em;
-  right: 3em;
-  font-size: 0.8rem;
-  color: rgba(255,255,255,0.4);
+  top: 0.5em;
+  right: 2.4em;
+  font-size: 1rem;
+  color: $primaryColor;
   cursor: pointer;
 }
 
-.interactive-button {
+.toggle-prompt-button {
   position: absolute;
   z-index: 3;
-  top: 0.8em;
-  right: 5em;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.4);
+  top: 0.5em;
+  right: 4em;
+  font-size: 1rem;
+  color: $primaryColor;
   cursor: pointer;
 
   &-off {

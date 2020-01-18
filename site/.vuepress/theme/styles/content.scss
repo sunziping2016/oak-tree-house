@@ -125,3 +125,7 @@ body, .v-application {
     padding: .6em 1em;
   }
 }
+
+#gitalk-container .gt-container .gt-meta {
+  z-index: 1;
+}

@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = (options, ctx) => {
   const { themeConfig } = ctx
   const enableSmoothScroll = themeConfig.smoothScroll === true
@@ -24,6 +26,7 @@ module.exports = (options, ctx) => {
         }
       }],
       ['smooth-scroll', enableSmoothScroll]
-    ]
+    ],
+    globalLayout: path.resolve(__dirname, 'layouts/GlobalLayout.vue')
   }
 }

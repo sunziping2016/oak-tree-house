@@ -7,9 +7,11 @@
       <v-container>
         <slot>
           <Content class="content" />
-          <MainEdit />
-          <MainNav />
-          <div id="gitalk-container" />
+          <ClientOnly>
+            <MainEdit />
+            <MainNav />
+            <div id="gitalk-container" />
+          </ClientOnly>
         </slot>
       </v-container>
     </v-responsive>
