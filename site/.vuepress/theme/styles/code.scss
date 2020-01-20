@@ -172,6 +172,10 @@ div[class~="language-haskell"]:before {
   content: "hs"
 }
 
+div[class~="language-java"]:before {
+  content: "java"
+}
+
 @import '~vuetify/src/styles/styles.sass';
 
 @media #{map-get($display-breakpoints, 'xs-only')} {

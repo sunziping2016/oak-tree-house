@@ -71,11 +71,13 @@ module.exports = {
     editLinkText: '在 GitHub 上编辑此页',
     lastUpdated: '上次更新',
     indexHeading: '`${date.getFullYear()}年${date.getMonth()}月`',
-    footer: '© 2016-2020 Ziping Sun | 京ICP备 17062397号',
+    footer: ['© 2016-2020 Ziping Sun', '京ICP备 17062397号'],
     homepageText: '主页',
     pageNumberText: '`第 ${index + 1} 页`',
     viewSourceText: '查看源码',
-    readMoreText: '阅读更多'
+    readMoreText: '阅读更多',
+    wordCloudName: '标签云',
+    wordCloudFrontmatter: 'tag'
   },
   plugins: [
     ['@vuepress/last-updated', {

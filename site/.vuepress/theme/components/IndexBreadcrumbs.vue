@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import { indexPageNumber } from '../util'
+
 export default {
   props: {
     breadcrumbs: {
@@ -22,9 +24,7 @@ export default {
         href: '/'
       }]
       items.push({
-        text: Function('index', `"use strict";return (${this.$site.themeConfig.pageNumberText});`)(
-          this.$pagination.paginationIndex
-        ) || `Page ${this.$pagination.paginationIndex + 1}`,
+        text: indexPageNumber(this.$pagination.paginationIndex, this.$site.themeConfig.pageNumberText),
         disabled: true
       })
       return items

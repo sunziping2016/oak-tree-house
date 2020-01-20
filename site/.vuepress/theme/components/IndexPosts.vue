@@ -6,9 +6,14 @@
       <div
         v-if="$site.themeConfig.indexHeading && (index === 0 ||
           indexHeading(page) !== indexHeading($pagination.pages[index - 1]))"
+        :id="`_${indexHeading(page)}`"
         :key="`${page.path}-date`"
         class="subtitle-1 post-heading"
       >
+        <a
+          :href="`#_${indexHeading(page)}`"
+          class="header-anchor"
+        />
         {{ indexHeading(page) }}
       </div>
       <v-card
@@ -144,14 +149,12 @@
 </template>
 
 <script>
-import { endingSlashRE, outboundRE } from '../util'
+import { endingSlashRE, indexHeading, outboundRE } from '../util'
 
 export default {
   methods: {
     indexHeading (page) {
-      return Function('date', `"use strict";return (${this.$site.themeConfig.indexHeading});`)(
-        new Date(page.frontmatter.date.trim())
-      )
+      return indexHeading(page, this.$site.themeConfig.indexHeading)
     },
     sourceLink (page) {
       const {
@@ -195,6 +198,8 @@ export default {
   &-heading {
     padding-left: 2px;
     color: $accentColor;
+    margin-top: -72px;
+    padding-top: 72px;
   }
 
   &-title {

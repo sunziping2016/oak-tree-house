@@ -31,7 +31,8 @@ import Vuetify, {
   VCardActions,
   VPagination,
   VFooter,
-  VBreadcrumbs
+  VBreadcrumbs,
+  VChip
 } from 'vuetify/lib'
 import { Scroll } from 'vuetify/lib/directives'
 import goTo from 'vuetify/es5/services/goto'
@@ -70,7 +71,8 @@ export default ({ Vue, options, router }) => {
       VCardActions,
       VPagination,
       VFooter,
-      VBreadcrumbs
+      VBreadcrumbs,
+      VChip
     },
     directives: {
       Scroll

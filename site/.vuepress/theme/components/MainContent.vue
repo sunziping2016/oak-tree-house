@@ -1,14 +1,10 @@
 <template>
   <v-content>
     <v-responsive
-      class="mx-auto overflow-visible px-6"
+      class="mx-auto overflow-visible"
       :max-width="contentWidth"
     >
-      <v-container
-        class="pa-0 mb-10"
-      >
-        <slot />
-      </v-container>
+      <slot />
     </v-responsive>
   </v-content>
 </template>

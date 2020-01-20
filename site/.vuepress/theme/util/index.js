@@ -44,3 +44,15 @@ export function resolveHeaders (pages, currentPath) {
     return stack[0]
   })
 }
+
+export function indexHeading (page, indexHeading) {
+  return Function('date', `"use strict";return (${indexHeading});`)(
+    new Date(page.frontmatter.date.trim())
+  )
+}
+
+export function indexPageNumber (index, pageNumberText) {
+  return Function('index', `"use strict";return (${pageNumberText});`)(
+    index
+  ) || `Page ${index + 1}`
+}

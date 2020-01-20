@@ -9,29 +9,62 @@
         class="hidden-md-and-up"
       />
       <v-divider v-if="$vuetify.breakpoint.smAndDown" />
+      <IndexSidebarToc
+        :pageName="tocName"
+        class="mt-4"
+      />
+      <IndexSidebarWordCloud />
     </template>
-    <Breadcrumbs
-      :breadcrumbs="breadcrumbs"
-      class="mt-6"
-    />
-    <Posts class="py-4" />
-    <Pagination />
+    <ClientOnly>
+      <v-container
+        class="pt-0 py-0 mb-10"
+      >
+        <IndexBreadcrumbs
+          :breadcrumbs="breadcrumbs"
+          class="mt-6"
+        />
+        <IndexPosts class="py-4" />
+        <IndexPagination />
+      </v-container>
+    </ClientOnly>
   </Layout>
 </template>
 
 <script>
 import Layout from '@theme/layouts/Layout'
 import SidebarLinks from '@theme/components/SidebarLinks.vue'
-import Posts from '@theme/components/Posts'
-import Pagination from '@theme/components/Pagination'
-import Breadcrumbs from '@theme/components/Breadcrumbs'
+import IndexPosts from '@theme/components/IndexPosts'
+import IndexPagination from '@theme/components/IndexPagination'
+import IndexBreadcrumbs from '@theme/components/IndexBreadcrumbs'
+import IndexSidebarToc from '@theme/components/IndexSidebarToc'
+import IndexSidebarWordCloud from '@theme/components/IndexSidebarWordCloud'
+import { indexPageNumber } from '../util'
 
 export default {
-  components: { Layout, SidebarLinks, Posts, Pagination, Breadcrumbs },
+  components: {
+    Layout,
+    SidebarLinks,
+    IndexPosts,
+    IndexPagination,
+    IndexBreadcrumbs,
+    IndexSidebarToc,
+    IndexSidebarWordCloud
+  },
   props: {
     breadcrumbs: {
       type: Array,
       default: null
+    },
+    pageName: {
+      type: String,
+      default: null
+    }
+  },
+  computed: {
+    tocName () {
+      return (this.pageName || this.$site.themeConfig.homepageText || 'Homepage')
+      + ' - '
+      + indexPageNumber(this.$pagination.paginationIndex, this.$site.themeConfig.pageNumberText)
     }
   }
 }

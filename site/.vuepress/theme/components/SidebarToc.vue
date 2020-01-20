@@ -36,12 +36,21 @@
 import { resolveHeaders } from '../util'
 
 export default {
+  props: {
+    items: {
+      type: Array,
+      default: null
+    }
+  },
   data: () => ({
     tocActive: [],
     tocOpen: []
   }),
   computed: {
     toc () {
+      if (this.items) {
+        return this.items
+      }
       if (this.$page.frontmatter
         && Array.isArray(this.$page.frontmatter.sidebar)) {
         return resolveHeaders(

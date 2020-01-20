@@ -13,10 +13,10 @@
           @click="drawer = !drawer"
         />
         <!-- Logo -->
-        <Logo />
+        <NavLogo />
         <v-spacer />
         <!-- Search -->
-        <Search />
+        <NavSearch />
         <!-- Menu -->
         <NavLinks class="hidden-sm-and-down" />
       </v-app-bar>
@@ -46,12 +46,16 @@
       :content-width="contentWidth"
     >
       <slot>
-        <Content class="content" />
-        <ClientOnly>
-          <MainEdit />
-          <MainNav />
-          <div id="gitalk-container" />
-        </ClientOnly>
+        <v-container
+          class="px-6 py-0 mb-10"
+        >
+          <Content class="content" />
+          <ClientOnly>
+            <MainEdit />
+            <MainNav />
+            <div id="gitalk-container" />
+          </ClientOnly>
+        </v-container>
       </slot>
     </MainContent>
     <ClientOnly>
@@ -65,8 +69,16 @@
         color="indigo"
         style="position: absolute"
       >
-        <div class="ma-auto">
-          {{ $site.themeConfig.footer }}
+        <div
+          class="mx-auto"
+        >
+          <div
+            v-for="line in $site.themeConfig.footer"
+            :key="line"
+            style="text-align: center"
+          >
+            {{ line }}
+          </div>
         </div>
       </v-footer>
     </ClientOnly>
@@ -74,8 +86,8 @@
 </template>
 
 <script>
-import Logo from '@theme/components/Logo.vue'
-import Search from '@theme/components/Search.vue'
+import NavLogo from '@theme/components/NavLogo.vue'
+import NavSearch from '@theme/components/NavSearch.vue'
 import NavLinks from '@theme/components/NavLinks.vue'
 import SidebarLinks from '@theme/components/SidebarLinks.vue'
 import SidebarToc from '@theme/components/SidebarToc.vue'
@@ -87,8 +99,8 @@ import MainNav from '@theme/components/MainNav'
 
 export default {
   components: {
-    Logo,
-    Search,
+    NavLogo,
+    NavSearch,
     NavLinks,
     SidebarLinks,
     SidebarToc,
