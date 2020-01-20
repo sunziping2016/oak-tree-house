@@ -10,7 +10,6 @@
       dark
       fab
       fixed
-      large
       right
       title="Scroll to top"
       @click="toTop"
@@ -34,7 +33,8 @@ export default {
       this.fab = top > 300
     },
     toTop () {
-      this.$router.push({ hash: '' })
+      this.$router.push({ hash: '' }).catch(() => {})
+      this.$vuetify.goTo(0)
     }
   }
 }

@@ -10,6 +10,7 @@ export default {
         })
       }
     })
+    this.$on('updated', this.triggerUpdateCopyButtons)
   },
   methods: {
     triggerUpdateCopyButtons () {
@@ -22,6 +23,9 @@ export default {
     updateCopyButtons () {
       const codeblocks = [...document.querySelectorAll('div[class^="language-"]')]
       for (const block of codeblocks) {
+        if (block.querySelector('.copy-button')) {
+          continue
+        }
         const copyButton = document.createElement('span')
         copyButton.classList.add('copy-button')
         copyButton.innerHTML = '<i class="mdi mdi-content-copy"></i>'

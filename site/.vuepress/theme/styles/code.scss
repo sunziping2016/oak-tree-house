@@ -168,12 +168,16 @@ div[class~="language-rust"]:before {
   content: "rust"
 }
 
+div[class~="language-haskell"]:before {
+  content: "hs"
+}
+
 @import '~vuetify/src/styles/styles.sass';
 
 @media #{map-get($display-breakpoints, 'xs-only')} {
   .v-application .content {
     div[class*="language-"] {
-      margin: 0.85rem -28px;
+      margin: 0.85rem -24px;
       border-radius: 0;
     }
   }

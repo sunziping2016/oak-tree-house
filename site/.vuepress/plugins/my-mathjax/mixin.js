@@ -20,6 +20,7 @@ export default {
         })
       }
     })
+    this.$on('updated', this.triggerMathjaxTypeset)
   },
   methods: {
     triggerMathjaxTypeset () {

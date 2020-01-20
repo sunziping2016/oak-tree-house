@@ -23,7 +23,15 @@ import Vuetify, {
   VTreeview,
   VContainer,
   VSnackbar,
-  VFabTransition
+  VFabTransition,
+  VCard,
+  VCardTitle,
+  VCardSubtitle,
+  VCardText,
+  VCardActions,
+  VPagination,
+  VFooter,
+  VBreadcrumbs
 } from 'vuetify/lib'
 import { Scroll } from 'vuetify/lib/directives'
 import goTo from 'vuetify/es5/services/goto'
@@ -54,7 +62,15 @@ export default ({ Vue, options, router }) => {
       VTreeview,
       VContainer,
       VSnackbar,
-      VFabTransition
+      VFabTransition,
+      VCard,
+      VCardTitle,
+      VCardSubtitle,
+      VCardText,
+      VCardActions,
+      VPagination,
+      VFooter,
+      VBreadcrumbs
     },
     directives: {
       Scroll
@@ -78,4 +94,18 @@ export default ({ Vue, options, router }) => {
       }
     }
   })
+  router.options.scrollBehavior = (to, from, savedPosition) => {
+    let scrollTo = 0
+    if (savedPosition) {
+      scrollTo = savedPosition.y
+    } else if (to.hash) {
+      if (Vue.$vuepress.$get('disableScrollBehavior')) {
+        return false
+      }
+      scrollTo = to.hash
+    }
+    return goTo(scrollTo).then(y => {
+      return { x: 0, y }
+    })
+  }
 }

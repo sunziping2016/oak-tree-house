@@ -3,6 +3,7 @@
     :is="layout"
     ref="child"
     @ready="onReady"
+    @updated="e => $emit('updated', arguments)"
   />
 </template>
 

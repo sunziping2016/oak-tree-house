@@ -13,11 +13,18 @@ body, .v-application {
     font-weight: 500;
     color: $accentColor;
     text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   p a code {
     font-weight: 400;
     color: $accentColor;
+  }
+
+  img {
+    max-width: 100%
   }
 
   kbd {

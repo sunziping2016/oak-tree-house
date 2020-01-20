@@ -1,6 +1,11 @@
 module.exports = {
   title: '橡树屋',
   description: '欢迎来到孙子平的博客',
+  locales: {
+    '/': {
+      lang: 'zh-CN'
+    }
+  },
   head: [
     ['link', { rel: 'icon', sizes: '32x32',
       href: '/assets/icons/favicon-32x32.png' }],
@@ -12,41 +17,65 @@ module.exports = {
   themeConfig: {
     logo: '/assets/icons/icon-light.png',
     nav: [
-      { type: 'menu', text: '检索', items: [
-        { text: '检索页面', subheader: true },
-        { text: '作者', link: '/author/', icon: 'mdi-account' },
-        { text: '标签', link: '/tag/', icon: 'mdi-tag' },
-        { text: '分类', link: '/category/', icon: 'mdi-file-tree' },
-        { text: '连载文章', link: '/series/', icon: 'mdi-bookshelf' }
-      ], icon: 'mdi-bookshelf' },
-      { type: 'menu', text: '此网站', items: [
-        { text: '相关文档', subheader: true },
-        { text: 'README', link: '/readme/', icon: 'mdi-book' },
-        { text: '计划列表', link: '/todo/', icon: 'mdi-format-list-checks' },
-        { text: '更新日志', link: '/changelog/', icon: 'mdi-file-document-box' },
-        { text: '授权', link: '/license/', icon: 'mdi-license' },
-        { text: '项目链接', subheader: true },
-        { text: 'GitHub', link: 'https://github.com/sunziping2016/oak-tree-house', icon: 'mdi-github-face' },
-        { text: 'Travis CI', link: 'https://travis-ci.com/sunziping2016/oak-tree-house', icon: 'mdi-robot' }
-      ], icon: 'mdi-bridge' },
-      { type: 'menu', text: '特殊页面', items: [
-        { text: '自我介绍', subheader: true },
-        { text: '我的项目', link: '/2018/12/04/projects/', icon: 'mdi-flag-triangle' },
-        { text: '我的计划', link: '/plan.html', icon: 'mdi-format-list-bulleted' },
-        { text: '关于', link: '/about.html', icon: 'mdi-account-card-details' }
-      ], icon: 'mdi-post' }
+      {
+        type: 'menu', text: '检索', items: [
+          { text: '检索页面', subheader: true },
+          { text: '作者', link: '/author/', icon: 'mdi-account' },
+          { text: '标签', link: '/tag/', icon: 'mdi-tag' },
+          { text: '分类', link: '/category/', icon: 'mdi-file-tree' },
+          { text: '连载文章', link: '/series/', icon: 'mdi-bookshelf' }
+        ], icon: 'mdi-bookshelf'
+      },
+      {
+        type: 'menu', text: '此网站', items: [
+          { text: '相关文档', subheader: true },
+          { text: 'README', link: '/readme/', icon: 'mdi-book' },
+          { text: '计划列表', link: '/todo/', icon: 'mdi-format-list-checks' },
+          { text: '更新日志', link: '/changelog/', icon: 'mdi-file-document-box' },
+          { text: '授权', link: '/license/', icon: 'mdi-license' },
+          { text: '项目链接', subheader: true },
+          {
+            text: 'GitHub',
+            link: 'https://github.com/sunziping2016/oak-tree-house',
+            icon: 'mdi-github-face'
+          },
+          {
+            text: 'Travis CI',
+            link: 'https://travis-ci.com/sunziping2016/oak-tree-house',
+            icon: 'mdi-robot'
+          }
+        ], icon: 'mdi-bridge'
+      },
+      {
+        type: 'menu', text: '特殊页面', items: [
+          { text: '自我介绍', subheader: true },
+          {
+            text: '我的项目',
+            link: '/2018/12/04/projects/',
+            icon: 'mdi-flag-triangle'
+          },
+          { text: '我的计划', link: '/plan.html', icon: 'mdi-format-list-bulleted' },
+          { text: '关于', link: '/about.html', icon: 'mdi-account-card-details' }
+        ], icon: 'mdi-post'
+      }
     ],
     algolia: {
       apiKey: '25626fae796133dc1e734c6bcaaeac3c',
       indexName: 'docsearch'
     },
-    smoothScroll: true,
+    // smoothScroll: true,
     snackbarCloseText: '关闭',
     repo: 'sunziping2016/oak-tree-house',
     docsDir: 'site',
     editLinks: true,
     editLinkText: '在 GitHub 上编辑此页',
-    lastUpdated: '上次更新'
+    lastUpdated: '上次更新',
+    indexHeading: '`${date.getFullYear()}年${date.getMonth()}月`',
+    footer: '© 2016-2020 Ziping Sun | 京ICP备 17062397号',
+    homepageText: '主页',
+    pageNumberText: '`第 ${index + 1} 页`',
+    viewSourceText: '查看源码',
+    readMoreText: '阅读更多'
   },
   plugins: [
     ['@vuepress/last-updated', {

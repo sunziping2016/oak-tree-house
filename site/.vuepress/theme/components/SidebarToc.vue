@@ -104,13 +104,13 @@ export default {
 </script>
 
 <style lang="scss">
-  .toc-label {
-    white-space: normal;
-    display: block;
-    text-decoration: none;
-    color: inherit !important;
-  }
-  .toc-label-top {
-    font-weight: bold;
-  }
+.toc-label {
+  white-space: normal;
+  display: block;
+  text-decoration: none;
+  color: inherit !important;
+}
+.toc-label-top {
+  font-weight: bold;
+}
 </style>

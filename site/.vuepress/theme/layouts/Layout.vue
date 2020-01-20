@@ -28,24 +28,47 @@
         :permanent="$vuetify.breakpoint.mdAndUp"
         :mobile-break-point="$vuetify.breakpoint.thresholds.md"
       >
-        <!-- menu -->
-        <SidebarLinks
-          class="hidden-md-and-up"
-        />
-        <v-divider v-if="$vuetify.breakpoint.smAndDown" />
-        <!-- TOC -->
-        <SidebarToc
-          v-if="enableToc"
-          class="mt-4"
-        />
+        <slot name="sidebar">
+          <!-- menu -->
+          <SidebarLinks
+            class="hidden-md-and-up"
+          />
+          <v-divider v-if="$vuetify.breakpoint.smAndDown" />
+          <!-- TOC -->
+          <SidebarToc
+            class="mt-4"
+          />
+        </slot>
       </v-navigation-drawer>
     </ClientOnly>
-    <MainContent>
-      <slot />
+    <MainContent
+      ref="abc"
+      :content-width="contentWidth"
+    >
+      <slot>
+        <Content class="content" />
+        <ClientOnly>
+          <MainEdit />
+          <MainNav />
+          <div id="gitalk-container" />
+        </ClientOnly>
+      </slot>
     </MainContent>
     <ClientOnly>
       <Snackbar ref="snackbar" />
       <Fab />
+      <v-footer
+        v-if="$site.themeConfig.footer"
+        inset
+        dark
+        app
+        color="indigo"
+        style="position: absolute"
+      >
+        <div class="ma-auto">
+          {{ $site.themeConfig.footer }}
+        </div>
+      </v-footer>
     </ClientOnly>
   </v-app>
 </template>
@@ -59,6 +82,8 @@ import SidebarToc from '@theme/components/SidebarToc.vue'
 import MainContent from '@theme/components/MainContent.vue'
 import Fab from '@theme/components/Fab.vue'
 import Snackbar from '@theme/components/Snackbar'
+import MainEdit from '@theme/components/MainEdit'
+import MainNav from '@theme/components/MainNav'
 
 export default {
   components: {
@@ -69,12 +94,14 @@ export default {
     SidebarToc,
     MainContent,
     Snackbar,
-    Fab
+    Fab,
+    MainEdit,
+    MainNav
   },
   props: {
-    enableToc: {
-      type: Boolean,
-      default: true
+    contentWidth: {
+      type: Number,
+      default: 960
     }
   },
   data: () => ({
@@ -82,6 +109,9 @@ export default {
   }),
   mounted () {
     this.$emit('ready')
+  },
+  updated () {
+    this.$emit('updated')
   },
   methods: {
     openSnackbar (text) {

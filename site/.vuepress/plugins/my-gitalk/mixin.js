@@ -24,12 +24,17 @@ export default {
         })
       }
     })
+    this.$on('updated', this.triggerLoadGitalk)
   },
   methods: {
     triggerLoadGitalk () {
       if (this.ready && this.scriptGitalkLoaded) {
         const commentsContainer = document.getElementById('gitalk-container')
         if (commentsContainer) {
+          if (commentsContainer.dataset.rendered === this.$route.path) {
+            return
+          }
+          commentsContainer.dataset.rendered = this.$route.path
           while (commentsContainer.firstChild) {
             commentsContainer.removeChild(commentsContainer.firstChild)
           }
