@@ -2,10 +2,11 @@
 title: TypeScipt学习笔记（未完待续）
 date: 2019-09-11T18:31:16Z
 tags: [JavaScript, 编程, 前端]
-summary: 这篇文章是TypeScript的学习笔记，主要内容来自TypeScript官网的handbook。
 ---
 
 这篇文章是TypeScript的学习笔记，主要内容来自TypeScript官网的[handbook](https://www.typescriptlang.org/docs/handbook/basic-types.html)。
+
+<!-- more -->
 
 ## 1 基础类型
 

@@ -3,12 +3,11 @@ title: HTML/CSS拾遗（未完待续）
 date: 2017-01-24T04:00:00Z
 category: 前端
 tags: [HTML, CSS, 前端]
-summary: 这篇学习笔记主要参考自MDN上的Learn Web Development。摘录的内容是我认为重要的，或是容易被遗忘的细节。
 ---
 
 这篇学习笔记主要参考自MDN上的 *[Learn Web Development](https://developer.mozilla.org/en-US/docs/Learn)*。摘录的内容是我认为重要的，或是容易被遗忘的细节。
 
-<!--more-->
+<!-- more -->
 
 ## 1 CSS笔记
 

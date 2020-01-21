@@ -28,4 +28,5 @@
 - [x] Unregister the old service worker
 - [x] Disable toggling checkbox
 - [x] Add copy button to code block
+- [x] Change whole site's theme to material design
 - [ ] Sidebar can display h1 to h4 toc (Wait for VuePress to release)

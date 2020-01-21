@@ -5,7 +5,6 @@ date: 2019-10-31T17:43:44Z
 category: Python
 tags: [Python, 编程, 教程]
 series: Python教程
-summary: 这是Python连载教程的第一期，内容是一些初始类型的介绍，内容主要来自Python官方教程第3章。
 sidebarDepth: 3
 sidebar:
   - /_posts/2019-11-01-python-tutorial1.html
@@ -15,6 +14,8 @@ sidebar:
 这个系列的教程适用于Python新手，讲得相比其他教程可能会更深入一些，内容将依照[Python官方的中文教程](https://docs.python.org/zh-cn/3.7/tutorial/index.html)。我将在[我的博客](https://szp.io/)和[知乎专栏](https://zhuanlan.zhihu.com/sunziping2016)上同步发表这个系列的文章。
 
 本文是这个系列的第1篇文章，其中第1节将介绍如何安装Python，第2节会介绍Python基本类型和函数的调用方法，最后一节我会复习下先前讲到的知识。
+
+<!-- more -->
 
 ## 1 Python介绍
 

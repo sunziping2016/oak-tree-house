@@ -2,10 +2,11 @@
 title: 数据库小抄
 date: 2019-09-07T18:59:05Z
 tags: [数据库]
-summary: 这是我的数据库期末小抄，是对老师课件的总结。
 ---
 
-原文由$\LaTeX$编写，可点击[此处](/assets/blog/database-notes/notes.pdf)下载。
+这是我的数据库期末小抄，是对老师课件的总结。原文由$\LaTeX$编写，可点击[此处](/assets/blog/database-notes/notes.pdf)下载。
+
+<!-- more -->
 
 ## 1 形式关系查询语言
 

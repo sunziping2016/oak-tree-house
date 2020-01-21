@@ -12,7 +12,8 @@ module.exports = {
     ['link', { rel: 'icon', sizes: '16x16',
       href: '/assets/icons/favicon-16x16.png' }],
     ['link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900' }],
-    ['link', { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css' }]
+    ['link', { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css' }],
+    ['meta', { name: 'theme-color', content: '#6699FF' }]
   ],
   themeConfig: {
     logo: '/assets/icons/icon-light.png',
@@ -95,7 +96,7 @@ module.exports = {
     [require('./plugins/vuepress-plugin-rss.js'),
       {
         base_url: '/',
-        site_url: 'https://szp.io',
+        site_url: 'https://szp15.com',
         count: 20
       }
     ],

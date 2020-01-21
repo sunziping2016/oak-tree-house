@@ -107,11 +107,11 @@
             </router-link>
           </div>
         </v-card-subtitle>
+        <!-- eslint-disable vue/no-v-html -->
         <v-card-text
-          class="post-summary"
-        >
-          {{ page.frontmatter.summary || page.summary }}
-        </v-card-text>
+          class="post-summary content"
+          v-html="page.excerpt"
+        />
         <v-card-actions>
           <div
             v-if="page.frontmatter.date"
@@ -241,6 +241,12 @@ export default {
 
   &-summary {
     font-size: 1rem;
+    p {
+      margin: 0 !important;
+    }
+    p + p {
+      margin: 1rem 0 !important;
+    }
   }
 }
 </style>
