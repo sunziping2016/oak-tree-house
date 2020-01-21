@@ -60,8 +60,8 @@ module.exports = {
       }
     ],
     algolia: {
-      apiKey: '25626fae796133dc1e734c6bcaaeac3c',
-      indexName: 'docsearch'
+      apiKey: '5eac05703da4f5923e426c2e44baa411',
+      indexName: 'szp'
     },
     // smoothScroll: true,
     snackbarCloseText: '关闭',
@@ -82,7 +82,8 @@ module.exports = {
     tagText: '标签',
     categoryText: '分类',
     authorText: '作者',
-    seriesText: '连载文章'
+    seriesText: '连载文章',
+    notFoundText: '回到主页'
   },
   plugins: [
     ['@vuepress/last-updated', {

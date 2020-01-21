@@ -49,7 +49,13 @@
 export default {
   computed: {
     prev () {
-      const prev = this.$page.frontmatter.prev
+      let prev = this.$page.frontmatter.prev
+      if (!prev && this.$page.frontmatter.sidebar) {
+        const index = this.$page.frontmatter.sidebar.findIndex(x => x === this.$page.regularPath)
+        if (index !== -1) {
+          prev = this.$page.frontmatter.sidebar[index - 1]
+        }
+      }
       if (!prev) {
         return null
       }
@@ -57,7 +63,13 @@ export default {
     },
 
     next () {
-      const next = this.$page.frontmatter.next
+      let next = this.$page.frontmatter.next
+      if (!next && this.$page.frontmatter.sidebar) {
+        const index = this.$page.frontmatter.sidebar.findIndex(x => x === this.$page.regularPath)
+        if (index !== -1) {
+          next = this.$page.frontmatter.sidebar[index + 1]
+        }
+      }
       if (!next) {
         return null
       }

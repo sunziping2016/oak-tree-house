@@ -49,6 +49,11 @@
         <v-container
           class="px-6 py-0 mb-10"
         >
+          <h1
+            style="display: none"
+          >
+            {{ $page.frontmatter.title }}
+          </h1>
           <Content class="content" />
           <ClientOnly>
             <MainEdit />

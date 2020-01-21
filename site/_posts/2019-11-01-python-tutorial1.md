@@ -6,7 +6,6 @@ category: Python
 tags: [Python, 编程, 教程]
 series: Python教程
 summary: 这是Python连载教程的第一期，内容是一些初始类型的介绍，内容主要来自Python官方教程第3章。
-next: /_posts/2019-11-11-python-tutorial2.html
 sidebarDepth: 3
 sidebar:
   - /_posts/2019-11-01-python-tutorial1.html
