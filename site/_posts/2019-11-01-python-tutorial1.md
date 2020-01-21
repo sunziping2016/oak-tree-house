@@ -375,7 +375,7 @@ Usage: thingy [OPTIONS]
 
 上面的代码会产生如下输出：
 
-```
+```text
 Usage: thingy [OPTIONS]
      -h                        Display this usage message
      -H hostname               Hostname to connect to
@@ -424,7 +424,7 @@ SyntaxError: invalid syntax
 
 可以用下面的图来表示`Python`这个字符串中各个字符的位置，这里位置6不能用于索引，但可以用于表示切片的结尾：
 
-```
+```text
  +---+---+---+---+---+---+
  | P | y | t | h | o | n |
  +---+---+---+---+---+---+
@@ -587,7 +587,7 @@ TypeError: 'str' object does not support item assignment
 
 最后一个例子可能对初学者有点困惑，我们把最后的变量布局画出来，浅拷贝只是创建了新列表，但新列表所指向的元素和旧列表是公用的，如果元素都是不可变的可能感受不到这个差异，但如果元素是可变的，那么修改旧列表中的该元素，新列表也会改变：
 
-```
+```text
      +---+---+
 a -> | 3 |   |
      +---+-+-+

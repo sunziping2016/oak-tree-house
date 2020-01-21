@@ -36,8 +36,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~vuetify/src/styles/styles.sass';
-
 .word-chip {
   &:hover {
     text-decoration: underline;

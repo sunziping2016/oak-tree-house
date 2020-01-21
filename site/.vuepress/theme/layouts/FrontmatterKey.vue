@@ -9,10 +9,6 @@
         class="hidden-md-and-up"
       />
       <v-divider v-if="$vuetify.breakpoint.smAndDown" />
-      <IndexSidebarToc
-        :page-name="tocName"
-        class="mt-4"
-      />
       <IndexSidebarWordCloud />
     </template>
     <ClientOnly>
@@ -20,11 +16,23 @@
         class="py-0 mb-10"
       >
         <IndexBreadcrumbs
-          :breadcrumbs="breadcrumbs"
           class="mt-6"
+          :breadcrumbs="breadcrumbs"
+          :enable-pagination-index="false"
         />
-        <IndexPosts class="py-4" />
-        <IndexPagination />
+        <div class="my-4 headline">
+          {{ heading }}
+        </div>
+        <v-chip
+          v-for="word in $frontmatterKey.list"
+          :key="word.name"
+          :to="word.path"
+          class="ma-1 frontmatter-key-chip"
+          outlined
+          color="primary"
+        >
+          {{ `${word.name} (${word.pages.length})` }}
+        </v-chip>
       </v-container>
     </ClientOnly>
   </Layout>
@@ -33,44 +41,41 @@
 <script>
 import Layout from '@theme/layouts/Layout'
 import SidebarLinks from '@theme/components/SidebarLinks.vue'
-import IndexPosts from '@theme/components/IndexPosts'
-import IndexPagination from '@theme/components/IndexPagination'
 import IndexBreadcrumbs from '@theme/components/IndexBreadcrumbs'
-import IndexSidebarToc from '@theme/components/IndexSidebarToc'
 import IndexSidebarWordCloud from '@theme/components/IndexSidebarWordCloud'
-import { indexPageNumber } from '../util'
+import { frontmatterKeyHeading } from '../util'
 
 export default {
   components: {
     Layout,
     SidebarLinks,
-    IndexPosts,
-    IndexPagination,
     IndexBreadcrumbs,
-    IndexSidebarToc,
     IndexSidebarWordCloud
   },
-  props: {
-    breadcrumbs: {
-      type: Array,
-      default: null
-    },
-    pageName: {
-      type: String,
-      default: null
-    }
-  },
   computed: {
-    tocName () {
-      return (this.pageName || this.$site.themeConfig.homepageText || 'Homepage')
-      + ' - '
-      + indexPageNumber(
-        this.$pagination.paginationIndex,
-        this.$pagination.length,
-        this.$pagination._matchedPages.length,
-        this.$site.themeConfig.pageNumberText
+    breadcrumbs () {
+      return [{
+        text: this.$page.frontmatter.name,
+        disabled: false,
+        to: this.$page.path
+      }]
+    },
+    heading () {
+      return frontmatterKeyHeading(
+        this.$page.frontmatter.name,
+        this.$frontmatterKey.list.length,
+        this.$site.themeConfig.frontmatterKeyHeading
       )
     }
   }
 }
 </script>
+
+<style lang="scss">
+.frontmatter-key-chip {
+  &:hover {
+    text-decoration: underline;
+  }
+}
+</style>
+

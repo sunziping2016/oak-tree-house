@@ -54,7 +54,7 @@ module.exports = {
             link: '/2018/12/04/projects/',
             icon: 'mdi-flag-triangle'
           },
-          { text: '我的计划', link: '/plan.html', icon: 'mdi-format-list-bulleted' },
+          { text: '我的规划', link: '/plan.html', icon: 'mdi-format-list-bulleted' },
           { text: '关于', link: '/about.html', icon: 'mdi-account-card-details' }
         ], icon: 'mdi-post'
       }
@@ -70,14 +70,19 @@ module.exports = {
     editLinks: true,
     editLinkText: '在 GitHub 上编辑此页',
     lastUpdated: '上次更新',
-    indexHeading: '`${date.getFullYear()}年${date.getMonth()}月`',
+    indexHeading: '`${date.getFullYear()}年${date.getMonth() + 1}月`',
     footer: ['© 2016-2020 Ziping Sun', '京ICP备 17062397号'],
     homepageText: '主页',
-    pageNumberText: '`第 ${index + 1} 页`',
+    pageNumberText: '`第${index + 1}页 (共${totalPage}页 ${totalPost}篇)`',
     viewSourceText: '查看源码',
     readMoreText: '阅读更多',
     wordCloudName: '标签云',
-    wordCloudFrontmatter: 'tag'
+    wordCloudFrontmatter: 'tag',
+    frontmatterKeyHeading: '`目前共计 ${number} 个${name}`',
+    tagText: '标签',
+    categoryText: '分类',
+    authorText: '作者',
+    seriesText: '连载文章'
   },
   plugins: [
     ['@vuepress/last-updated', {
@@ -130,11 +135,11 @@ module.exports = {
           path: '/tag/',
           scopeLayout: 'TagFrontmatterPagination',
           frontmatter: {
-            title: 'Tag',
             name: '标签'
           },
           pagination: {
-            lengthPerPage: 10
+            lengthPerPage: 10,
+            layout: 'TagFrontmatterPagination'
           }
         },
         {
@@ -143,11 +148,11 @@ module.exports = {
           path: '/category/',
           scopeLayout: 'CategoryFrontmatterPagination',
           frontmatter: {
-            title: 'Category',
             name: '分类'
           },
           pagination: {
-            lengthPerPage: 10
+            lengthPerPage: 10,
+            layout: 'CategoryFrontmatterPagination'
           }
         },
         {
@@ -156,11 +161,11 @@ module.exports = {
           path: '/author/',
           scopeLayout: 'AuthorFrontmatterPagination',
           frontmatter: {
-            title: 'Author',
             name: '作者'
           },
           pagination: {
-            lengthPerPage: 10
+            lengthPerPage: 10,
+            layout: 'AuthorFrontmatterPagination'
           }
         },
         {
@@ -169,11 +174,11 @@ module.exports = {
           path: '/series/',
           scopeLayout: 'SeriesFrontmatterPagination',
           frontmatter: {
-            title: 'Series',
             name: '连载文章'
           },
           pagination: {
-            lengthPerPage: 10
+            lengthPerPage: 10,
+            layout: 'SeriesFrontmatterPagination'
           }
         }
       ]
@@ -182,6 +187,13 @@ module.exports = {
   markdown: {
     extractHeaders: ['h2', 'h3', 'h4'],
     extendMarkdown: md => {
+      const originHighlight = md.options.highlight
+      md.options.highlight = (str, lang) => {
+        if (lang === 'text') {
+          return originHighlight(str)
+        }
+        return originHighlight(str, lang)
+      }
       md.use(require('markdown-it-task-checkbox'))
       md.render = (src, env) => {
         const text = src

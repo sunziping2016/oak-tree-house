@@ -51,8 +51,18 @@ export function indexHeading (page, indexHeading) {
   )
 }
 
-export function indexPageNumber (index, pageNumberText) {
-  return Function('index', `"use strict";return (${pageNumberText});`)(
-    index
+export function indexPageNumber (index, totalPage, totalPost, pageNumberText) {
+  return Function('index', 'totalPage', 'totalPost',
+    `"use strict";return (${pageNumberText});`)(
+    index,
+    totalPage,
+    totalPost
   ) || `Page ${index + 1}`
+}
+
+export function frontmatterKeyHeading (name, number, frontmatterKeyHeading) {
+  return Function('name', 'number', `"use strict";return (${frontmatterKeyHeading});`)(
+    name,
+    number
+  )
 }
