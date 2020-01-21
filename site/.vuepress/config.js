@@ -54,7 +54,7 @@ module.exports = {
             link: '/2018/12/04/projects/',
             icon: 'mdi-flag-triangle'
           },
-          { text: '我的规划', link: '/plan.html', icon: 'mdi-format-list-bulleted' },
+          { text: '友情链接', link: '/links.html', icon: 'mdi-link' },
           { text: '关于', link: '/about.html', icon: 'mdi-account-card-details' }
         ], icon: 'mdi-post'
       }
