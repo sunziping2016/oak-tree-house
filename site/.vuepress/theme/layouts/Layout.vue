@@ -41,8 +41,8 @@
         </slot>
       </v-navigation-drawer>
     </ClientOnly>
+    <NavDummy />
     <MainContent
-      ref="abc"
       :content-width="contentWidth"
     >
       <slot>
@@ -96,6 +96,7 @@ import Fab from '@theme/components/Fab.vue'
 import Snackbar from '@theme/components/Snackbar'
 import MainEdit from '@theme/components/MainEdit'
 import MainNav from '@theme/components/MainNav'
+import NavDummy from '@theme/components/NavDummy'
 
 export default {
   components: {
@@ -108,7 +109,8 @@ export default {
     Snackbar,
     Fab,
     MainEdit,
-    MainNav
+    MainNav,
+    NavDummy
   },
   props: {
     contentWidth: {

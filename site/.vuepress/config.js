@@ -123,8 +123,12 @@ module.exports = {
           dirname: '_posts',
           path: '/',
           itemPermalink: '/:year/:month/:day/:slug',
+          title: '文章',
           pagination: {
-            lengthPerPage: 10
+            lengthPerPage: 10,
+            getPaginationPageTitle (pageNumber) {
+              return `第${pageNumber}页 | 文章`
+            }
           }
         }
       ],
@@ -133,52 +137,68 @@ module.exports = {
           id: 'tag',
           keys: ['tags'],
           path: '/tag/',
+          title: '标签',
           scopeLayout: 'TagFrontmatterPagination',
           frontmatter: {
             name: '标签'
           },
           pagination: {
             lengthPerPage: 10,
-            layout: 'TagFrontmatterPagination'
+            layout: 'TagFrontmatterPagination',
+            getPaginationPageTitle (pageNumber, key) {
+              return `第${pageNumber}页 - ${key} | 标签`
+            }
           }
         },
         {
           id: 'category',
           keys: ['category'],
           path: '/category/',
+          title: '分类',
           scopeLayout: 'CategoryFrontmatterPagination',
           frontmatter: {
             name: '分类'
           },
           pagination: {
             lengthPerPage: 10,
-            layout: 'CategoryFrontmatterPagination'
+            layout: 'CategoryFrontmatterPagination',
+            getPaginationPageTitle (pageNumber, key) {
+              return `第${pageNumber}页 - ${key} | 分类`
+            }
           }
         },
         {
           id: 'author',
           keys: ['author'],
           path: '/author/',
+          title: '作者',
           scopeLayout: 'AuthorFrontmatterPagination',
           frontmatter: {
             name: '作者'
           },
           pagination: {
             lengthPerPage: 10,
-            layout: 'AuthorFrontmatterPagination'
+            layout: 'AuthorFrontmatterPagination',
+            getPaginationPageTitle (pageNumber, key) {
+              return `第${pageNumber}页 - ${key} | 作者`
+            }
           }
         },
         {
           id: 'series',
           keys: ['series'],
           path: '/series/',
+          title: '连载文章',
           scopeLayout: 'SeriesFrontmatterPagination',
           frontmatter: {
             name: '连载文章'
           },
           pagination: {
             lengthPerPage: 10,
-            layout: 'SeriesFrontmatterPagination'
+            layout: 'SeriesFrontmatterPagination',
+            getPaginationPageTitle (pageNumber, key) {
+              return `第${pageNumber}页 - ${key} | 连载文章`
+            }
           }
         }
       ]
@@ -195,23 +215,6 @@ module.exports = {
         return originHighlight(str, lang)
       }
       md.use(require('markdown-it-task-checkbox'))
-      md.render = (src, env) => {
-        const text = src
-        const regex = /(\${1,2})((?:\\.|.)*?)\1/g
-        let output = ''
-        let array
-        let lastIndex = 0
-        while ((array = regex.exec(text)) !== null) {
-          output += text.slice(lastIndex, array.index)
-          output += array[0]
-            .replace(/\\/g, '\\\\')
-            .replace(/_/g, '\\_')
-            .replace(/\*/g, '\\*')
-          lastIndex = array.index + array[0].length
-        }
-        output += text.slice(lastIndex, -1)
-        return md.renderer.render(md.parse(output, env), md.options, env)
-      }
     }
   },
   sass: {

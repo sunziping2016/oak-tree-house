@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <v-responsive
-      class="mx-auto overflow-visible"
+      class="mx-auto overflow-auto"
       :max-width="contentWidth"
     >
       <slot />

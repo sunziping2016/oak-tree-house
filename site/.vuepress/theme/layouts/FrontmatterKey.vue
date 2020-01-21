@@ -11,6 +11,18 @@
       <v-divider v-if="$vuetify.breakpoint.smAndDown" />
       <IndexSidebarWordCloud />
     </template>
+    <ul style="display: none">
+      <li
+        v-for="word in $frontmatterKey.list"
+        :key="word.name"
+      >
+        <a
+          :href="word.path"
+        >
+          {{ word.name }}
+        </a>
+      </li>
+    </ul>
     <ClientOnly>
       <v-container
         class="py-0 mb-10"

@@ -15,6 +15,7 @@
       />
       <IndexSidebarWordCloud />
     </template>
+    <IndexDummy />
     <ClientOnly>
       <v-container
         class="py-0 mb-10"
@@ -38,6 +39,7 @@ import IndexPagination from '@theme/components/IndexPagination'
 import IndexBreadcrumbs from '@theme/components/IndexBreadcrumbs'
 import IndexSidebarToc from '@theme/components/IndexSidebarToc'
 import IndexSidebarWordCloud from '@theme/components/IndexSidebarWordCloud'
+import IndexDummy from '@theme/components/IndexDummy'
 import { indexPageNumber } from '../util'
 
 export default {
@@ -48,7 +50,8 @@ export default {
     IndexPagination,
     IndexBreadcrumbs,
     IndexSidebarToc,
-    IndexSidebarWordCloud
+    IndexSidebarWordCloud,
+    IndexDummy
   },
   props: {
     breadcrumbs: {
