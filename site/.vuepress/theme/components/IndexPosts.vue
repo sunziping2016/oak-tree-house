@@ -123,7 +123,7 @@
             >
               mdi-clock-outline
             </v-icon>
-            <span>{{ new Date(page.frontmatter.date.trim()).toLocaleDateString($lang) }}</span>
+            <span>{{ new Date(page.frontmatter.date.trim()).toLocaleString($lang) }}</span>
           </div>
           <v-spacer />
           <v-btn

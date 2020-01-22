@@ -92,7 +92,9 @@ module.exports = {
         return new Date(timestamp).toLocaleString('zh-CN')
       }
     }],
-    ['@vuepress/medium-zoom'],
+    ['@vuepress/medium-zoom', {
+      selector: '.content img'
+    }],
     [require('./plugins/vuepress-plugin-rss.js'),
       {
         base_url: '/',
@@ -217,6 +219,10 @@ module.exports = {
         return originHighlight(str, lang)
       }
       md.use(require('markdown-it-task-checkbox'))
+      md.use(require('markdown-it-footnote'))
+      md.use(require('markdown-it-attrs'), {
+        allowedAttributes: ['style', 'class']
+      })
     }
   },
   sass: {

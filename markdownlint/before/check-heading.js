@@ -75,7 +75,7 @@ module.exports = {
                 }
               }
               if (level > stack.length) {
-                if (ord[ord.length - 1] !== 1) {
+                if (ord[ord.length - 1] !== 1 && ord[ord.length - 1] !== 0) {
                   onError({
                     lineNumber: inlineToken.lineNumber
                   })
