@@ -11,13 +11,13 @@ tags: [大作业]
 
 ## 1 删除旧用户 & 用户注册
 
-<video src="/assets/blog/wxticket-user-guide/1.create-user.mp4" height="480" width="270" type="video/mp4" controls=""></video>
+<Bilibili aid="84684666" cid="144832583" :aspect-ratio="1.7778" :width="0.5" />
 
 用户是软删除，但其实除了数据库应该是对其他地方透明的。也可以禁掉用户，之后可以解禁。此外用户创建是可以借助邮箱的。
 
 ## 2 添加活动 & 修改微信菜单
 
-<video src="/assets/blog/wxticket-user-guide/2.add-activity.mp4" height="480" width="426" type="video/mp4" controls=""></video>
+<Bilibili aid="84684783" cid="144832859" :aspect-ratio="1.7778" :width="0.5" />
 
 上述视频出现了个小bug，在于修改活动的时候，后台因为前端请求多了个字段反回了400错误。该bug原因在于后端这里活动的“短名称”是创建之后不能修改的，旧版可修改。前端还没及时更新。
 
@@ -25,7 +25,7 @@ tags: [大作业]
 
 ## 3 绑定微信 & 抢票 & 退票
 
-<video src="/assets/blog/wxticket-user-guide/3.buy-ticket.mp4" height="480" width="270" type="video/mp4" controls=""></video>
+<Bilibili aid="84685190" cid="144833382" :aspect-ratio="1.7778" :width="0.5" />
 
 微信绑定中的一闪而过的“登录中”其实是微信弹出的OAuth验证进度条。
 
@@ -35,12 +35,12 @@ tags: [大作业]
 
 ## 4 微信扫码检票
 
-<video src="/assets/blog/wxticket-user-guide/4.check-ticket.mp4" height="480" width="270" type="video/mp4" controls=""></video>
+<Bilibili aid="84685460" cid="144833658" :aspect-ratio="1.7778" :width="0.5" />
 
 这里借助手机的前置摄像头看了一下电脑的情况，检票成功后客户端是同步收到电子票检票成功的推送的。电子票的二维码是临时生成、每次都不同、只有2分钟有效期且一次性使用的。（可以等个2分钟看手动刷新界面）
 
 ## 5 用户管理
 
-<video src="/assets/blog/wxticket-user-guide/5.user-management.mp4" height="480" width="270" type="video/mp4" controls=""></video>
+<Bilibili aid="84685714" cid="144834066" :aspect-ratio="1.7778" :width="0.5" />
 
 演示了RBAC和用户屏蔽。

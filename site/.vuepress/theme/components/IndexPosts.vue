@@ -121,7 +121,7 @@
             <v-icon
               size="18"
             >
-              mdi-clock-outline
+              mdi-calendar-month-outline
             </v-icon>
             <span>{{ new Date(page.frontmatter.date.trim()).toLocaleDateString($lang) }}</span>
           </div>
