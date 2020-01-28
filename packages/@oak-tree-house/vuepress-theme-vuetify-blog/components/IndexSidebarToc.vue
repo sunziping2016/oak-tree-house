@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import SidebarToc from '@theme/components/SidebarToc'
+import SidebarToc from '@theme/components/SidebarToc.vue'
 import { indexHeading } from '../util'
 
 export default {

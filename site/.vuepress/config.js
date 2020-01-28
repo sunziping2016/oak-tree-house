@@ -16,6 +16,24 @@ module.exports = {
     ['meta', { name: 'theme-color', content: '#6699FF' }]
   ],
   themeConfig: {
+    vuetifyConfig: {
+      theme: {
+        themes: {
+          light: {
+            primary: '#6699FF',
+            accent: '#FF6699'
+          }
+        }
+      },
+      breakpoint: {
+        thresholds: {
+          xs: 420,
+          sm: 720,
+          md: 960,
+          lg: 1280
+        }
+      }
+    },
     logo: '/assets/icons/icon-light.png',
     nav: [
       {
@@ -64,7 +82,6 @@ module.exports = {
       apiKey: '5eac05703da4f5923e426c2e44baa411',
       indexName: 'szp'
     },
-    // smoothScroll: true,
     snackbarCloseText: '关闭',
     repo: 'sunziping2016/oak-tree-house',
     docsDir: 'site',
@@ -94,6 +111,24 @@ module.exports = {
     }],
     ['@vuepress/medium-zoom', {
       selector: '.content img'
+    }],
+    ['container', {
+      type: 'tip',
+      defaultTitle: {
+        '/': '提示'
+      }
+    }],
+    ['container', {
+      type: 'warning',
+      defaultTitle: {
+        '/': '注意'
+      }
+    }],
+    ['container', {
+      type: 'danger',
+      defaultTitle: {
+        '/': '警告'
+      }
     }],
     [require('./plugins/vuepress-plugin-rss.js'),
       {

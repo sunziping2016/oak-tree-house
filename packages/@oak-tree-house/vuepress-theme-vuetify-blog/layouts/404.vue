@@ -25,9 +25,9 @@
 </template>
 
 <script>
-import Layout from '@theme/layouts/Layout'
+import Layout from '@theme/layouts/Layout.vue'
 import SidebarLinks from '@theme/components/SidebarLinks.vue'
-import IndexSidebarWordCloud from '@theme/components/IndexSidebarWordCloud'
+import IndexSidebarWordCloud from '@theme/components/IndexSidebarWordCloud.vue'
 
 export default {
   components: {
@@ -39,7 +39,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~vuetify/src/styles/styles.sass';
+@import '../styles/default';
+@import '~vuetify/src/styles/styles';
 
 .not-found {
   h1 {

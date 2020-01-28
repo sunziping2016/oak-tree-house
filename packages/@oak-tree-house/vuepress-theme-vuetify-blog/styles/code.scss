@@ -1,4 +1,4 @@
-@import "./variables";
+@import "./default";
 
 .v-application .content {
   code {
@@ -184,7 +184,7 @@ div[class~="language-matlab"]:before {
   content: "matlab"
 }
 
-@import '~vuetify/src/styles/styles.sass';
+@import '~vuetify/src/styles/styles';
 
 @media #{map-get($display-breakpoints, 'xs-only')} {
   .v-application .content {

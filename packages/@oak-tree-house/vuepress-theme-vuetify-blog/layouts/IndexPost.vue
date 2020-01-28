@@ -32,14 +32,14 @@
 </template>
 
 <script>
-import Layout from '@theme/layouts/Layout'
+import Layout from '@theme/layouts/Layout.vue'
 import SidebarLinks from '@theme/components/SidebarLinks.vue'
-import IndexPosts from '@theme/components/IndexPosts'
-import IndexPagination from '@theme/components/IndexPagination'
-import IndexBreadcrumbs from '@theme/components/IndexBreadcrumbs'
-import IndexSidebarToc from '@theme/components/IndexSidebarToc'
-import IndexSidebarWordCloud from '@theme/components/IndexSidebarWordCloud'
-import IndexDummy from '@theme/components/IndexDummy'
+import IndexPosts from '@theme/components/IndexPosts.vue'
+import IndexPagination from '@theme/components/IndexPagination.vue'
+import IndexBreadcrumbs from '@theme/components/IndexBreadcrumbs.vue'
+import IndexSidebarToc from '@theme/components/IndexSidebarToc.vue'
+import IndexSidebarWordCloud from '@theme/components/IndexSidebarWordCloud.vue'
+import IndexDummy from '@theme/components/IndexDummy.vue'
 import { indexPageNumber } from '../util'
 
 export default {

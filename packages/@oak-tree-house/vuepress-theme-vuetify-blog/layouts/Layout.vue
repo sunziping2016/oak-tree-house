@@ -98,10 +98,10 @@ import SidebarLinks from '@theme/components/SidebarLinks.vue'
 import SidebarToc from '@theme/components/SidebarToc.vue'
 import MainContent from '@theme/components/MainContent.vue'
 import Fab from '@theme/components/Fab.vue'
-import Snackbar from '@theme/components/Snackbar'
-import MainEdit from '@theme/components/MainEdit'
-import MainNav from '@theme/components/MainNav'
-import NavDummy from '@theme/components/NavDummy'
+import Snackbar from '@theme/components/Snackbar.vue'
+import MainEdit from '@theme/components/MainEdit.vue'
+import MainNav from '@theme/components/MainNav.vue'
+import NavDummy from '@theme/components/NavDummy.vue'
 
 export default {
   components: {

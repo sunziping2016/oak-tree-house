@@ -1,11 +1,6 @@
 const path = require('path')
 
-const lowercaseIgnore = [
-  'CHANGELOG.md',
-  'LICENSE.md',
-  'README.md',
-  'TODO.md'
-]
+const lowercaseIgnore = []
 
 const postsPath = 'site/_posts/'
 

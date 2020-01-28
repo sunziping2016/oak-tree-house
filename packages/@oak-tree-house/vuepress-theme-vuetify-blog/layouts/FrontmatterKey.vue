@@ -51,10 +51,10 @@
 </template>
 
 <script>
-import Layout from '@theme/layouts/Layout'
+import Layout from '@theme/layouts/Layout.vue'
 import SidebarLinks from '@theme/components/SidebarLinks.vue'
-import IndexBreadcrumbs from '@theme/components/IndexBreadcrumbs'
-import IndexSidebarWordCloud from '@theme/components/IndexSidebarWordCloud'
+import IndexBreadcrumbs from '@theme/components/IndexBreadcrumbs.vue'
+import IndexSidebarWordCloud from '@theme/components/IndexSidebarWordCloud.vue'
 import { frontmatterKeyHeading } from '../util'
 
 export default {

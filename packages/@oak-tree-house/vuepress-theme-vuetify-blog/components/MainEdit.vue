@@ -90,7 +90,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~vuetify/src/styles/styles.sass';
+@import '../styles/default';
+@import '~vuetify/src/styles/styles';
 
 .page-edit {
   padding-top: 1rem;

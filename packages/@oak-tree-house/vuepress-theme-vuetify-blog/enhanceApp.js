@@ -37,7 +37,7 @@ import Vuetify, {
 import { Scroll } from 'vuetify/lib/directives'
 import goTo from 'vuetify/es5/services/goto'
 
-export default ({ Vue, options, router }) => {
+export default ({ Vue, options, router, siteData }) => {
   Vue.use(Vuetify, {
     components: {
       VApp,
@@ -78,24 +78,7 @@ export default ({ Vue, options, router }) => {
       Scroll
     }
   })
-  options.vuetify = new Vuetify({
-    theme: {
-      themes: {
-        light: {
-          primary: '#6699FF',
-          accent: '#FF6699'
-        }
-      }
-    },
-    breakpoint: {
-      thresholds: {
-        xs: 420,
-        sm: 720,
-        md: 960,
-        lg: 1280
-      }
-    }
-  })
+  options.vuetify = new Vuetify((siteData.themeConfig && siteData.themeConfig.vuetifyConfig) || {})
   router.options.scrollBehavior = (to, from, savedPosition) => {
     let scrollTo = 0
     if (savedPosition) {

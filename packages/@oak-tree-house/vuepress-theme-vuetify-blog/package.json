@@ -1,0 +1,36 @@
+{
+  "name": "@oak-tree-house/vuepress-theme-vuetify-blog",
+  "version": "0.1.3",
+  "description": "Vuetify VuePress Theme Suitable for Blog",
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sunziping2016/oak-tree-house.git",
+    "directory": "packages/@oak-tree-house/vuepress-theme-vuetify-blog"
+  },
+  "keywords": [
+    "blog",
+    "vue",
+    "vuepress",
+    "vuetify"
+  ],
+  "author": "Sun Ziping",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sunziping2016/oak-tree-house/issues"
+  },
+  "homepage": "https://github.com/sunziping2016/oak-tree-house/packages/@oak-tree-house/vuepress-theme-vuetify-blog#readme",
+  "dependencies": {
+    "@vuepress/plugin-active-header-links": "^1.2.0",
+    "deepmerge": "^4.2.2",
+    "fibers": "^4.0.2",
+    "prismjs": "^1.19.0",
+    "sass": "^1.24.4",
+    "sass-loader": "^7.0.0",
+    "vuetify": "^2.2.3",
+    "vuetify-loader": "^1.4.3"
+  }
+}
