@@ -4,7 +4,7 @@
 
 - [ ] <del>PWA only loads app not content</del> (Not using PWA any more)
 - [ ] <del>Theme has an independent repository</del>
-- [ ] <del>Embed videos and musics</del> (Vanilla seems to be good)
+- [ ] <del>Embed videos and musics</del>
 - [x] Transfer origin site
 - [x] Post index based on tags, categories, author and groups
 - [x] Post can be grouped
@@ -29,4 +29,6 @@
 - [x] Add copy button to code block
 - [x] Change whole site's theme to material design
 - [x] Transfer video to Bilibili
+- [x] Add audio component for NetEase Cloud Music
+- [ ] Support diagrams listed in [here](https://medium.com/technical-writing-is-easy/diagrams-in-documentation-markdown-guide-4e78419e8d2f)
 - [ ] Sidebar can display h1 to h4 toc (Wait for VuePress to release)

@@ -401,7 +401,7 @@ def add(a, b):
     return a + b
 ```
 
-定义函数的时候，函数并不会被执行，只有在调用时，才会真正执行并根据参数返回一个值。**调用（call）**这个函数就和调用别的函数那样：
+定义函数的时候，函数并不会被执行，只有在调用时，才会真正执行并根据参数返回一个值。**调用（call）** 这个函数就和调用别的函数那样：
 
 ```python
 >>> add(1, 2)
@@ -961,7 +961,7 @@ kwargs: {}
 
 ### 2.5 解包参数列表
 
-上面的函数接受任意参数实际上是将函数的实参**打包（pack）**成元组和字典，但有些时候我们需要相反的操作，即将可迭代对象和字典**解包（unpack）**成函数的实参。这两个操作结合就能实现参数的转发。
+上面的函数接受任意参数实际上是将函数的实参**打包（pack）** 成元组和字典，但有些时候我们需要相反的操作，即将可迭代对象和字典**解包（unpack）** 成函数的实参。这两个操作结合就能实现参数的转发。
 
 首先可迭代对象（如列表、元组）可以通过解包成一系列的位置参数，方法是在可迭代对象之前加上`*`。看示例：
 
@@ -1128,11 +1128,88 @@ def char_at(text: str, index: int) -> str:
 - 使用`lowercase_with_underscores`的命名风格命名变量和函数；
 - 使用UTF-8编码，代码标识符不要采用中文。
 
-你可以使用代码风格检查工具或者IDE来帮助你达成好的代码风格。下面我们会介绍PyCharm，它是我认为功能最强大的Python IDE之一。
+你可以使用代码风格检查工具或者IDE（集成开发环境）来帮助你达成好的代码风格。下面我们会介绍PyCharm，它是我认为功能最强大的Python IDE之一。
 
 ## 4 PyCharm的使用
 
-先前我们介绍过JupyterLab。
+### 4.1 什么时候会用到IDE
+
+先前我们介绍过JupyterLab。它主要是用于交互式的编程，也就是你输入若干行语句或表达式，它就立刻显示运行的结果。对于进行简短的编程（比如测试函数的用法、大多数数据分析、调用一些机器学习库等，通常来讲它们的代码量并不会特别大），交互式编程是很有帮助的。但有时候：
+
+- 我们需要开发一些大项目，这些大项目的代码多到如果放在一个文件里会显得很没有组织，这也算一种模块化，关于涉及多个源文件的编程我们会在以后介绍；
+- 我们觉得JupyterLab的代码补全、代码调试（debug）、代码静态分析（inspect）、风格检查（lint）、代码性能分析（benchmark）等等功能不够完善，我们需要一个强大的IDE；
+- 我们需要将我们的代码提供给别人运行，而那些人可能没有安装JupyterLab。
+
+当遇到上面这些情况时，将代码保存成一个个`.py`文件，用IDE编辑就非常有优势了。
+
+接下来我们介绍如何安装PyCharm。注意我下面的文章是基于PyCharm 2019.3版本的，之后的版本可能步骤会有变化。
+
+### 4.2 安装PyCharm
+
+你可以在[Download PyCharm: Python IDE for Professional Developers by JetBrains](https://www.jetbrains.com/pycharm/download/#section=windows)页面下载PyCharm，它有两个版本：付费的专业（Professional）版和免费的社区（Community）版。如果你是学生，可以在[JetBrains Products for Learning](https://www.jetbrains.com/shop/eform/students)获得免费的专业版账号，它的验证邮件可能发得比较慢，需要耐心等待。当然你也可以选择购买，JetBrains（制作PyCharm等IDE的公司）的产品的价格并不便宜。当然社区版的功能也足够大多数人使用了。
+
+下载完毕之后运行会出现安装向导。在选项界面，我建议勾上“Add "Open Folder as Project"”，对于需要的人也可以勾上“Create Desktop Shortcut”。然后会出现选择主题界面，有明亮和黑暗两款可以选，这个就看个人喜好了。最后是插件界面，建议不要勾选任何插件，毕竟在这之后是可以再下载插件的，尤其是Vim插件，给很多初学者带来了极大的困扰。
+
+### 4.3 创建工程
+
+IDE通常将一个Python项目组织成工程。让我们来创建一个工程。
+
+运行PyCharm后，点击“Create New Project”就可以创建一个工程。然后你可以选择一个合适的“Location”，`.py`文件会被直接存放到那个目录中，如果那个目录不存在会创建。如果你不知道怎么取个名字，就把`Untitled`改成`hello`吧。
+
+先别急着创建项目，点开“Project Intepreter”，你有以下两个主要选项：
+
+- New environment using Virtualenv：这个选项是创建一个虚拟的环境，你安装的所有外部的包都会存放在这个虚拟环境中，这在绝大多数情况下是个很好的选择，但也意味着如果你的多个项目共同用一个很大的外部包，那么它们都会独自安装一份，占用很大的磁盘空间（由于pip会缓存安装包，所以并不会多次下载同一版本的同一个包，网络流量不需要担忧）；
+- Existing interpreter下点击省略号 -> System Intepreter -> 选择你安装的Python位置（默认是在AppData目录下）：这个是使用全局的Python环境，所有的包都会安装到全局的同一个目录下，如果不同的项目依赖不同版本的同一个包，那就会出现问题，这种方案虽然节省存储空间，但可能会存在各种冲突，不过也算一个不错的选择。
+
+如果你很纠结，就使用Virtualenv吧（第一个选项），然后下一步，就可以创建工程。
+
+### 4.4 编辑和运行
+
+进入主界面后，你应该可以看到一个叫Project的窗口位于左侧。如果你没看到。可以在侧栏找到`1:Project`这个竖着的按钮点开，或者按`Alt+1`又或者点击View->Tool Windows->Project。
+
+打开完Project窗口后，它显示了项目的目录结构，应该长这样:
+
+![IDEA Project Window](/assets/blog/python-tutorial2/idea-project-window.png) {.text-center}
+
+然后右键项目的根目录（这里是写着`hello`高亮出来的一行）-> New -> Python File，创建一个文件（不需要输入后缀名），比如下面图中所示的`main.py`：
+
+![IDEA New File](/assets/blog/python-tutorial2/idea-new-file.png) {.text-center}
+
+然后我们添加下面的示例代码：
+
+```python
+if __name__ == '__main__':
+    text = input('Please input an English word:')
+    print('It\'s uppercase is', text.upper())
+```
+
+这个代码的功能就是输入一行字，输出它的大写。输入完毕后就是下面的样子（我装的是另一个IDE，叫IDEA，所以一些细节可能不同）。
+
+![IDEA Add Code](/assets/blog/python-tutorial2/idea-add-code.png) {.text-center}
+
+注意到`if`语句的左侧有个绿色的箭头，这就是运行的按钮。点击一下会出现一个菜单，选择Run 'main'就可以运行起来，这时底部会弹出一个窗口，效果就像下面这样：
+
+![IDEA Run Window](/assets/blog/python-tutorial2/idea-run-window.png) {.text-center}
+
+点击左侧第一个绿色圆圈箭头的按钮可以重新运行，点击左侧第二个红色的方块可以终止运行，然后你可以输入一个英文单词，它会变长全部大写。
+
+当你运行过一次之后，右上方的工具栏就会变样子：
+
+![IDEA Run Toolbar](/assets/blog/python-tutorial2/idea-run-toolbar.png) {.text-center}
+
+这是因为点击`if`语句左侧的绿色箭头会创建一个可以运行的配置，方便以后再次运行或者调试。
+
+### 4.5 调试（Debug）
+
+调试是一种特殊的运行模式，在调试模式下，你可以让程序暂停，查看变量的值、函数调用的经过。
+
+让我们点击工具栏上的臭虫图标，它位于运行图标的右侧，就是下图红框圈出来的部分。
+
+![IDEA Debug Toolbar](/assets/blog/python-tutorial2/idea-debug-toolbar.png) {.text-center}
+
+点击后程序会运行起来，同时下方会弹出调试窗口，调试窗口也会显示出`input()`函数的提示。窗口左侧从上往下，多出了第2个继续和第3个暂停按钮。接下来别急着输入英文单词，让我们添加一个断点（breakpoint）到`print()`那一行，当程序在调试模式下运行到断点那一行就会暂停（执行完断点那行前的所有语句，不包括断点所在的那行）。
+
+![IDEA Debug Window](/assets/blog/python-tutorial2/idea-debug-window.png) {.text-center}
 
 ## 5 复习
 

@@ -534,4 +534,6 @@ systemctl enable spigot
 
 修改`/srv/craftbukkit/eula.txt`。然后再次启动服务即可。
 
-TODO: 安装插件
+### 4.2 安装插件
+
+懒得写了，等以后需要再说233。
