@@ -3,11 +3,10 @@ title: Git & GitHub 学习笔记（放弃更新）
 date: 2016-11-28T04:00:00Z
 category: Git
 tags: [Git, GitHub]
-summary: 这篇文章主要是对于man git的梳理。
 ---
 这篇文章主要是对于`man git`的梳理。
 
-<!--more-->
+<!-- more -->
 
 ## 1 基本概念
 

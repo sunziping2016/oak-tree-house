@@ -2,10 +2,11 @@
 title: Rust学习笔记（未完待续）
 date: 2019-09-08T13:54:09Z
 tags: [Rust, 编程]
-summary: 这篇文章是Rust的学习笔记，主要内容来自Rust官方的《The Rust Programming Language》。
 ---
 
 这篇文章是Rust的学习笔记，主要内容来自Rust官方的[《The Rust Programming Language》](https://doc.rust-lang.org/book/)。
+
+<!-- more -->
 
 ## 1 常见编程概念
 

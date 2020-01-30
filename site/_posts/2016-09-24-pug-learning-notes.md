@@ -3,8 +3,11 @@ title: Pug 学习笔记
 date: 2016-09-24T04:00:00Z
 category: 前端
 tags: [Pug, 编程, 前端]
-summary: 这篇博客是学习Pug的笔记。
 ---
+
+这篇博客是学习Pug的笔记。
+
+<!-- more -->
 
 ## 1 文档类型（Doctype）
 

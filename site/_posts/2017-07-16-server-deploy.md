@@ -3,12 +3,11 @@ title: 服务器配置
 date: 2017-07-16T04:00:00Z
 category: 配置
 tags: [配置, Ubuntu]
-summary: 这篇文章主要是关于自己VPS的配置的。
 ---
 
 这篇文章主要是关于自己VPS的配置的。
 
-<!--more-->
+<!-- more -->
 
 ## 1 Vultr VPS
 
@@ -116,7 +115,7 @@ sudo apt install nginx letsencrypt
 
 根据 <https://community.letsencrypt.org/t/how-to-nginx-configuration-to-enable-acme-challenge-support-on-all-http-virtual-hosts/5622> 创建`/etc/nginx/snippets/letsencrypt-acme-challenge.conf`。
 
-```
+```text
 location ^~ /.well-known/acme-challenge/ {
   default_type "text/plain";
   root /var/www/letsencrypt;
@@ -125,7 +124,7 @@ location ^~ /.well-known/acme-challenge/ {
 
 创建`/etc/nginx/snippets/ssl-redirect.conf`。
 
-```
+```text
 location / {
   return 301 https://$host$request_uri;
 }
@@ -139,7 +138,7 @@ sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
 
 创建`/etc/nginx/snippets/ssl-params.conf`。
 
-```
+```text
 # from https://cipherli.st/
 # and https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html
 
@@ -189,7 +188,7 @@ sudo rm /etc/nginx/sites-available/default
 
 创建`/etc/nginx/sites-available/default.conf`。
 
-```
+```text
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
@@ -219,7 +218,7 @@ sudo /etc/nginx/snippets/generate-ssl-config.sh szp.io
 
 重新修改`/etc/nginx/sites-available/default.conf`。
 
-```
+```text
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
@@ -258,7 +257,7 @@ sudo systemctl reload nginx
 
 开启自动续，`sudo crontab -e`编辑。
 
-```
+```text
 30 2 * * 1 /usr/bin/letsencrypt renew >> /var/log/le-renew.log
 35 2 * * 1 /bin/systemctl reload nginx
 ```

@@ -2,10 +2,11 @@
 title: 微软实习总结
 date: 2019-09-08T07:39:02Z
 tags: [工作]
-summary: 这是我在微软实习的总结，主要用于“专业专题训练”课程的汇报。
 ---
 
 原文由$\LaTeX$编写，点击[此处](/assets/blog/microsoft-intern-summary/main.pdf)下载报告原文，点击[此处](/assets/blog/microsoft-intern-summary/slides.pdf)下载幻灯片。
+
+<!-- more -->
 
 ## 1 实习任务
 

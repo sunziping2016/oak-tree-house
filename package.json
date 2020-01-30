@@ -8,9 +8,9 @@
     "lint": "npm run lint:before && npm run lint:after",
     "lint:before": "npm run lint:js && npm run lint:md:before",
     "lint:after": "npm run lint:md:after",
-    "lint:js": "eslint site --ext .js,.vue",
-    "lint:md:before": "markdownlint --ignore node_modules -r \"markdownlint/before/*.js\" \"**/*.md\"",
-    "lint:md:after": "rm external-link-list.txt -f && markdownlint --ignore node_modules -r \"markdownlint/after/*.js\" \"**/*.md\""
+    "lint:js": "eslint packages site  --ext .js,.vue",
+    "lint:md:before": "markdownlint -r \"markdownlint/before/*.js\" \"site/**/*.md\"",
+    "lint:md:after": "rm external-link-list.txt -f && markdownlint -r \"markdownlint/after/*.js\" \"site/**/*.md\""
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/sunziping2016/oak-tree-house#readme",
   "devDependencies": {
+    "@oak-tree-house/vuepress-theme-vuetify-blog": "^0.1.4",
     "@vuepress/plugin-blog": "^1.8.1",
     "@vuepress/plugin-medium-zoom": "^1.2.0",
     "chalk": "^3.0.0",
@@ -30,14 +31,17 @@
     "eslint-plugin-vue-libs": "^4.0.0",
     "fs-extra": "^8.1.0",
     "husky": "^4.0.7",
+    "markdown-it": "^10.0.0",
+    "markdown-it-attrs": "3.0.0",
+    "markdown-it-footnote": "^3.0.2",
+    "markdown-it-mathjax": "^2.0.0",
     "markdown-it-task-checkbox": "^1.0.6",
     "markdownlint": "^0.18.0",
     "markdownlint-cli": "^0.21.0",
     "rss": "^1.2.2",
     "vue-feather-icons": "^5.0.0",
-    "vue-plyr": "^6.0.4",
     "vuepress": "^1.2.0",
-    "vuepress-plugin-mathjax": "^1.2.8"
+    "vuepress-plugin-container": "^2.1.2"
   },
   "husky": {
     "hooks": {

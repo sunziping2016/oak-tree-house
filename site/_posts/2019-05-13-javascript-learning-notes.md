@@ -3,12 +3,11 @@ title: JavaScript学习笔记
 date: 2019-05-12T16:12:11Z
 category: JavaScript
 tags: [JavaScript, 编程]
-summary: 这篇文章是JavaScript的学习笔记。内容主要来自MDN的JavaScript Guide - JavaScript | MDN。
 ---
 
 这篇文章是JavaScript的学习笔记。内容主要来自MDN的[JavaScript Guide - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)。
 
-<!--more-->
+<!-- more -->
 
 ## 1 语法和类型
 
@@ -450,7 +449,7 @@ ES5开始，有3种遍历属性的方式：
 
 JavaScript是基于原型的面向对象语言。JavaScript的所有对象都至少继承自另一个对象。被继承的对象称为**原型**。继承的属性都是来自构造函数的`prototype`对象。`this`指代调用对象。通过如下面所示的代码定义继承：
 
-```JavaScript
+```javascript
 function Base() {
     this.a = ...;
     this.b = ...;
@@ -467,7 +466,7 @@ Derived.prototype.constructor = Derived;
 
 其中的`Derived`函数也可以如下写，下面的`base`只是一个普通的名字：
 
-```JavaScript
+```javascript
 function Derived() {
     this.base = Base;
     this.base();
@@ -485,7 +484,7 @@ function Derived() {
 
 对于对象字面量，可以通过如下方式构造getter和setter：
 
-```JavaScript
+```javascript
 var o = {
     get b() {
         return ...;
@@ -498,7 +497,7 @@ var o = {
 
 也可以通过如下方式创建getter和setter：
 
-```JavaScript
+```javascript
 Object.defineProperty(o, 'b', {
     get: function() { return ...; },
     set: function(y) { ... }
@@ -507,7 +506,7 @@ Object.defineProperty(o, 'b', {
 
 也可以通过`Object.defineProperties`定义，形式如下：
 
-```JavaScript
+```javascript
 Object.defineProperties(o, {
     'b': { get: function() { return ,,,; } },
     'c': { set: function(x) { ... } }
@@ -537,7 +536,7 @@ Promise拥有如下方法：
 
 ES2017加入了`async/await`语法糖，形如：
 
-```JavaScript
+```javascript
 async function foo() {
     try {
         const result = await doSomething();
@@ -583,7 +582,7 @@ async function foo() {
 
 生成器形如下面的代码，函数内可以yield多次：
 
-```JavaScript
+```javascript
 function* foo() {
     ...
     yield value;

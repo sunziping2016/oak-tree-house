@@ -1,12 +1,15 @@
 <template>
   <FrontmatterPagination
-    title="Tag"
-    name="标签"
+    :frontmatter-text="this.$site.themeConfig.tagText || 'Tags'"
+    :frontmatter-path="'/tag'"
+    :frontmatter-key-text="this.$currentTag.key"
+    @ready="e => $emit('ready', arguments)"
+    @updated="e => $emit('updated', arguments)"
   />
 </template>
 
 <script>
-import FrontmatterPagination from './FrontmatterPagination'
+import FrontmatterPagination from '@theme/layouts/FrontmatterPagination.vue'
 
 export default {
   components: { FrontmatterPagination }

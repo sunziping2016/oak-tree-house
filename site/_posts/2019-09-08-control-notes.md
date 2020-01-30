@@ -1,11 +1,13 @@
 ---
 title: 系统分析与控制小抄
 date: 2019-09-07T18:12:29Z
+cover: /assets/blog/control-notes/struct-diagram.jpg
 tags: [控制]
-summary: 这是我的系统分析与控制期末小抄，是对老师课件的总结。
 ---
 
-原文由$\LaTeX$编写，可点击[此处](/assets/blog/control-notes/notes.pdf)下载。
+这是我的系统分析与控制期末小抄，是对老师课件的总结。原文由$\LaTeX$编写，可点击[此处](/assets/blog/control-notes/notes.pdf)下载。
+
+<!-- more -->
 
 ## 1 Laplace变换
 

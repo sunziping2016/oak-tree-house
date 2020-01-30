@@ -9,6 +9,10 @@ function checkPath (externalLinks, src) {
     externalLinks.add(src)
     return true
   }
+  if (src.startsWith('#')) {
+    // ignore hash
+    return true
+  }
   if (!src.startsWith('/')) {
     // Only absolute path is supported
     return false

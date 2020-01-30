@@ -1,12 +1,15 @@
 <template>
   <FrontmatterPagination
-    title="Author"
-    name="作者"
+    :frontmatter-text="this.$site.themeConfig.authorText || 'Authors'"
+    :frontmatter-path="'/author'"
+    :frontmatter-key-text="this.$currentAuthor.key"
+    @ready="e => $emit('ready', arguments)"
+    @updated="e => $emit('updated', arguments)"
   />
 </template>
 
 <script>
-import FrontmatterPagination from './FrontmatterPagination'
+import FrontmatterPagination from '@theme/layouts/FrontmatterPagination.vue'
 
 export default {
   components: { FrontmatterPagination }

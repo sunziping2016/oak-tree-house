@@ -1,0 +1,36 @@
+@import "./content";
+@import "./code";
+@import "./custom-blocks";
+
+.copy-button {
+  position: absolute;
+  z-index: 3;
+  top: 0.5em;
+  right: 2.4em;
+  font-size: 1rem;
+  color: $primaryColor;
+  cursor: pointer;
+}
+
+.toggle-prompt-button {
+  position: absolute;
+  z-index: 3;
+  top: 0.5em;
+  right: 4em;
+  font-size: 1rem;
+  color: $primaryColor;
+  cursor: pointer;
+
+  &-off {
+    text-decoration: line-through
+  }
+}
+
+.task-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+div[class~="language-rust"]:before {
+  content: "rust"
+}
