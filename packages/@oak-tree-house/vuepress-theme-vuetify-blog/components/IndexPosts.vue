@@ -138,7 +138,7 @@
           <v-btn
             color="accent"
             text
-            :href="page.path"
+            :to="page.path"
           >
             {{ $site.themeConfig.readMoreText || 'Read More' }}
           </v-btn>

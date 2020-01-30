@@ -16,7 +16,9 @@
         <NavLogo />
         <v-spacer />
         <!-- Search -->
-        <NavSearch />
+        <NavSearch
+          v-if="$site.themeConfig.algolia"
+        />
         <!-- Menu -->
         <NavLinks class="hidden-sm-and-down" />
       </v-app-bar>
@@ -74,17 +76,11 @@
         color="indigo"
         style="position: absolute"
       >
+        <!-- eslint-disable vue/no-v-html -->
         <div
-          class="mx-auto"
-        >
-          <div
-            v-for="line in $site.themeConfig.footer"
-            :key="line"
-            style="text-align: center"
-          >
-            {{ line }}
-          </div>
-        </div>
+          class="mx-auto text-center"
+          v-html="$site.themeConfig.footer"
+        />
       </v-footer>
     </ClientOnly>
   </v-app>

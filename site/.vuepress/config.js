@@ -7,10 +7,8 @@ module.exports = {
     }
   },
   head: [
-    ['link', { rel: 'icon', sizes: '32x32',
-      href: '/assets/icons/favicon-32x32.png' }],
-    ['link', { rel: 'icon', sizes: '16x16',
-      href: '/assets/icons/favicon-16x16.png' }],
+    ['link', { rel: 'icon', sizes: '32x32', href: '/assets/icons/favicon-32x32.png' }],
+    ['link', { rel: 'icon', sizes: '16x16', href: '/assets/icons/favicon-16x16.png' }],
     ['link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900' }],
     ['link', { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css' }],
     ['meta', { name: 'theme-color', content: '#6699FF' }]
@@ -37,7 +35,7 @@ module.exports = {
     logo: '/assets/icons/icon-light.png',
     nav: [
       {
-        type: 'menu', text: '检索', items: [
+        type: 'menu', text: '归档', items: [
           { text: '检索页面', subheader: true },
           { text: '作者', link: '/author/', icon: 'mdi-account' },
           { text: '标签', link: '/tag/', icon: 'mdi-tag' },
@@ -82,33 +80,29 @@ module.exports = {
       apiKey: '5eac05703da4f5923e426c2e44baa411',
       indexName: 'szp'
     },
-    snackbarCloseText: '关闭',
     repo: 'sunziping2016/oak-tree-house',
     docsDir: 'site',
     editLinks: true,
     editLinkText: '在 GitHub 上编辑此页',
     lastUpdated: '上次更新',
+    footer: '© 2016-2020 Ziping Sun <br> 京ICP备 17062397号',
+    snackbarCloseText: '关闭',
+    notFoundText: '回到主页',
     indexHeading: '`${date.getFullYear()}年${date.getMonth() + 1}月`',
-    footer: ['© 2016-2020 Ziping Sun', '京ICP备 17062397号'],
     homepageText: '主页',
     pageNumberText: '`第${index + 1}页 (共${totalPage}页 ${totalPost}篇)`',
     viewSourceText: '查看源码',
     readMoreText: '阅读更多',
+    frontmatterKeyHeading: '`目前共计 ${number} 个${name}`',
     wordCloudName: '标签云',
     wordCloudFrontmatter: 'tag',
-    frontmatterKeyHeading: '`目前共计 ${number} 个${name}`',
     tagText: '标签',
     categoryText: '分类',
     authorText: '作者',
-    seriesText: '连载文章',
-    notFoundText: '回到主页'
+    seriesText: '连载文章'
   },
   plugins: [
-    ['@vuepress/last-updated', {
-      transformer (timestamp, lang) {
-        return new Date(timestamp).toLocaleString('zh-CN')
-      }
-    }],
+    ['@vuepress/last-updated'],
     ['@vuepress/medium-zoom', {
       selector: '.content img'
     }],
@@ -130,13 +124,13 @@ module.exports = {
         '/': '警告'
       }
     }],
-    [require('./plugins/vuepress-plugin-rss.js'),
-      {
-        base_url: '/',
-        site_url: 'https://szp15.com',
-        count: 20
-      }
-    ],
+    // [require('./plugins/vuepress-plugin-rss.js'),
+    //   {
+    //     base_url: '/',
+    //     site_url: 'https://szp15.com',
+    //     count: 20
+    //   }
+    // ],
     [require('./plugins/additional-pages')],
     [require('./plugins/code-copy-button'), {
       codeCopiedText: '成功复制代码片段'

@@ -9,7 +9,9 @@
         class="hidden-md-and-up"
       />
       <v-divider v-if="$vuetify.breakpoint.smAndDown" />
-      <IndexSidebarWordCloud />
+      <IndexSidebarWordCloud
+        v-if="$site.themeConfig.wordCloudFrontmatter"
+      />
     </template>
     <v-container
       class="py-0 mb-10 not-found"

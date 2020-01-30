@@ -57,6 +57,9 @@ export default {
           })
         }
       }
+      if (!this.$site.themeConfig.indexHeading) {
+        items[0].children = items[0].children[0].children
+      }
       return items
     }
   }

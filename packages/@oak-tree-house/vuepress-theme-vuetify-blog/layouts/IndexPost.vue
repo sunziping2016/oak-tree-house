@@ -13,7 +13,9 @@
         :page-name="tocName"
         class="mt-4"
       />
-      <IndexSidebarWordCloud />
+      <IndexSidebarWordCloud
+        v-if="$site.themeConfig.wordCloudFrontmatter"
+      />
     </template>
     <IndexDummy />
     <ClientOnly>
