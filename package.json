@@ -26,6 +26,7 @@
     "@oak-tree-house/vuepress-theme-vuetify-blog": "^0.1.4",
     "@vuepress/plugin-blog": "^1.8.1",
     "@vuepress/plugin-medium-zoom": "^1.2.0",
+    "aes-js": "^3.1.2",
     "chalk": "^3.0.0",
     "eslint": "^6.8.0",
     "eslint-plugin-vue-libs": "^4.0.0",
