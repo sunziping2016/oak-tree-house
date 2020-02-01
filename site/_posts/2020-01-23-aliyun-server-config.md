@@ -4,6 +4,10 @@ author: 孙子平
 date: 2020-01-23T07:56:24Z
 category: 配置
 tags: [配置, Ubuntu]
+series: 系统配置
+sidebar:
+  - /_posts/2020-01-23-aliyun-server-config.html
+  - /_posts/2020-02-01-zeptovm-server-config.html
 ---
 
 这篇文章是关于如何配置我的阿里云服务器。阿里云服务器上有Web服务、Seafile和Minecraft（spigot），计划还会配有MongoDB、Redis、ElasticSearch等服务。
@@ -198,7 +202,7 @@ server {
 开启服务器，获取证书。
 
 ```bash
-sudo mkdir /var/www/letsencrypt
+sudo mkdir -p /var/www/letsencrypt
 cd /etc/nginx/sites-enabled
 sudo ln -s ../sites-available/default.conf .
 sudo nginx -t

@@ -9,7 +9,11 @@ function checkPath (externalLinks, src) {
     externalLinks.add(src)
     return true
   }
-  if (src.startsWith('#')) {
+  const hashIndex = src.indexOf('#')
+  if (hashIndex >= 0) {
+    src = src.slice(0, hashIndex)
+  }
+  if (!src) {
     // ignore hash
     return true
   }
