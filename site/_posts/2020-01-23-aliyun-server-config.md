@@ -98,7 +98,14 @@ curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer 
 ssh szp15.com
 # at szp15.com
 sed -i 's/plugins=(\(.*\))/plugins=(\1 nvm pyenv)/' .zshrc
-exit
+```
+
+### 1.6 开启BBR
+
+```bash
+sudo sh -c 'echo "net.core.default_qdisc=fq" >> /etc/sysctl.d/bbr.conf'
+sudo sh -c 'echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.d/bbr.conf'
+sudo reboot
 ```
 
 ## 2 配置Web服务器

@@ -176,6 +176,7 @@ include snippets/v2ray.conf;
 ```bash
 nginx -t
 systemctl start v2ray
-systemctl start v2ray
 systemctl reload nginx
+systemctl enable v2ray
+systemctl enable nginx
 ```
