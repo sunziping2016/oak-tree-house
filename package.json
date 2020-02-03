@@ -5,6 +5,8 @@
   "scripts": {
     "build": "vuepress build site",
     "dev": "vuepress dev --no-cache site",
+    "decrypt": "site/.vuepress/plugins/encrypt/cli.js --source-dir site --key-file keys.json decrypt",
+    "encrypt": "site/.vuepress/plugins/encrypt/cli.js --source-dir site --key-file keys.json encrypt",
     "lint": "npm run lint:before && npm run lint:after",
     "lint:before": "npm run lint:js && npm run lint:md:before",
     "lint:after": "npm run lint:md:after",
