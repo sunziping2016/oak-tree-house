@@ -4,11 +4,11 @@
   "description": "My New Personal Homepage",
   "scripts": {
     "build": "vuepress build site",
-    "dev": "vuepress dev site",
+    "dev": "vuepress dev --no-cache site",
     "lint": "npm run lint:before && npm run lint:after",
     "lint:before": "npm run lint:js && npm run lint:md:before",
     "lint:after": "npm run lint:md:after",
-    "lint:js": "eslint packages site  --ext .js,.vue",
+    "lint:js": "eslint packages site --ext .js,.vue",
     "lint:md:before": "markdownlint -r \"markdownlint/before/*.js\" \"site/**/*.md\"",
     "lint:md:after": "rm external-link-list.txt -f && markdownlint -r \"markdownlint/after/*.js\" \"site/**/*.md\""
   },
@@ -28,6 +28,7 @@
     "@vuepress/plugin-medium-zoom": "^1.2.0",
     "aes-js": "^3.1.2",
     "chalk": "^3.0.0",
+    "commander": "^4.1.0",
     "eslint": "^6.8.0",
     "eslint-plugin-vue-libs": "^4.0.0",
     "fs-extra": "^8.1.0",

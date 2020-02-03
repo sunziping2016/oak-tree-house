@@ -149,6 +149,15 @@ module.exports = {
         createIssueManually: true
       }
     }],
+    [require('./plugins/encrypt'), {
+      contentTitle: '加密的内容',
+      unencryptedText: '内容已显示在下方，发布时应当加密。',
+      encryptedText: '这部分内容已被加密，你需要输入正确的密钥才能查看。',
+      decryptedText: '内容被成功解密并显示在下方。',
+      decryptButtonText: '解密',
+      errorWrongFormat: '密钥格式错误！应为32个16进制数字。',
+      errorDecryptFail: '加密失败'
+    }],
     ['@vuepress/blog', {
       directories: [
         {
