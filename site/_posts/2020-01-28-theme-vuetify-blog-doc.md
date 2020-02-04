@@ -1,18 +1,18 @@
 ---
-title: Documentation for vuepress-theme-vuetify-blog
+title: vuepress-theme-vuetify-blog Documentation
 author: 孙子平
 date: 2020-01-28T15:03:25Z
 category: 文档
 tags: [项目, 前端, 编程]
 ---
 
-This is the documentation for npm package [@oak-tree-house/vuepress-theme-vuetify-blog](https://www.npmjs.com/package/@oak-tree-house/vuepress-theme-vuetify-blog). The Chinese version of this documentation will soon be published.
+This is the documentation for npm package [@oak-tree-house/vuepress-theme-vuetify-blog](https://www.npmjs.com/package/@oak-tree-house/vuepress-theme-vuetify-blog).
 
 <!-- more -->
 
 ## 1 Introduction
 
-This theme utilizes [Vuetify](https://vuetifyjs.com/en/) to create a Material Design UI for model blogs. It is intended to be used along with [VuePress](https://vuepress.vuejs.org/) and its plugin [@vuepress/plugin-blog](https://vuepress-plugin-blog.ulivz.com/). This website is built with this theme and several other plugins. I'll release these plugins soon. And you can view the source of my site at [sunziping2016/oak-tree-house](https://github.com/sunziping2016/oak-tree-house/). The UI of my website only supports Simplified Chinese. I'feel sorry, if this troubles you. But the language of the theme is not limited, Here is some screenshots of my sites.
+This theme utilizes [Vuetify](https://vuetifyjs.com/en/) to create a Material Design UI for modern blogs. It is intended to be used along with [VuePress](https://vuepress.vuejs.org/) and its plugin [@vuepress/plugin-blog](https://vuepress-plugin-blog.ulivz.com/). This website is built with this theme and several other plugins. I'll release these plugins soon. And you can view the source of my site at [sunziping2016/oak-tree-house](https://github.com/sunziping2016/oak-tree-house/). The UI of my website only supports Simplified Chinese. I'feel sorry if this troubles you. But the language of the theme is not limited, Here is some screenshots of my site.
 
 The figure below shows the [directory classifier](https://vuepress-plugin-blog.ulivz.com/guide/getting-started.html#directory-classifier) index page with pagination (`IndexPost.vue`). The posts are organized in the form of cards, which supports an optional cover image.
 
@@ -299,6 +299,16 @@ To make the 404 page work, you also need to modify your web server configuration
 
 ```text
 error_page 404 /404.html;
+```
+
+### 3.10 Sidebar TOC for Serial Posts
+
+When you write serial posts, you may want to group these posts together to the sidebar. This can be archived by adding `sidebar` to frontmatters of posts like following code.
+
+```toml
+sidebar:
+  - /_posts/2019-11-01-python-tutorial1.html
+  - /_posts/2019-11-11-python-tutorial2.html
 ```
 
 ## 4 Document Classifier

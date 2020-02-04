@@ -2,6 +2,7 @@
 .vscode
 node_modules
 .ipynb_checkpoints
+yarn-error.log
 /site/.vuepress/dist
 /external-link-list.txt
 /keys.json

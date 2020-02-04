@@ -28,8 +28,10 @@ module.exports = (options) => ({
     'EN_ENCRYPTED_TEXT': options.encryptedText || 'This part of content is encrypted. To view it, you need to enter the correct key in the input field below.',
     'EN_DECRYPTED_TEXT': options.decryptedText || 'The encrypted content is successfully decrypted and shown below.',
     'EN_DECRYPT_BUTTON_TEXT': options.decryptButtonText || 'Decrypt',
-    'EN_ERROR_WRONG_FORMAT': options.errorWrongFormat || 'Wrong key format! It should be 32 hex numbers.',
-    'EN_ERROR_DECRYPT_FAIL': options.errorDecryptFail || 'Failed to decrypt!'
+    'EN_DECRYPT_FAIL_TEXT': options.decryptFailText || 'Failed to decrypt!',
+    'EN_UNENCRYPTED_ICON': options.unencryptedIcon,
+    'EN_ENCRYPTED_ICON': options.encryptedIcon,
+    'EN_DECRYPTED_ICON': options.decryptedIcon
   },
   plugins: [
     ['@vuepress/register-components', {

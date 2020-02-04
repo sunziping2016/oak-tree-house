@@ -124,13 +124,13 @@ module.exports = {
         '/': '警告'
       }
     }],
-    // [require('./plugins/vuepress-plugin-rss.js'),
-    //   {
-    //     base_url: '/',
-    //     site_url: 'https://szp15.com',
-    //     count: 20
-    //   }
-    // ],
+    [require('./plugins/vuepress-plugin-rss.js'),
+      {
+        base_url: '/',
+        site_url: 'https://szp15.com',
+        count: 20
+      }
+    ],
     [require('./plugins/additional-pages')],
     [require('./plugins/code-copy-button'), {
       codeCopiedText: '成功复制代码片段'
@@ -149,14 +149,16 @@ module.exports = {
         createIssueManually: true
       }
     }],
-    [require('./plugins/encrypt'), {
+    ['@oak-tree-house/encrypt', {
       contentTitle: '加密的内容',
       unencryptedText: '内容已显示在下方，发布时应当加密。',
       encryptedText: '这部分内容已被加密，你需要输入正确的密钥才能查看。',
       decryptedText: '内容被成功解密并显示在下方。',
       decryptButtonText: '解密',
-      errorWrongFormat: '密钥格式错误！应为32个16进制数字。',
-      errorDecryptFail: '解密失败！'
+      decryptFailText: '解密失败！',
+      unencryptedIcon: 'mdi mdi-lock-alert',
+      encryptedIcon: 'mdi mdi-lock',
+      decryptedIcon: 'mdi mdi-lock-open'
     }],
     ['@vuepress/blog', {
       directories: [

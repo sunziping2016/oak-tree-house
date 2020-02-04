@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-const crypto = require('crypto')
 const fs = require('fs')
 const path = require('path')
 const readline = require('readline')
@@ -7,12 +6,30 @@ const util = require('util')
 const aesjs = require('aes-js')
 const program = require('commander')
 const chalk = require('chalk')
+const md5 = require('md5')
 const { createApp } = require('@vuepress/core')
 const { globby, sort, parseFrontmatter } = require('@vuepress/shared-utils')
 
 const ENCRYPT_BEGIN_REGEX = /^(\s*:{3,})\s+encrypt\s+key=(\w+)\s+owners=(\w+(?:,\w+)*)\s*$/
 const ENCRYPT_BEGIN_REGEX_WITH_ENCRYPTED = /^(\s*:{3,})\s+encrypt\s+encrypted\s+key=(\w+)\s+owners=(\w+(?:,\w+)*)\s*$/
 const ENCRYPT_END_REGEX = /^(\s*:{3,})\s*$/
+
+const VALID_KEY_CHARACTERS = ''
+  + 'abcdefghijklmnopqrstuvwxyz'
+  + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  + '0123456789'
+  + '!"#$%&\'()*+,.\\/:;<=>?@[] ^_`{|}~-'
+
+const DEFAULT_KEY_LENGTH = 8
+
+function randomKey (length) {
+  let result = ''
+  const charactersLength = VALID_KEY_CHARACTERS.length
+  for (let i = 0; i < length; i++) {
+    result += VALID_KEY_CHARACTERS.charAt(Math.floor(Math.random() * charactersLength))
+  }
+  return result
+}
 
 class App {
   constructor (options) {
@@ -113,19 +130,12 @@ class App {
       }
       let answer
       do {
-        answer = await util.promisify(rl.question)(`[PROMPT] Key for "${key}" does not exist. Generate, abort or skip? [G/A/S]: `)
-        answer = (answer || '').toUpperCase()
-      } while (answer !== 'G' && answer !== 'A' && answer !== 'S')
+        answer = await util.promisify(rl.question)(`[PROMPT] Key for "${key}" does not exist. Generate, abort, skip or input? [G/A/S/I]: `)
+      } while (!answer)
       rl.close()
-      if (answer === 'A') {
-        console.log(chalk.red('[ERROR] Abort!'))
-        process.exit(1)
-      } else if (answer === 'S') {
-        console.warn(chalk.yellow(`[WARN] Skip key "${key}"`))
-        return false
-      }
+      return answer
     }
-    return await util.promisify(crypto.randomBytes)(16)
+    return randomKey(DEFAULT_KEY_LENGTH)
   }
   async saveKeyFile () {
     try {
@@ -152,15 +162,15 @@ class App {
         }
         let encryptKey
         if (this.keyFile.keys[key]) {
-          encryptKey = aesjs.utils.hex.toBytes(this.keyFile.keys[key])
+          encryptKey = this.keyFile.keys[key]
         } else {
           encryptKey = await this.requestForNewKey(key)
           if (!encryptKey) {
             return false
           }
-          this.keyFile.keys[key] = aesjs.utils.hex.fromBytes(encryptKey)
+          this.keyFile.keys[key] = encryptKey
+          await this.saveKeyFile()
         }
-        await this.saveKeyFile()
         const { html } = this.markdown.render(block, {
           frontmatter: frontmatter.data,
           relativePath: path.relative(this.options.sourceDir, filename)
@@ -171,7 +181,7 @@ class App {
           rendered: html
         })
         // eslint-disable-next-line new-cap
-        const aesCtr = new aesjs.ModeOfOperation.ctr(encryptKey)
+        const aesCtr = new aesjs.ModeOfOperation.ctr(aesjs.utils.hex.toBytes(md5(encryptKey)))
         const encryptedText = Buffer.from(aesCtr.encrypt(aesjs.utils.utf8.toBytes(plaintext)))
         this.currentFileBuffer.push(`${preamble} encrypt encrypted key=${key} owners=${owners.join(',')}`)
         this.currentFileBuffer = this.currentFileBuffer.concat(encryptedText.toString('base64').match(/.{1,79}/g))
@@ -197,7 +207,7 @@ class App {
           console.error(chalk.red(`[ERROR] Abort due to the missing key "${key}"`))
           process.exit(1)
         }
-        const encryptKey = aesjs.utils.hex.toBytes(this.keyFile.keys[key])
+        const encryptKey = aesjs.utils.hex.toBytes(md5(this.keyFile.keys[key]))
         // eslint-disable-next-line new-cap
         const aesCtr = new aesjs.ModeOfOperation.ctr(encryptKey)
         const plaintext = aesjs.utils.utf8.fromBytes(aesCtr.decrypt(Buffer.from(block.replace(/\s/g, ''), 'base64')))

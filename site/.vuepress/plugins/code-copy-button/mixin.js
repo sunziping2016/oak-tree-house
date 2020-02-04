@@ -38,7 +38,7 @@ export default {
           selection.removeAllRanges()
           selection.addRange(range)
           document.execCommand('Copy')
-          if (this.$refs.child.openSnackbar) {
+          if (this.$refs.child && this.$refs.child.openSnackbar) {
             this.$refs.child.openSnackbar(CCB_CODE_COPIED_TEXT)
           }
         })

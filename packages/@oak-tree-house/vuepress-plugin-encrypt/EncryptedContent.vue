@@ -4,10 +4,12 @@
       <div
         class="encrypted-header"
       >
-        <p class="encrypted-icon">
+        <p
+          v-if="icon"
+          class="encrypted-icon"
+        >
           <i
-            class="mdi"
-            :class="encrypted && !decryptedComponent ? 'mdi-lock' : 'mdi-lock-open'"
+            :class="icon"
           />
         </p>
         <p class="encrypted-title">
@@ -51,10 +53,11 @@
 
 <script>
 /* global EN_CONTENT_TITLE, EN_UNENCRYPTED_TEXT, EN_ENCRYPTED_TEXT,
-   EN_DECRYPTED_TEXT, EN_DECRYPT_BUTTON_TEXT, EN_ERROR_WRONG_FORMAT,
-   EN_ERROR_DECRYPT_FAIL */
+  EN_DECRYPTED_TEXT, EN_DECRYPT_BUTTON_TEXT, EN_DECRYPT_FAIL_TEXT,
+  EN_UNENCRYPTED_ICON, EN_ENCRYPTED_ICON, EN_DECRYPTED_ICON */
 
 import aesjs from 'aes-js'
+import md5 from 'md5'
 
 function base64ToArrayBuffer (base64) {
   const binaryString = window.atob(base64)
@@ -102,6 +105,15 @@ export default {
     },
     decryptButtonText () {
       return EN_DECRYPT_BUTTON_TEXT
+    },
+    icon () {
+      if (!this.encrypted) {
+        return EN_UNENCRYPTED_ICON || ''
+      } else if (!this.decryptedComponent) {
+        return EN_ENCRYPTED_ICON || ''
+      } else {
+        return EN_DECRYPTED_ICON || ''
+      }
     }
   },
   updated () {
@@ -111,13 +123,9 @@ export default {
   },
   methods: {
     onConfirm () {
-      if (!this.keyFromInput.match(/^[0-9a-fA-F]{32}$/)) {
-        alert(EN_ERROR_WRONG_FORMAT)
-        return
-      }
       try {
         const encryptedContent = base64ToArrayBuffer(this.encryptedContent)
-        const key = aesjs.utils.hex.toBytes(this.keyFromInput)
+        const key = aesjs.utils.hex.toBytes(md5(this.keyFromInput))
         // eslint-disable-next-line new-cap
         const aesCtr = new aesjs.ModeOfOperation.ctr(key)
         const content = aesjs.utils.utf8.fromBytes(aesCtr.decrypt(encryptedContent))
@@ -129,7 +137,13 @@ export default {
           this.$root.$refs.layout.$emit('updated')
         })
       } catch (e) {
-        alert(EN_ERROR_DECRYPT_FAIL)
+        if (this.$root.$refs.layout
+          && this.$root.$refs.layout.$refs.child
+          && this.$root.$refs.layout.$refs.child.openSnackbar) {
+          this.$root.$refs.layout.$refs.child.openSnackbar(EN_DECRYPT_FAIL_TEXT)
+        } else {
+          alert(EN_DECRYPT_FAIL_TEXT)
+        }
       }
     }
   }

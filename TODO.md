@@ -30,7 +30,8 @@
 - [x] Add audio component for NetEase Cloud Music
 - [x] Theme is provided via npm package
 - [x] Plugin to encrypt content
+- [x] Sidebar can display h1 to h4 toc
 - [ ] PWA only loads app not content
 - [ ] Display frontmatter in sidebar
 - [ ] Support diagrams listed in [here](https://medium.com/technical-writing-is-easy/diagrams-in-documentation-markdown-guide-4e78419e8d2f)
-- [ ] Sidebar can display h1 to h4 toc (Wait for VuePress to release)
+- [ ] Update sass loader (wait for VuePress to solve issue #2148)

@@ -5,7 +5,6 @@ date: 2019-11-11T12:37:52Z
 category: Python
 tags: [Python, 编程, 教程]
 series: Python教程
-sidebarDepth: 3
 sidebar:
   - /_posts/2019-11-01-python-tutorial1.html
   - /_posts/2019-11-11-python-tutorial2.html

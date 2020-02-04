@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@vuepress/plugin-active-header-links@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@vuepress/plugin-active-header-links/-/plugin-active-header-links-1.2.0.tgz#46495c89e51a95e57139be007dffbcae4b229260"
-  integrity sha512-vdi7l96pElJvEmcx6t9DWJNH25TIurS8acjN3+b7o4NzdaszFn5j6klN6WtI4Z+5BVDrxHP5W1F3Ebw8SZyupA==
+"@vuepress/plugin-active-header-links@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@vuepress/plugin-active-header-links/-/plugin-active-header-links-1.3.0.tgz#8b4184e7c84a5ee754e6b4f34997c3bd7ae07b72"
+  integrity sha512-C+EhZefAOxN83jVZebRWqFUBUklTsTtWRiDFczxcxqH995ZZumi1UFKj9TurOjrZppUDr4ftfxIqGkj4QSUeWw==
   dependencies:
     lodash.debounce "^4.0.8"
 
@@ -232,7 +232,7 @@ sass-loader@^7.0.0:
     pify "^4.0.1"
     semver "^6.3.0"
 
-sass@^1.24.4:
+sass@^1.25.0:
   version "1.25.0"
   resolved "https://registry.yarnpkg.com/sass/-/sass-1.25.0.tgz#f8bd7dfbb39d6b0305e27704a8ebe637820693f3"
   integrity sha512-uQMjye0Y70SEDGO56n0j91tauqS9E1BmpKHtiYNQScXDHeaE9uHwNEqQNFf4Bes/3DHMNinB6u79JsG10XWNyw==
@@ -275,7 +275,7 @@ vuetify-loader@^1.4.3:
   dependencies:
     loader-utils "^1.2.0"
 
-vuetify@^2.2.3:
-  version "2.2.6"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.2.6.tgz#f1ea54bbc0410b6038384de7abd410ab492187e9"
-  integrity sha512-HrcdKLs4YYG/3HwcdJa+HMUoNtKt/0ePmdkPYj/ju3EmyeJZyUaxbX0kyW5cyeUTyysrFkBJHCU+24iPYP3+pQ==
+vuetify@^2.2.8:
+  version "2.2.8"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.2.8.tgz#9e9105503d38e66c0fad27aba08de5e65ff6ba99"
+  integrity sha512-qeN+X/6L1Xi3Mmog9PMDUKYjC2ZOk3trl7/vDMuP0gcH1QReKb9tqpLjAyP8niOgnvZcUQw4jSc7e4Esju8Seg==

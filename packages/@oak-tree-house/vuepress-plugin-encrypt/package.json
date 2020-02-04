@@ -1,0 +1,34 @@
+{
+  "name": "@oak-tree-house/vuepress-plugin-encrypt",
+  "version": "0.1.1",
+  "description": "VuePress Plugin to Encrypt Part of Markdown",
+  "main": "index.js",
+  "bin": {
+    "encrypt": "cli.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sunziping2016/oak-tree-house.git",
+    "directory": "packages/@oak-tree-house/vuepress-plugin-encrypt"
+  },
+  "keywords": [
+    "encrypt",
+    "vue",
+    "vuepress"
+  ],
+  "author": "Sun Ziping",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sunziping2016/oak-tree-house/issues"
+  },
+  "homepage": "https://github.com/sunziping2016/oak-tree-house/tree/master/packages/%40oak-tree-house/vuepress-plugin-encrypt#readme",
+  "dependencies": {
+    "aes-js": "^3.1.2",
+    "chalk": "^3.0.0",
+    "commander": "^4.1.1",
+    "md5": "^2.2.1"
+  }
+}
