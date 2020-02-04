@@ -156,7 +156,7 @@ module.exports = {
       decryptedText: '内容被成功解密并显示在下方。',
       decryptButtonText: '解密',
       errorWrongFormat: '密钥格式错误！应为32个16进制数字。',
-      errorDecryptFail: '加密失败'
+      errorDecryptFail: '解密失败！'
     }],
     ['@vuepress/blog', {
       directories: [

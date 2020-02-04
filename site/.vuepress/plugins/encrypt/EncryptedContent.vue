@@ -157,8 +157,8 @@ export default {
   border-radius: 5px;
   padding: 2px 8px;
   background-color: #e8ffff;
-  margin-right: 1em;
   box-shadow: 0 0 3px darkcyan;
+  margin: .5em 1em .5em 0;
 }
 .encrypted-header button {
   background-color: darkcyan;
@@ -167,6 +167,7 @@ export default {
   padding: 2px 8px;
   box-shadow: 0 0 3px darkcyan;
   transition: box-shadow 0.2s ease-in-out;
+  margin: .5em 0;
 }
 .encrypted-header button:hover {
   box-shadow: 0 0 5px darkcyan;
