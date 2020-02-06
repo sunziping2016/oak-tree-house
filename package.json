@@ -7,10 +7,11 @@
     "packages/@oak-tree-house/*"
   ],
   "scripts": {
-    "build": "vuepress build site",
-    "dev": "vuepress dev --no-cache site",
-    "decrypt": "encrypt --source-dir site --key-file keys.json decrypt",
-    "encrypt": "encrypt --source-dir site --key-file keys.json encrypt",
+    "build": "vuepress build --temp .temp-build site",
+    "check": "encrypt --source-dir site --key-file keys.json --temp .temp-encrypt check",
+    "dev": "vuepress dev --no-cache --temp .temp-dev site",
+    "decrypt": "encrypt --source-dir site --key-file keys.json --temp .temp-encrypt decrypt",
+    "encrypt": "encrypt --source-dir site --key-file keys.json --temp .temp-encrypt encrypt",
     "lint": "npm run lint:before && npm run lint:after",
     "lint:before": "npm run lint:js && npm run lint:md:before",
     "lint:after": "npm run lint:md:after",
@@ -51,7 +52,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "npm run lint && npm run check"
     }
   }
 }

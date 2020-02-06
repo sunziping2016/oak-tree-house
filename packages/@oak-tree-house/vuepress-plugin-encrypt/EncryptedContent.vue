@@ -120,6 +120,7 @@ export default {
     if (this.encrypted) {
       this.encryptedContent = this.$refs.content.innerText.replace(/\s/g, '')
     }
+    this.$root.$refs.layout.$emit('updated')
   },
   methods: {
     onConfirm () {
@@ -129,10 +130,8 @@ export default {
         // eslint-disable-next-line new-cap
         const aesCtr = new aesjs.ModeOfOperation.ctr(key)
         const content = aesjs.utils.utf8.fromBytes(aesCtr.decrypt(encryptedContent))
-        const { rendered } = JSON.parse(content)
-        this.decryptedComponent = {
-          template: `<div>${rendered}</div>`
-        }
+        const { component } = JSON.parse(content)
+        this.decryptedComponent = component
         this.$nextTick(() => {
           this.$root.$refs.layout.$emit('updated')
         })

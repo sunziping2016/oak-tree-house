@@ -4,6 +4,9 @@ author: 孙子平
 date: 2020-01-28T15:03:25Z
 category: 文档
 tags: [项目, 前端, 编程]
+sidebar:
+  - /_posts/2020-01-28-theme-vuetify-blog-doc.html
+  - /_posts/2020-02-04-plugin-encrypt-doc.html
 ---
 
 This is the documentation for npm package [@oak-tree-house/vuepress-theme-vuetify-blog](https://www.npmjs.com/package/@oak-tree-house/vuepress-theme-vuetify-blog).
