@@ -31,7 +31,7 @@
 - [x] Theme is provided via npm package
 - [x] Plugin to encrypt content
 - [x] Sidebar can display h1 to h4 toc
-- [ ] Checker for whether everything is encrypted
+- [x] Checker for whether everything is encrypted
 - [ ] PWA only loads app not content
 - [ ] Display frontmatter in sidebar
 - [ ] Share to WeChat

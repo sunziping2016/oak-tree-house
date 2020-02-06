@@ -8,6 +8,7 @@ series: Python教程
 sidebar:
   - /_posts/2019-11-01-python-tutorial1.html
   - /_posts/2019-11-11-python-tutorial2.html
+  - /_posts/2020-02-06-python-tutorial3.html
 ---
 
 这个系列的教程适用于Python新手，讲得相比其他教程可能会更深入一些，内容将依照[Python官方的中文教程](https://docs.python.org/zh-cn/3.7/tutorial/index.html)。我将在[我的博客](https://szp.io/)和[知乎专栏](https://zhuanlan.zhihu.com/sunziping2016)上同步发表这个系列的文章。
