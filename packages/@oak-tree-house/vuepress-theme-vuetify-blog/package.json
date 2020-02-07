@@ -1,6 +1,6 @@
 {
   "name": "@oak-tree-house/vuepress-theme-vuetify-blog",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Vuetify VuePress Theme Suitable for Blog",
   "main": "index.js",
   "publishConfig": {

@@ -22,8 +22,9 @@
           <p>{{ encryptedText }}</p>
           <p>
             <input
-              v-model="keyFromInput"
+              v-model.lazy="keyFromInput"
               type="text"
+              @keyup.enter="onConfirm"
             >
             <button
               @click="onConfirm"
@@ -117,7 +118,7 @@ export default {
     }
   },
   updated () {
-    if (this.encrypted) {
+    if (this.encrypted && !this.encryptedContent) {
       this.encryptedContent = this.$refs.content.innerText.replace(/\s/g, '')
     }
     this.$root.$refs.layout.$emit('updated')

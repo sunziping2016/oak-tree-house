@@ -1,6 +1,6 @@
 {
   "name": "@oak-tree-house/vuepress-plugin-encrypt",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "VuePress Plugin to Encrypt Part of Markdown",
   "main": "index.js",
   "bin": {

@@ -44,22 +44,10 @@ export default {
   },
   data: () => ({
     tocActive: [],
-    tocOpen: []
+    tocOpen: [],
+    toc: []
   }),
   computed: {
-    toc () {
-      if (this.items) {
-        return this.items
-      }
-      if (this.$page.frontmatter
-        && Array.isArray(this.$page.frontmatter.sidebar)) {
-        return resolveHeaders(
-          this.$page.frontmatter.sidebar.map(
-            path => this.$site.pages.find(page => page.regularPath === path))
-            .filter(x => x))
-      }
-      return resolveHeaders([this.$page])
-    },
     tocWithoutParent () {
       function removeParent (toc) {
         return toc.map(x => {
@@ -81,15 +69,38 @@ export default {
   },
   watch: {
     $route () {
-      this.updateToc()
+      this.updateTocOpenAndActive()
     }
   },
   mounted () {
     this.updateToc()
+    this.updateTocOpenAndActive()
+    this.$root.$refs.layout.$on('updated', this.updateTocListener)
+  },
+  beforeDestroy () {
+    this.$root.$refs.layout.$off('updated', this.updateTocListener)
   },
   methods: {
+    updateTocListener () {
+      this.$nextTick(() => this.updateToc())
+    },
     resolveHeaders,
     updateToc () {
+      if (this.items) {
+        this.toc = this.items
+      } else if (this.$page.frontmatter
+        && Array.isArray(this.$page.frontmatter.sidebar)) {
+        this.toc = resolveHeaders(
+          this.$page.frontmatter.sidebar.map(
+            path => this.$site.pages.find(page => page.regularPath === path))
+            .filter(x => x),
+          this.$page.path
+        )
+      } else {
+        this.toc = resolveHeaders([this.$page], this.$page.path)
+      }
+    },
+    updateTocOpenAndActive () {
       const currentSlug = decodeURIComponent(
         this.$route.path + this.$route.hash)
       const currentHeader = this.tocIds[currentSlug]

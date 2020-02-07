@@ -24,8 +24,19 @@ export function resolveHeaders (pages, currentPath) {
         children: []
       }
     ]
-    if (page.headers) {
-      for (const header of page.headers) {
+    let headers
+    if (page.path === currentPath) {
+      const headings = document.querySelectorAll('.content h1,.content h2,.content h3,.content h4')
+      headers = [].map.call(headings, x => ({
+        level: parseInt(x.tagName.slice(1), 10),
+        slug: x.id,
+        title: x.innerText.slice(1).trim()
+      }))
+    } else {
+      headers = page.headers
+    }
+    if (headers) {
+      for (const header of headers) {
         if (header.level > 1 && header.level <= stack.length + 1) {
           const parent = stack[header.level - 2]
           const child = {
