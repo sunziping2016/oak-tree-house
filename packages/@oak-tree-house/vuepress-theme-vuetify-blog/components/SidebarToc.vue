@@ -94,10 +94,15 @@ export default {
           this.$page.frontmatter.sidebar.map(
             path => this.$site.pages.find(page => page.regularPath === path))
             .filter(x => x),
-          this.$page.path
+          this.$page.path,
+          this.$site.themeConfig.extractHeaders
         )
       } else {
-        this.toc = resolveHeaders([this.$page], this.$page.path)
+        this.toc = resolveHeaders(
+          [this.$page],
+          this.$page.path,
+          this.$site.themeConfig.extractHeaders
+        )
       }
     },
     updateTocOpenAndActive () {

@@ -13,7 +13,8 @@ export function isTel (path) {
   return /^tel:/.test(path)
 }
 
-export function resolveHeaders (pages, currentPath) {
+export function resolveHeaders (pages, currentPath, extractHeaders) {
+  extractHeaders = extractHeaders || ['h2', 'h3']
   return pages.map(page => {
     const stack = [
       {
@@ -26,7 +27,7 @@ export function resolveHeaders (pages, currentPath) {
     ]
     let headers
     if (page.path === currentPath) {
-      const headings = document.querySelectorAll('.content h1,.content h2,.content h3,.content h4')
+      const headings = document.querySelectorAll(extractHeaders.map(x => `.content ${x}`).join(','))
       headers = [].map.call(headings, x => ({
         level: parseInt(x.tagName.slice(1), 10),
         slug: x.id,

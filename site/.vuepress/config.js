@@ -80,6 +80,7 @@ module.exports = {
       apiKey: '5eac05703da4f5923e426c2e44baa411',
       indexName: 'szp'
     },
+    extractHeaders: ['h2', 'h3', 'h4'],
     repo: 'sunziping2016/oak-tree-house',
     docsDir: 'site',
     editLinks: true,
@@ -263,6 +264,13 @@ module.exports = {
       md.use(require('markdown-it-attrs'), {
         allowedAttributes: ['style', 'class']
       })
+      md.use(require('markdown-it-multimd-table'), {
+        multiline: true,
+        rowspan: true,
+        headerless: true
+      })
+      md.use(require('./markdown-it-plugins/graphviz'))
+      md.use(require('./markdown-it-plugins/ditaa'))
     }
   },
   sass: {
