@@ -125,6 +125,11 @@ module.exports = {
         '/': '警告'
       }
     }],
+    ['container', {
+      type: 'details',
+      before: info => `<details class="custom-block details">${info ? `<summary>${info}</summary>` : ''}\n`,
+      after: () => '</details>\n'
+    }],
     [require('./plugins/vuepress-plugin-rss.js'),
       {
         base_url: '/',
@@ -269,8 +274,7 @@ module.exports = {
         rowspan: true,
         headerless: true
       })
-      md.use(require('./markdown-it-plugins/graphviz'))
-      md.use(require('./markdown-it-plugins/ditaa'))
+      md.use(require('./markdown-it-plugins/diagrams'))
     }
   },
   sass: {

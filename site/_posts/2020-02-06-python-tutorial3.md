@@ -31,7 +31,7 @@ Python的类型之间是有父子关系的。子类型会拥有父类型的所�
 
 下图是一些内置类型的继承关系，其中方框是内置类型，椭圆来自`collection.abc`，每个椭圆的内容都提供一些方法。以后如果有机会，我会再来介绍每个节点是什么含义，你可以点击[此处](https://docs.python.org/3.7/library/collections.abc.html#collections-abstract-base-classes)查看相关文档。
 
-```graphviz [compile]
+```graphviz [render]
 digraph abc {
   graph [rankdir=RL]
   subgraph abstract {
@@ -60,18 +60,25 @@ digraph abc {
     KeysView -> MappingView
     KeysView -> Set
     ValuesView -> MappingView
-    ValuesView -> Set
+    ValuesView -> Collection
     Awaitable
     Coroutine -> Awaitable
     AsyncIterable
     AsyncIterator -> AsyncIterable
     AsyncGenerator -> AsyncIterator
+    Number
+    Complex -> Number
+    Real -> Complex
+    Rational -> Real
+    Integral -> Rational
   }
   subgraph concret {
     node [shape=box]
     rank=same
     int
     float
+    bool
+    bool
     complex
     list
     tuple
@@ -85,8 +92,13 @@ digraph abc {
     dict
   }
   int -> Hashable
+  int -> Integral
   float -> Hashable
+  float -> Real
+  bool -> Hashable
+  bool -> Integral
   complex -> Hashable
+  complex -> Complex
   list -> MutableSequnece
   tuple -> Sequence
   tuple -> Hashable
@@ -104,7 +116,6 @@ digraph abc {
   fronzenset -> Set
   fronzenset -> Hashable
   dict -> MutableMapping
-  dict -> Reversible
 }
 ```
 
@@ -630,6 +641,7 @@ True
 |`iter(iterable)`{.text-no-wrap}|返回`iterable`的迭代器|`Iterable`要求的方法|
 |`min(iterable)`{.text-no-wrap}|`iterable`最小的元素|`Iterable`提供的方法|
 |`max(iterable)`{.text-no-wrap}|`iterable`最大的元素|^^|
+|`sorted(iterable)`{.text-no-wrap}|返回一个迭代器，是排好序的`iterable`，排序是stable的|^^|
 |`sum(iterable, start=0)`{.text-no-wrap}|从`start`开始左往右对所有数据求和|^^|
 |`all(iterable)`{.text-no-wrap}|`iterable`所有元素是否都是真|^^|
 |`any(iterable)`{.text-no-wrap}|`iterable`是否存在某个元素是真|^^|
@@ -680,7 +692,7 @@ True
 
 所谓**序列**就是那些能够通过整数索引元素`s[i]`、并能通过`len()`函数获取长度的对象，所有的序列对象一定是**可迭代对象**（在先前的继承图中你可以看到`Sequence`继承自`Iterable`）。**可变的序列**是普通**序列**的子类型，除继承得到的方法之外，更进一步支持了对索引赋值`s[i] = value`、删除索引`del s[i]`和插入元素`s.insert(index, value)`这一些操作。这些继承关系可以用下图表示。
 
-```graphviz [compile]
+```graphviz [render]
 digraph {
   graph [rankdir=BT]
   subgraph abstract {
@@ -749,7 +761,7 @@ True
 
 对于索引和切片下标值的含义，我们还是祭出下方的这个图，这是字符串`Python`的索引对应的位置。索引从0开始计数，索引6是个非法的索引，它**越界**了。此外还要注意切片是左闭右开的。
 
-```ditaa [compile no-separation]
+```ditaa [render no-separation]
  +---+---+---+---+---+---+
  | P | y | t | h | o | n |
  +---+---+---+---+---+---+
@@ -839,7 +851,7 @@ True
 
 此外`list`还提供了以下方法：
 
-- `list.sort(key=None, reverse=False)`：将列表排序。`key`是一个函数，接受元素，返回排序的键，如果`reverse`为`True`，改为由小到大排序。
+- `list.sort(key=None, reverse=False)`：将列表排序。`key`是一个函数，接受元素，返回排序的键，如果`reverse`为`True`，改为由大到小排序，排序一定是stable的。
 
 示例代码如下：
 
@@ -861,7 +873,11 @@ True
 ```
 
 ::: tip 原理
-TODO
+获取`s[i]`（包括切片）都会调用`s.__getitem__(i)`，`s[i] = t`会调用`s.__setitem__(i, t)`，而`del s[i]`会调用`s.__getitem__(i)`。实际上如何处理`i`是负数、切片之类的完全有对象`s`掌管。如果`i`不是一个合适的类型，可以抛出`TypeError`异常；对于序列类型，如果`i`越界，可以抛出`IndexError`异常；对于映射类型，如果`i`不存在，可以抛出`KeyError`异常。
+
+`len(s)`会调用`s.__len__()`，这个方法应当返回$geq 0$的整数。
+
+`reversed(s)`会先尝试调用`s.__reversed__()`得到逆序迭代器，如果这个方法不存在，它会试图创建一个迭代器，这个迭代器会，从`s.__len__() - 1`一直递减到0，调用`iterable.__getitem__()`获取元素。
 :::
 
 #### 1.5.5 列表推导式
@@ -949,13 +965,256 @@ squares = [x**2 for x in range(10)]
 [[1, 5, 9], [2, 6, 10], [3, 7, 11], [4, 8, 12]]
 ```
 
-### 1.6 slice
+### 1.6 字典
 
-### 1.7 range和enumerate
+字典属于可变映射类型，它可以存储键值对。
 
-### 1.8 字典
+#### 1.6.1 字典的字面量
 
-### 1.9 复数
+字典的字面量是由一对花括号`{}`，逗号分割的键值对`key: value`组成，最后一个键值对的末尾可以有逗号`,`，这里`key`和`value`可以是任意表达式，但需要注意`key`表达式的结果一定是**可哈希对象（hashable）**，想知道那些对象是可哈希对象可以查看[本章开头](#_1-内置对象)的那张图，继承自`Hashable`的对象都是可哈希对象，所有的数学类型、元组、字符串、bytes是可哈希的。在Python标准库中不可变对象都是可哈希的，可变对象都不是可哈希的，但实际上可变和可哈希没有必然的联系。
+
+可能大家还是不清楚什么叫“哈希”，哈希的意思是将对象的内容映射到一个整数，这种映射就像一个指纹，这对于哈希表这种数据结构是必须的，而哈希表在存储键值对的数据中有很优秀的性能。
+
+```python
+>>> {'a': 1, 1: 'a', ('1', 1): 'a'}
+{'a': 1, 1: 'a', ('1', 1): 'a'}
+>>> {
+...   'a': 1,  # 末尾可以跟逗号
+... }
+{'a': 1}
+>>> {['1', 1]: 'a'}  # 列表不是可哈希对象
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: unhashable type: 'list'
+>>> {}  # 空的字典
+{}
+```
+
+:::tip
+所谓可哈希对象必须满足两个条件：
+
+- `hashable.__hash__()`方法返回一个整数，这个整数在对象存在期间不会发生变化；
+- `hashable.__eq__(self)`方法可以判断对象是否相等，对于相等的对象，它们的哈希值必须相等。
+
+:::
+
+此外，字典的字面量中还允许字典的解包语法，这和函数的解包是一样的。
+
+当字典的字面量包含重复的键的时候，后面的那个会起效。
+
+```python
+>>> a = {'a': 0, 'b': 1}
+>>> b = {**a, 'a': 1}  # 解包
+>>> b
+{'a': 1, 'b': 1}
+>>> {1: 'a', 1.0: 'b'}  # 由于 1 == 1.0 ，后面的键值对会替代前面的
+{1: 'b'}
+```
+
+从Python 3.7开始，映射的迭代顺序一定遵循插入顺序。
+
+#### 1.6.2 其他构造出字典的方式
+
+`dict`是字典的构造函数。`dict`可以接受其他映射对象构造出一个新的字典，也可以从可迭代对象构造出新的字典，这个可迭代对象的元素是包含键和值的二元素可迭代对象。`dict`还接受关键字参数，可以给先前说的两种构造方式添加新的元素。
+
+当出现重复的键时，后面的有效，由于关键字参数位于最后，所以关键字参数总归有效。我们来看例子：
+
+```python
+>>> a = {'a': 0, 'b': 1}
+>>> dict(a, a=1)
+{'a': 1, 'b': 1}
+>>> dict([('a', 0), ('b', 1), ('c', 2)])
+{'a': 0, 'b': 1, 'c': 2}
+>>> dict(zip(['a', 'b', 'c'], range(3)))
+{'a': 0, 'b': 1, 'c': 2}
+```
+
+#### 1.6.3 映射的操作
+
+```graphviz [render]
+digraph {
+  graph [rankdir=BT]
+  subgraph abstract {
+    MutableMapping -> Mapping -> Collection -> Iterable
+    Set -> Collection
+    ItemsView -> MappingView
+    ItemsView -> Set
+    KeysView -> MappingView
+    KeysView -> Set
+    ValuesView -> MappingView
+    ValuesView -> Collection
+  }
+  subgraph concret {
+    node [shape=box]
+    dict
+    "dict.items()"
+    "dict.keys()"
+    "dict.values()"
+  }
+  dict -> MutableMapping
+  "dict.items()" -> ItemsView
+  "dict.keys()" -> KeysView
+  "dict.values()" -> ValuesView
+}
+```
+
+|操作|结果|来源|
+|:-|:-|:-|
+|`d[k]`{.text-no-wrap}|返回键`k`对应的值，如果该值不存在，抛出`KeyError`异常|`Mapping`要求的方法|
+|`len(d)`{.text-no-wrap}|返回`d`中元素的个数|^^|
+|`iter(d)`{.text-no-wrap}|返回遍历`d`所有键的迭代器，等价于`iter(d.keys())`|^^|
+|`d[k] = v`{.text-no-wrap}|将`d[k]`设置为`v`，如果'k'存在会更新，不存在会插入|`MutableMapping`要求的方法|
+|`del d[k]`{.text-no-wrap}|删除`d[k]`，如果`k`存在会抛出`KeyError`异常|^^|
+|`k in d`{.text-no-wrap}和`k not in d`{.text-no-wrap}|判断键`k`是否存在|`Mapping`提供的方法|
+|`d1 == d2`{.text-no-wrap}和`d1 != d2`{.text-no-wrap}|判断两个字典是否相等，只要有相同的键值对的字典就认为相同，这与插入顺序无关|^^|
+|`d.keys()`{.text-no-wrap}|返回字典键的视图，这是一个包含了字典所有键的集合，详见[字典的试图](#_1-6-4-字典的视图)|^^|
+|`d.items()`{.text-no-wrap}|返回字典键值对的试图，这是一个包含了`(key, value)`二元组的集合，详见[字典的试图](#_1-6-4-字典的视图)|^^|
+|`d.values()`{.text-no-wrap}|返回字典值的试图，这是一个包含了所有值的迭代器，注意`d.values() == d.values()`为`False`|^^|
+|`d.get(key, default=None)`{.text-no-wrap}|类似`d[key]`，只是如果该值不存在会返回`default`|^^|
+|`d.pop(key[, default])`|如果`key`在字典中，移除它并返回，否则返回`default`，如果`default`也没指定，抛出`KeyError`异常|`MutableMapping`提供的方法|
+|`d.popitem()`|返回`(key, value)`二元组键值对，并移除它，如果字典空会抛出`KeyError`，对于字典，最后插入的会最先pop出来|^^|
+|`d.clear()`|移除字典中所有的元素|^^|
+|`d.update([other, ]**kwargs)`|和[其他构造出字典的方式]#_1-6-2-其他构造出字典的方式)类似，只是会保留或者更新字典中的键值对，`other`可以是映射或者包含键值对的可迭代对象，也可以携带关键字参数|^^|
+|`d.setdefault(key, default=None)`|等价于`d.get(key, default)`，如果`key`不存在，会执行`d[key] = default`|^^|
+|`d.copy()`|返回字典的一个浅拷贝|字典对象的额外方法|
+
+同样的，对于上述操作，我们会给出示例，置于字典的视图，更详细的示例代码会在[字典的试图](#_1-6-4-字典的视图)那一节给出。
+
+```python
+>>> d = {'a': 1, 'b': 2}
+>>> len(d)
+2
+>>> list(d)  # 等价于list(d.keys())
+['a', 'b']
+>>> d['c'] = 3
+>>> d
+{'a': 1, 'b': 2, 'c': 3}
+>>> del d['a']
+>>> d
+{'b': 2, 'c': 3}
+>>> 'a' in d
+False
+>>> d == {'c': 3, 'b': 2}  # 可以看出顺序并不影响是否相等
+True
+>>> list(d.items())
+[('b', 2), ('c', 3)]
+>>> list(d.values())
+[2, 3]
+>>> d.get('d', 4)
+4
+>>> d.pop('c', 5)
+3
+>>> d
+{'b': 2}
+>>> d.update([('a', 1), ('c', 3)])
+>>> d.popitem()  # 最后插入的是('c', 3)，所以它被pop了出来
+('c', 3)
+>>> d
+{'b': 2, 'a': 1}
+>>> d.clear()
+>>> d
+{}
+>>> d.setdefault('a', 0)
+0
+>>> d
+{'a': 0}
+>>> d.copy()
+{'a': 0}
+```
+
+::: tip 原理
+对于字典`d[k]`的操作，如果字典的子类型实现了`d.__missing__(key)`的方法，当`k`找不到的时候就会调用并返回`d.__missing__(k)`。
+:::
+
+#### 1.6.4 字典的视图
+
+`dict.keys()`、`dict.values()`和`dict.items()`返回的是视图对象。它们是**动态的**，也就是说如果字典发生了变化，这些视图也会发生变化。下面这张图是[上面](#_1-6-3-映射的操作)图的子图，显示了各个视图对象的关系。
+
+```graphviz [render]
+digraph {
+  graph [rankdir=BT]
+  subgraph abstract {
+    Set -> Collection
+    ItemsView -> MappingView
+    ItemsView -> Set
+    KeysView -> MappingView
+    KeysView -> Set
+    ValuesView -> MappingView
+    ValuesView -> Collection
+  }
+  subgraph concret {
+    node [shape=box]
+    "dict.items()"
+    "dict.keys()"
+    "dict.values()"
+  }
+  "dict.items()" -> ItemsView
+  "dict.keys()" -> KeysView
+  "dict.values()" -> ValuesView
+}
+```
+
+所有的视图都支持下列操作：
+
+|操作|结果|来源|
+|:-|:-|:-|
+|`len(view)`{.text-no-wrap}|得到字典元素的个数|`MappingView`提供的方法|
+|`iter(view)`{.text-no-wrap}|按照插入顺序遍历，边遍历边插入删除元素会抛出`RuntimeError`|`ItemsView`、`KeysView`和`ValuesView`提供的方法|
+|`x in view`{.text-no-wrap}|判断`x`是否是键、值或键值对|^^|
+
+`dict.keys()`返回的对象类似集合，而如果字典的值也是可哈希对象，`dict.items()`返回的对象也类似集合。这里类似集合是指可以用判断是否相等的运算（`==`和`!=`）、判断子集的运算（`<`、`<=`、`>`和`>=`）、交（`&`）、并（`|`）、差（`-`）、对称差（`^`）和`isdisjoint()`。具体集合的操作可以查看[1.7 集合和frozenset](#_1-7-集合和frozenset)。
+
+下面是例子：
+
+```python
+>>> dishes = {'eggs': 2, 'sausage': 1, 'bacon': 1, 'spam': 500}
+>>> keys = dishes.keys()
+>>> values = dishes.values()
+
+>>> # 迭代，会调用iter(values)
+>>> n = 0
+>>> for val in values:
+...     n += val
+>>> print(n)
+504
+
+>>> # keys和values按照同样的顺序（插入顺序）
+>>> list(keys)
+['eggs', 'sausage', 'bacon', 'spam']
+>>> list(values)
+[2, 1, 1, 500]
+
+>>> # 视图对象是动态的，会反映字典的变化
+>>> del dishes['eggs']
+>>> del dishes['sausage']
+>>> list(keys)
+['bacon', 'spam']
+
+>>> # 集合操作
+>>> keys & {'eggs', 'bacon', 'salad'}
+{'bacon'}
+>>> keys ^ {'sausage', 'juice'}
+{'juice', 'sausage', 'bacon', 'spam'}
+```
+
+最后我指出一下，其实视图对象用得最多的地方是`for`循环。如果你只需要遍历键，就可以`for k in d:`（`d`是个字典）或者`for k in d.keys():`；如果只需要遍历值，就可以`for v in d.values():`；如果需要遍历键和值，就可以`for k, v in d.items():`。
+
+#### 1.6.5 字典推导式
+
+与列表类似，字典也有推导式。字典的推导式语法与列表类似，只是使用花括号`{}`括起，单个表达式也变成了`:`分隔的两个表达式：
+
+```python
+>>> {x: x**2 for x in (2, 4, 6)}
+{2: 4, 4: 16, 6: 36}
+```
+
+### 1.7 集合和FrozenSet
+
+### 1.8 复数
+
+### 1.9 slice
+
+### 1.10 range和enumerate
 
 ## 2 表达式
 
@@ -970,3 +1229,205 @@ squares = [x**2 for x in range(10)]
 ## 4 函数
 
 ## 5 习题
+
+### 5.1 A+B问题
+
+#### 题目要求
+
+输入两个浮点数，输出它们的和，你可以有适当的输出提示来让用户输入浮点数和显示结果。
+
+#### 样例输入输出
+
+```text
+Please input the first real number: 1.2
+Please input the second real number: 2.3
+1.2 + 2.3 = 3.5
+```
+
+#### 提示
+
+- [input()函数](https://docs.python.org/3/library/functions.html#input)用于输入；
+- [print()函数](https://docs.python.org/3/library/functions.html#print)用于输出：
+- [1.2.2 浮点数与字符串的转换](#_1-2-2-浮点数与字符串的转换)。
+
+#### 答案
+
+::: details 点击查看答案
+
+```python
+if __name__ == '__main__':
+    a = float(input('Please input the first real number: '))
+    b = float(input('Please input the second real number: '))
+    print(str(a) + ' + ' + str(b) + ' = ' + str(a + b))
+```
+
+:::
+
+### 5.2 判断正负
+
+#### 题目要求
+
+输入一个浮点数，输出它是正数、负数还是0。
+
+#### 样例输入输出
+
+```text
+Please input a real number: -1
+-1.0 is a negative number
+```
+
+#### 提示
+
+- 使用[if语句](https://docs.python.org/3/tutorial/controlflow.html#if-statements)来判断。
+
+#### 答案
+
+::: details 点击查看答案
+
+```python
+if __name__ == '__main__':
+    number = float(input('Please input a real number: '))
+    if number > 0.0:
+        print(str(number) + ' is a positive number')
+    elif number < 0.0:
+        print(str(number) + ' is a negative number')
+    else:
+        print(str(number) + ' is zero')
+```
+
+:::
+
+### 5.3 最大值与最小值
+
+#### 题目要求
+
+输入一系列的浮点数，直到输入为0停止，输出他们的最大值最小值平均数和和。
+
+#### 样例输入输出
+
+```text
+Please input a real number (input 0 to stop): 2
+Please input a real number (input 0 to stop): 1
+Please input a real number (input 0 to stop): 3
+Please input a real number (input 0 to stop): 0
+The maximum number is 3.0
+The minimum number is 1.0
+The average number is 2.0
+The sum number is 6.0
+```
+
+#### 提示
+
+- 使用[while语句](https://docs.python.org/3/tutorial/introduction.html#first-steps-towards-programming)来制造循环；
+- 使用[break语句](https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops)来终止循环。
+- 使用[max()、min()和sum()函数](#_1-5-3-可迭代对象的操作)，注意`max()`函数既可作用域可迭代对象`max(iterable)`，也可直接比较两个数`max(a, b)`，`min()`函数也同样。
+
+#### 答案
+
+::: details 点击查看答案
+
+对于这道题，我们有两种解法。第一种是存下所有的数字，这种方法的代码较为简短，这里需要额外指出的是如果是空的序列`min()`和`max()`会报错，平均数也有可能除零异常
+
+```python
+if __name__ == '__main__':
+    numbers = []
+    while True:
+        number = float(input('Please input a real number (input 0 to stop): '))
+        if number == 0:
+            break
+        numbers.append(number)
+    if numbers:
+        print('The maximum number is ' + str(max(numbers)))
+        print('The minimum number is ' + str(min(numbers)))
+        sum_of_numbers = sum(numbers)
+        print('The average number is ' + str(sum_of_numbers / len(numbers)))
+        print('The sum number is ' + str(sum_of_numbers))
+    else:
+        print('You entered a empty sequence')
+```
+
+另一方式就是，只存放最大值、最小值和和。这样空间性能会比较好，如果有大量的甚至超出内存承受范围的浮点数需要输入，也不会出现问题。
+
+```python
+import math
+
+if __name__ == '__main__':
+    max1, min1, sum1, n = -math.inf, math.inf, 0.0, 0
+    while True:
+        number = float(input('Please input a real number (input 0 to stop): '))
+        if number == 0:
+            break
+        max1 = max(max1, number)
+        min1 = min(min1, number)
+        sum1 += number
+        n += 1
+    if n:
+        print('The maximum number is ' + str(max1))
+        print('The minimum number is ' + str(min1))
+        print('The average number is ' + str(sum1 / n))
+        print('The sum number is ' + str(sum1))
+    else:
+        print('You entered a empty sequence')
+```
+
+:::
+
+### 5.4 判断回文串
+
+#### 题目要求
+
+输入一行字符串，判断是不是回文字符串（正过来和倒过来都一样的字符串），如`abcdcba`就是回文数。
+
+#### 样例输入输出
+
+```text
+Please input a line: aba
+It is a palindrome
+```
+
+#### 提示
+
+- [字符串的切片方法](#_1-5-4-序列的操作)。
+
+#### 答案
+
+::: details 点击查看答案
+
+这道题我们也有几种解法，第一种解法非常简单，使用反向的切片就可以得到原来字符串反过来的字符串。
+
+```python
+if __name__ == '__main__':
+    line = input('Please input a line: ')
+    if line == line[::-1]:
+        print('It is a palindrome')
+    else:
+        print('It is not a palindrome')
+```
+
+但是我们会发现这个实现中创建了一个临时字符串，所以第一种改进方法是不再创建这个临时字符串：
+
+```python
+if __name__ == '__main__':
+    line = input('Please input a line: ')
+    for a, b in zip(line, reversed(line)):
+        if a != b:
+            print('It is not a palindrome')
+            break
+    else:
+        print('It is a palindrome')
+```
+
+最后我们还会发现回文字符串多比较了几次，所以稍加改动性能就可以翻倍，这里只改动了第3行：
+
+```python
+if __name__ == '__main__':
+    line = input('Please input a line: ')
+    for a, b, _ in zip(line, reversed(line), range(len(line) // 2)):
+        if a != b:
+            print('It is not a palindrome')
+            break
+    else:
+        print('It is a palindrome')
+```
+
+:::
