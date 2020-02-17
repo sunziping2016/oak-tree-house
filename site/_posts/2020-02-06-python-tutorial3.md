@@ -1431,3 +1431,183 @@ if __name__ == '__main__':
 ```
 
 :::
+
+### 5.5 统计字符数目
+
+#### 题目要求
+
+输入一行字符串，统计英文字符（包括大小写）和数字字符的个数。
+
+#### 样例输入输出
+
+```text
+Please input a line: a1h45
+Number of alphas is 2
+Number of digits is 3
+```
+
+#### 提示
+
+- [1.3.7 常见的字符串方法](#_1-3-7-常见的字符串方法)有一些判断字符类型的方法。
+
+#### 答案
+
+::: details 点击查看答案
+
+```python
+if __name__ == '__main__':
+    line = input('Please input a line: ')
+    n_alpha, n_digit = 0, 0
+    for char in line:
+        if char.isalpha():
+            n_alpha += 1
+        elif char.isdigit():
+            n_digit += 1
+    print('Number of alphas is ' + str(n_alpha))
+    print('Number of digits is ' + str(n_digit))
+```
+
+:::
+
+### 5.6 统计单词数目
+
+#### 题目要求
+
+输入一行字符串，字符串包含若干单词（单词中不包含空白符），单词之间有空白符，统计每个单词出现的个数，并将所有的单词按照字母表顺序排列出来：
+
+#### 样例输入输出
+
+```text
+Please input a line: what the fuck does what the fuck mean
+does: 1
+fuck: 2
+mean: 1
+the: 2
+what: 2
+```
+
+#### 提示
+
+- 你应当使用字典之类的类型存储个数；
+- 你可以使用`sorted()`函数或`list.sort()`方法。
+
+#### 答案
+
+::: details 点击查看答案
+
+```python
+if __name__ == '__main__':
+    line = input('Please input a line: ')
+    words = line.split()
+    counter = {}
+    for word in words:
+        counter[word] = counter.get(word, 0) + 1
+    for key, value in sorted(counter.items()):
+        print(str(key) + ': ' + str(value))
+```
+
+:::
+
+### 5.7 考拉兹猜想
+
+#### 题目要求
+
+考拉兹猜想，又称为奇偶归一猜想、3n+1猜想、冰雹猜想、角谷猜想、哈塞猜想、乌拉姆猜想或叙拉古猜想，是指对于每一个正整数，如果它是奇数，则对它乘3再加1，如果它是偶数，则对它除以2，如此循环，最终都能够得到1。（来自维基百科）。
+
+$$f(n) = \begin{cases} n/2 &\mbox{if } n \equiv 0 \\ 3n+1 & \mbox{if } n\equiv 1 \end{cases} \pmod{2}$$
+
+我们的目标是输入一个整数，输出考拉兹猜想对应的序列，如输入为6，序列就是6，3，10，5，16，8，4，2，1。
+
+#### 提示
+
+- 你需要熟悉一下数学运算。
+
+#### 样例输入输出
+
+```text
+Please input a number: 6
+6
+3
+10
+5
+16
+8
+4
+2
+1
+```
+
+#### 答案
+
+::: details 点击查看答案
+
+```python
+if __name__ == '__main__':
+    num = int(input('Please input a number: '))
+    while True:
+        print(num)
+        if num == 1:
+            break
+        elif num % 2 == 0:
+            num //= 2
+        else:
+            num = 3 * num + 1
+```
+
+:::
+
+### 5.8 快速幂
+
+#### 题目要求
+
+Python内置的`**`运算符其实就是快速幂的一种实现。快速幂是求一个数的整数次方时采用的算法，它的计算方法来源于这个式子：
+
+$$x^n = \begin{cases}
+1, & \mbox{if } n = 0 \\
+x \, ( x \times x)^{\frac{n - 1}{2}}, & \mbox{if } n \mbox{ is odd} \\
+(x \times x)^{\frac{n}{2}} , & \mbox{if } n \mbox{ is even}.
+\end{cases}$$
+
+你的目标是输入两个整数$a$和$b$，求$a^b$而不使用`**`运算符。我们强烈建议初学者使用递归来解决，这里给出递归的模板代码：
+
+```python
+def power(x, n):
+    # Your need to call power inside this function
+    pass
+
+
+if __name__ == '__main__':
+    x = int(input('Please input the base: '))
+    n = int(input('Please input the exponent: '))
+    print(str(x) + '^' + str(n) + ' = ' + str(power(x, n)))
+```
+
+#### 样例输入输出
+
+```text
+Please input the base: 2
+Please input the exponent: 5
+2^5 = 32
+```
+
+#### 答案
+
+::: details 点击查看答案
+
+```python
+def power(x, n):
+    if n == 0:
+        return 1
+    elif n % 2:
+        return x * power(x * x, (n - 1) // 2)
+    else:
+        return power(x * x, n // 2)
+
+
+if __name__ == '__main__':
+    x = int(input('Please input the base: '))
+    n = int(input('Please input the exponent: '))
+    print(str(x) + '^' + str(n) + ' = ' + str(power(x, n)))
+```
+
+:::
