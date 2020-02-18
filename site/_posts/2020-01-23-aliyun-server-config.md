@@ -8,6 +8,7 @@ series: 系统配置
 sidebar:
   - /_posts/2020-01-23-aliyun-server-config.html
   - /_posts/2020-02-01-zeptovm-server-config.html
+  - /_posts/2020-02-18-xiaomi-notebook-config.html
 ---
 
 这篇文章是关于如何配置我的阿里云服务器。阿里云服务器上有Web服务、Seafile和Minecraft（spigot），计划还会配有MongoDB、Redis、ElasticSearch等服务。

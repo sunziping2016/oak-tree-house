@@ -8,6 +8,7 @@ series: 系统配置
 sidebar:
   - /_posts/2020-01-23-aliyun-server-config.html
   - /_posts/2020-02-01-zeptovm-server-config.html
+  - /_posts/2020-02-18-xiaomi-notebook-config.html
 ---
 
 这篇文章是关于如何配置我的ZeptoVM服务器的。目前下来我尝试下来上网最快的服务器就是ZeptoVM。其上面运行的主要服务是某科学的超能上网。目前服务器被绑定到了域名szp.io上。其Web服务会重定向到szp15.com上。
