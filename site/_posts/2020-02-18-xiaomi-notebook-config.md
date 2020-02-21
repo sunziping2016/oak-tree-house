@@ -292,6 +292,13 @@ sudo chown sun:sun /usr/local/share/bacgrounds/sun\'s-wallpaper
 ln -s /usr/local/share/bacgrounds/sun\'s-wallpaper ~/Pictures/backgrounds
 ```
 
+然后配置XDG用户目录：
+
+```bash
+yay -S xdg-user-dirs
+xdg-user-dirs-update
+```
+
 ### 2.10 输入法
 
 ```bash
@@ -405,6 +412,7 @@ sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="my-theme"/' .zshrc
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 sed -i 's/plugins=(\(.*\))/plugins=(\1 zsh-syntax-highlighting zsh-autosuggestions)/' .zshrc
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
 ```
 
 ### 3.4 vim
@@ -412,7 +420,10 @@ sed -i 's/plugins=(\(.*\))/plugins=(\1 zsh-syntax-highlighting zsh-autosuggestio
 取消vim的鼠标，以使vim可以方便被复制。
 
 ```bash
-cat << EOF >> .vimrc
+cat << EOF > .vimrc
+unlet! skip_defaults_vim
+source \$VIMRUNTIME/defaults.vim
+
 set mouse=
 set ttymouse=
 EOF
@@ -469,11 +480,25 @@ yay -S texlive-most texlive-lang biber
 
 ### 3.9 安装常用的命令行软件
 
+#### 3.9.1 开发相关
+
 ```bash
-yay -S htop wget cmake gdb git git-lfs tree w3m tmux clang bzip2 cppcheck ditaa graphviz dos2unix zip llvm neofetch networkmanager-openconnect openconnect p7zip pwgen rsync you-get unzip-iconv unrar vlc valgrind you-get
+yay -S cmake gdb git git-lfs tk clang llvm cppcheck valgrind coq coqide
 ```
 
-一些命令行游戏：
+#### 3.9.2 压缩软件
+
+```bash
+yay -S bzip2 zip p7zip unzip-iconv unrar
+```
+
+#### 3.9.3 其他应用
+
+```bash
+yay -S htop wget tree w3m tmux ditaa graphviz dos2unix neofetch networkmanager-openconnect openconnect pwgen rsync you-get scrapy tensorboard
+```
+
+#### 3.9.4 游戏
 
 ```bash
 yay -S bsd-games curseofwar
@@ -481,27 +506,231 @@ yay -S bsd-games curseofwar
 
 ### 3.10 安装常用的图形界面软件
 
+#### 3.10.1 开发相关
+
 ```bash
-yay -S chromium pepper-flash birdtray thunderbird visual-studio-code-bin seafile-client telegram-desktop audacity celestia baidunetdisk-bin inkscape kazam netease-cloud-music openshot postman-bin qq-linux ttf-wps-fonts wps-office wxmaxima maxima wireshark-qt clion intellij-idea-ultimate-edition
+yay -S visual-studio-code-bin clion intellij-idea-ultimate-edition
+```
+
+#### 3.10.2 其他应用
+
+```bash
+yay -S chromium pepper-flash birdtray thunderbird seafile-client telegram-desktop audacity celestia baidunetdisk-bin inkscape kazam netease-cloud-music openshot postman-bin qq-linux ttf-wps-fonts wps-office wxmaxima maxima wireshark-qt vlc
+```
+
+#### 3.10.3 游戏
+
+```bash
+yay -S minecraft-launcher
 ```
 
 ## 4 后端服务
 
+默认来讲这些服务都不启动。
+
 ### 4.1 Nginx
+
+首先：
+
+```bash
+sudo pacman -S nginx-mainline
+```
+
+将[Nginx#Configure example](https://wiki.archlinux.org/index.php/nginx#Configuration_example)的内容拷贝到`/etc/nginx/nginx.conf`。
+
+```bash
+sudo mkdir /etc/nginx/sites-available
+sudo mkdir /etc/nginx/sites-enabled
+sudo mkdir /etc/nginx/snippets
+```
+
+然后编辑`/etc/nginx/sites-available/default.conf`，为了避免之后本地访问不到这个server块，我们还额外监听了本地：
+
+```text
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    listen 127.0.0.1:80;
+    listen [::1]:80;
+    server_name localhost;
+
+    access_log  /var/log/nginx/default.access.log;
+    error_log  /var/log/nginx/default.error.log;
+
+    location / {
+        root /srv/http/default;
+        index index.html;
+    }
+
+    location ~ ^/~(.+?)(/.*)?$ {
+        alias /srv/http/users/$1$2;
+        index index.html;
+        autoindex on;
+    }
+}
+```
+
+创建符号链接。
+
+```bash
+cd /etc/nginx/sites-enabled
+sudo ln -s ../sites-available/default.conf .
+sudo mkdir -p /srv/http/default
+sudo mkdir -p /srv/http/users/sun
+sudo chown sun:sun /srv/http/users/sun
+ln -s /srv/http/users/sun ~/public_html
+```
 
 ### 4.2 MariaDB
 
+```bash
+sudo pacman -S mariadb
+sudo mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+sudo systemctl start mariadb
+sudo mysql_secure_installation
+```
+
+可以使用`mysql -u root -p`登录MariaDB。
+
+接下来安装PhpMyAdmin。
+
+```bash
+sudo pacman -S php php-fpm phpmyadmin
+```
+
+编辑`/etc/php/php.ini`：
+
+```ini
+date.timezone = Asia/Shanghai
+extension=mysqli
+extension=bz2
+extension=zip
+```
+
+编辑`/etc/nginx/sites-available/pma.conf`：
+
+```text
+server {
+    server_name pma.localhost;
+    listen 127.0.0.1:80;
+    listen [::1]:80;
+    index index.php;
+    access_log /var/log/nginx/pma.access.log;
+    error_log /var/log/nginx/pma.error.log;
+
+    root /usr/share/webapps/phpMyAdmin;
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    error_page 404 /index.php;
+
+    location ~ \.php$ {
+        try_files $uri $document_root$fastcgi_script_name =404;
+
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+
+        fastcgi_param HTTP_PROXY "";
+        fastcgi_request_buffering off;
+   }
+}
+```
+
+然后启用配置：
+
+```bash
+cd /etc/nginx/sites-enabled
+sudo ln -s ../sites-available/pma.conf .
+sudo nginx -t
+sudo systemctl start php-fpm nginx mariadb
+sudo systemctl reload nginx
+```
+
 ### 4.3 MongoDB
+
+安装`arch4edu`的MongoDB：
+
+```bash
+sudo pacman -S mongodb
+sudo systemctl start mongodb
+mongo
+# in MongoDB shell
+use admin
+db.createUser(
+  {
+    user: "sun",
+    pwd: passwordPrompt(),
+    roles: ["root"]
+  }
+)
+```
+
+然后编辑`/etc/mongodb.conf`：
+
+```text
+security:
+ authorization: "enabled"
+```
+
+使用`mongo -u sun`登录。
 
 ### 4.4 Redis
 
+```bash
+sudo pacman -S redis
+```
+
 ### 4.5 ElasticSearch
 
+```bash
+sudo pacman -S elasticsearch-xpack kibana-xpack
+```
+
+编辑`/etc/elasticsearch/elasticsearch.yml`：
+
+```text
+network.host: 127.0.0.1
+
+xpack.security.enabled: true
+```
+
+然后设置账户的密码：
+
+```bash
+elasticsearch-setup-passwords interactive
+```
+
+编辑`/etc/kibana/kibana.yml`：
+
+```text
+elasticsearch.username: "kibana"
+elasticsearch.password: "PASSWORD"
+```
+
 ### 4.6 Docker
+
+```bash
+sudo pacman -S docker
+sudo gpasswd -a sun docker
+```
 
 ## 5 编程语言
 
 ### 5.1 Android
+
+```bash
+yay -S android-sdk android-sdk-build-tools android-sdk-platform-tools android-platform android-studio
+sudo groupadd android-sdk
+sudo gpasswd -a sun android-sdk
+sudo setfacl -R -m g:android-sdk:rwx /opt/android-sdk
+sudo setfacl -d -m g:android-sdk:rwX /opt/android-sdk
+```
+
+记得设置Android Studio的代理，它会提示设置代理，Gradle也会被提示需要设置代理，不要启用Gradle的https代理。
 
 ### 5.2 Java
 
@@ -510,6 +739,17 @@ yay -S jdk-openjdk jdk8-openjdk
 ```
 
 ### 5.3 Python
+
+```bash
+curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+sed -i 's/plugins=(\(.*\))/plugins=(\1 pyenv)/' .zshrc
+```
+
+更新pyenv使用`pyenv update`即可。
+
+使用`pyenv install VERSION`可以安装Python版本。使用`pyenv install --list`可以查看可用的安装版本。使用`pyenv local VERSION`可以设置本目录环境下的Python版本。使用`pyenv global VERSION`可以设置全局的Python版本。
+
+最后安装JupyterLab
 
 ### 5.4 Node.js
 
@@ -520,6 +760,45 @@ sed -i 's/plugins=(\(.*\))/plugins=(\1 nvm)/' .zshrc
 
 使用`nvm install VERSION`可以安装Node.js版本，如`nvm install node`安装最新版。使用`nvm ls-remote`可以查看可用的版本，`nvm ls`可以查看现在系统中的版本。使用`nvm use VERSION`可以临时切换版本，使用`nvm alias default VERSION`永久切换版本。
 
+更新可以`nvm`使用下方的命令：
+
+```bash
+(
+  cd "$NVM_DIR"
+  git fetch --tags origin
+  git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
+) && \. "$NVM_DIR/nvm.sh"
+```
+
 ### 5.5 Rust
 
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+echo 'source "\$HOME/.cargo/env"' >> ~/.zshrc
+```
+
 ### 5.6 Haskell
+
+```bash
+yay -S ghc stack
+```
+
+### 5.7 MATLAB
+
+下载iso后挂在，`sudo ./install`即可。
+
+可以创建`/usr/share/applications/matlab.desktop`：
+
+```text
+[Desktop Entry]
+Version=R2019b
+Type=Application
+Terminal=false
+MimeType=text/x-matlab
+Exec=/usr/local/MATLAB/R2019b/bin/matlab -desktop
+Name=MATLAB
+Icon=matlab
+Categories=Development;Math;Science
+Comment=Scientific computing environment
+StartupNotify=true
+```
