@@ -36,6 +36,11 @@ export default {
     Layout,
     SidebarLinks,
     IndexSidebarWordCloud
+  },
+  methods: {
+    openSnackbar () {
+      this.$children[0].openSnackbar.apply(this.$children[0], arguments)
+    }
   }
 }
 </script>

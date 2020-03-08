@@ -109,6 +109,15 @@ sudo sh -c 'echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.d/bbr.conf
 sudo reboot
 ```
 
+### 1.7 代理配置
+
+```bash
+sudo apt install proxychains4
+curl -Ls https://install.direct/go.sh | sudo bash
+```
+
+修改`/etc/proxychains4.conf`，注意，代理的命令是`proxychains4`。
+
 ## 2 配置Web服务器
 
 以下内容复制自[服务器配置](/2017/07/16/server-deploy)。
@@ -537,7 +546,7 @@ source spigot.install
 post_install
 ```
 
-然后启动服务。
+如果是更新，最后一行改为`post_upgrade`。然后启动服务。
 
 ```bash
 systemctl start spigot
@@ -549,3 +558,18 @@ systemctl enable spigot
 ### 4.2 安装插件
 
 懒得写了，等以后需要再说233。
+
+## 5 Frp
+
+寻找最新的frp下载：
+
+```bash
+wget https://github.com/fatedier/frp/releases/download/v0.31.2/frp_0.31.2_linux_amd64.tar.gz
+tar xzvf frp_0.31.2_linux_amd64.tar.gz
+cd /usr/local/bin
+sudo cp ~/frp_0.31.2_linux_amd64/frpc ~/frp_0.31.2_linux_amd64/frps .
+cd /etc/systemd/system
+sudo cp ~/frp_0.31.2_linux_amd64/systemd/* .
+sudo sed -i "s/\/usr\/bin\/frp/\/usr\/local\/bin\/frp/" frpc.service frpc@.service frps.service frps@.service
+sudo mkdir -p /etc/frp
+```

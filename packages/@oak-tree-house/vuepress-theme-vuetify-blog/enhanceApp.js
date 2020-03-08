@@ -23,7 +23,6 @@ import Vuetify, {
   VTreeview,
   VContainer,
   VSnackbar,
-  VFabTransition,
   VCard,
   VCardTitle,
   VCardSubtitle,
@@ -32,7 +31,11 @@ import Vuetify, {
   VPagination,
   VFooter,
   VBreadcrumbs,
-  VChip
+  VChip,
+  VSpeedDial,
+  VDialog,
+  VProgressCircular,
+  VSwitch
 } from 'vuetify/lib'
 import { Scroll } from 'vuetify/lib/directives'
 import goTo from 'vuetify/es5/services/goto'
@@ -63,7 +66,6 @@ export default ({ Vue, options, router, siteData }) => {
       VTreeview,
       VContainer,
       VSnackbar,
-      VFabTransition,
       VCard,
       VCardTitle,
       VCardSubtitle,
@@ -72,7 +74,11 @@ export default ({ Vue, options, router, siteData }) => {
       VPagination,
       VFooter,
       VBreadcrumbs,
-      VChip
+      VChip,
+      VSpeedDial,
+      VDialog,
+      VProgressCircular,
+      VSwitch
     },
     directives: {
       Scroll

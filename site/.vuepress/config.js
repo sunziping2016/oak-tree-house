@@ -18,7 +18,7 @@ module.exports = {
       theme: {
         themes: {
           light: {
-            primary: '#6699FF',
+            primary: '#9A7ED8',
             accent: '#FF6699'
           }
         }
@@ -100,7 +100,21 @@ module.exports = {
     tagText: '标签',
     categoryText: '分类',
     authorText: '作者',
-    seriesText: '连载文章'
+    seriesText: '连载文章',
+    shareDialogHeading: '分享本页...',
+    shareDialogLinkText: '链接',
+    shareDialogQRCodeText: '二维码',
+    shareDialogIncludeFullPathText: '包含完整路径',
+    shareDialogCloseText: '关闭',
+    shareDialogLinkCopiedText: '成功复制页面链接',
+    infoDialogHeading: '页面信息',
+    infoDialogCloseText: '关闭',
+    infoDialogFrontmatterKeys: {
+      'tags': { id: 'tag' },
+      'category': { id: 'category' },
+      'author': { id: 'author' },
+      'series': { id: 'series' }
+    }
   },
   plugins: [
     ['@vuepress/last-updated'],
@@ -111,6 +125,7 @@ module.exports = {
       type: 'tip',
       defaultTitle: {
         '/': '提示'
+
       }
     }],
     ['container', {

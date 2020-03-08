@@ -172,7 +172,7 @@ sudo pacman -S yay
 
 ### 2.3 显卡
 
-配置显卡的切换有两种方式：Bumblebee和PRIME。Bumblebee的性能较差，但能完全关掉不用的显卡，续航更好，PRIME则相反。我才用了Bumblebee
+配置显卡的切换有两种方式：Bumblebee和PRIME。Bumblebee的性能较差，但能完全关掉不用的显卡，续航更好，PRIME则相反。我采用了Bumblebee。
 
 #### 2.3.1 Prime
 
@@ -515,13 +515,13 @@ yay -S visual-studio-code-bin clion intellij-idea-ultimate-edition
 #### 3.10.2 其他应用
 
 ```bash
-yay -S chromium pepper-flash birdtray thunderbird seafile-client telegram-desktop audacity celestia baidunetdisk-bin inkscape kazam netease-cloud-music openshot postman-bin qq-linux ttf-wps-fonts wps-office wxmaxima maxima wireshark-qt vlc
+yay -S chromium pepper-flash birdtray thunderbird seafile-client telegram-desktop audacity celestia baidunetdisk-bin inkscape kazam netease-cloud-music openshot postman-bin qq-linux ttf-wps-fonts wps-office wxmaxima maxima wireshark-qt vlc xdot teamviewer
 ```
 
 #### 3.10.3 游戏
 
 ```bash
-yay -S minecraft-launcher
+yay -S minecraft-launcher mcedit
 ```
 
 ## 4 后端服务
@@ -801,4 +801,55 @@ Icon=matlab
 Categories=Development;Math;Science
 Comment=Scientific computing environment
 StartupNotify=true
+```
+
+## 6 Tsmart
+
+编辑`/etc/makepkg.conf`：
+
+```bash
+MAKEFLAGS="-j$(nproc)"
+```
+
+下载或clone [aur-llvm](https://github.com/sunziping2016/aur-llvm39)。
+
+```bash
+wget https://releases.llvm.org/3.9.1/llvm-3.9.1.src.tar.xz
+wget https://releases.llvm.org/3.9.1/cfe-3.9.1.src.tar.xz
+tar xf llvm-3.9.1.src.tar.xz
+tar xf cfe-3.9.1.src.tar.xz
+cd llvm-3.9.1.src
+mkdir build
+mv "../cfe-3.9.1.src" tools/clang
+patch -Np1 -i ../0000-disable-llvm-symbolizer-test.patch
+patch -Np1 -d tools/clang <../0001-GCC-compatibility-Ignore-the-fno-plt-flag.patch
+patch -Np1 -d tools/clang <../0002-Enable-SSP-and-PIE-by-default.patch
+patch -Np1 -i ../0003-disable-ArrayRefTest.InitializerList.patch
+patch -Np1 -i ../0004-fix-lambda-parameter-name-redeclared.patch
+cd build
+cmake \
+  -DCMAKE_CC_COMPILER=clang \
+  -DCMAKE_CXX_COMPILER=clang++ \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/usr/local/llvm39 \
+  -DLLVM_BUILD_LLVM_DYLIB=ON \
+  -DLLVM_LINK_LLVM_DYLIB=ON \
+  -DLLVM_INSTALL_UTILS=ON \
+  -DLLVM_ENABLE_RTTI=ON \
+  -DLLVM_ENABLE_FFI=ON \
+  -DLLVM_BUILD_TESTS=ON \
+  -DCLANG_INSTALL_SCANBUILD=OFF \
+  -DCLANG_INSTALL_SCANVIEW=OFF \
+  -DFFI_INCLUDE_DIR=$(pkg-config --variable=includedir libffi) \
+  -DLLVM_BINUTILS_INCDIR=/usr/include \
+  ..
+make -j8
+# Run test
+make check-llvm
+make check-clang
+sudo make install
+cd /usr/local/bin
+sudo ln -s ../llvm39/bin/clang-3.9 clang-3.9
+sudo ln -s ../llvm39/bin/llvm-dis llvm-dis-3.9
+sudo ln -s ../llvm39/bin/llvm-link llvm-link-3.9
 ```

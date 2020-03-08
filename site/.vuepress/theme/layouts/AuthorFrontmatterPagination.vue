@@ -12,6 +12,11 @@
 import FrontmatterPagination from '@theme/layouts/FrontmatterPagination.vue'
 
 export default {
-  components: { FrontmatterPagination }
+  components: { FrontmatterPagination },
+  methods: {
+    openSnackbar () {
+      this.$children[0].openSnackbar.apply(this.$children[0], arguments)
+    }
+  }
 }
 </script>

@@ -4,7 +4,7 @@
   >
     {{ snackbarText }}
     <v-btn
-      color="accent"
+      color="red"
       text
       @click="snackbar = false"
     >

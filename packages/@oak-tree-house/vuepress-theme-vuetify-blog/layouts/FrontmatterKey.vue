@@ -79,6 +79,11 @@ export default {
         this.$site.themeConfig.frontmatterKeyHeading
       )
     }
+  },
+  methods: {
+    openSnackbar () {
+      this.$children[0].openSnackbar.apply(this.$children[0], arguments)
+    }
   }
 }
 </script>

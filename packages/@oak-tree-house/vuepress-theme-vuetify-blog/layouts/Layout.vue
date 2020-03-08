@@ -66,8 +66,10 @@
       </slot>
     </MainContent>
     <ClientOnly>
+      <slot name="fab">
+        <Fab />
+      </slot>
       <Snackbar ref="snackbar" />
-      <Fab />
       <v-footer
         v-if="$site.themeConfig.footer"
         inset

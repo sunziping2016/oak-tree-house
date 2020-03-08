@@ -47,6 +47,11 @@ export default {
       })
       return items
     }
+  },
+  methods: {
+    openSnackbar () {
+      this.$children[0].openSnackbar.apply(this.$children[0], arguments)
+    }
   }
 }
 </script>
