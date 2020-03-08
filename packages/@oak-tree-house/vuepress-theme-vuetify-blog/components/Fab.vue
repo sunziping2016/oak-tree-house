@@ -190,15 +190,15 @@
                   {{ value }}
                 </v-chip>
                 <v-chip
-                  v-else
                   v-for="item in value"
+                  v-else
                   :key="item"
                   outlined
                   color="indigo"
                   :to="that[`\$${$site.themeConfig.infoDialogFrontmatterKeys[key].id}`].map[item].path"
                   class="ma-1"
                 >
-                  {{ item}}
+                  {{ item }}
                 </v-chip>
               </div>
               <span
