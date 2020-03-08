@@ -9,9 +9,16 @@ module.exports = {
   head: [
     ['link', { rel: 'icon', sizes: '32x32', href: '/assets/icons/favicon-32x32.png' }],
     ['link', { rel: 'icon', sizes: '16x16', href: '/assets/icons/favicon-16x16.png' }],
+    ['link', { rel: 'manifest', href: '/manifest.json' }],
+    ['meta', { name: 'theme-color', content: '#9A7ED8' }],
+    ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
+    ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'default' }],
+    ['link', { rel: 'apple-touch-icon', href: '/assets/icons/icon152.png' }],
+    ['link', { rel: 'mask-icon', href: '/assets/icons/icon-purple.svg', color: '#FFF' }],
+    ['meta', { name: 'msapplication-TileImage', content: '/assets/icons/icon-purple144.png' }],
+    ['meta', { name: 'msapplication-TileColor', content: '#FFF' }],
     ['link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900' }],
-    ['link', { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css' }],
-    ['meta', { name: 'theme-color', content: '#9A7ED8' }]
+    ['link', { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css' }]
   ],
   themeConfig: {
     vuetifyConfig: {
@@ -117,6 +124,7 @@ module.exports = {
     }
   },
   plugins: [
+    ['@vuepress/pwa'],
     ['@vuepress/last-updated'],
     ['@vuepress/medium-zoom', {
       selector: '.content img'
