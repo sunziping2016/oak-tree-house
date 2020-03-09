@@ -7,6 +7,7 @@
         color="primary"
         dark
         clipped-left
+        :hide-on-scroll="$vuetify.breakpoint.smAndDown"
       >
         <v-app-bar-nav-icon
           class="hidden-md-and-up"

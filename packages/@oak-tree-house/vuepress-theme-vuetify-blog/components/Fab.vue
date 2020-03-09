@@ -11,7 +11,7 @@
       <template v-slot:activator>
         <v-btn
           v-model="fab"
-          color="blue darken-2"
+          color="purple"
           dark
           fab
         >
@@ -38,7 +38,7 @@
         fab
         dark
         small
-        color="purple"
+        color="blue"
         @click="infoDialog = true"
       >
         <v-icon>mdi-information-outline</v-icon>

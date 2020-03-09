@@ -5,5 +5,5 @@ module.exports = (options) => ({
   define: {
     MG_GITALK_CONFIG: options.config
   },
-  clientRootMixin: path.resolve(__dirname, 'mixin.js')
+  clientRootMixin: path.resolve(__dirname, 'clientRootMixin.js')
 })

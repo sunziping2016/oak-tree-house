@@ -3,6 +3,7 @@
 ## Tasks
 
 - [ ] <del>Embed videos and musics</del>
+- [ ] <del>Share to WeChat (I have no privilege)</del>
 - [x] Transfer origin site
 - [x] Post index based on tags, categories, author and groups
 - [x] Post can be grouped
@@ -35,7 +36,6 @@
 - [x] Display frontmatter in dialog
 - [x] PWA loads app
 - [ ] Make PWA notification use snackbar
-- [ ] Share to WeChat
 - [ ] Support marp like VsCode
 - [ ] Support diagrams listed in [here](https://medium.com/technical-writing-is-easy/diagrams-in-documentation-markdown-guide-4e78419e8d2f)
 - [ ] Reimplement medium zoom

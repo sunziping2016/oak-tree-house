@@ -5,5 +5,5 @@ module.exports = (options) => ({
   define: {
     CCB_CODE_COPIED_TEXT: options.codeCopiedText || 'Code snippet copied'
   },
-  clientRootMixin: path.resolve(__dirname, 'mixin.js')
+  clientRootMixin: path.resolve(__dirname, 'clientRootMixin.js')
 })
