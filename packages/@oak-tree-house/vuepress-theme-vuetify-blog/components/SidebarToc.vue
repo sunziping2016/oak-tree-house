@@ -19,7 +19,10 @@
       </template>
     </v-treeview>
     <!-- For selector -->
-    <div style="display: none">
+    <div
+      v-if="!$page.frontmatter.marp"
+      style="display: none"
+    >
       <a
         v-for="item in Object.values(tocIds)"
         :key="item.id"

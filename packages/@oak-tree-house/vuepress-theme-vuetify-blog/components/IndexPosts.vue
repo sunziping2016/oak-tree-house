@@ -110,7 +110,7 @@
         <!-- eslint-disable vue/no-v-html -->
         <v-card-text
           class="post-summary content"
-          v-html="page.excerpt"
+          v-html="page.excerpt || page.frontmatter.summary"
         />
         <v-card-actions>
           <div

@@ -189,6 +189,7 @@ module.exports = {
       encryptedIcon: 'mdi mdi-lock',
       decryptedIcon: 'mdi mdi-lock-open'
     }],
+    [require('./plugins/marp')],
     ['@vuepress/blog', {
       directories: [
         {

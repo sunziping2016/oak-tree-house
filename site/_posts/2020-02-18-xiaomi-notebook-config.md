@@ -11,9 +11,11 @@ sidebar:
   - /_posts/2020-02-18-xiaomi-notebook-config.html
 ---
 
-我有一个小米笔记本Air 13.3。笔记本上只有1个无线网卡，还有2块SSD（约240GB的nvme0n1和约480GB的sda），2块显卡（intel集显和Nvidia独显）。笔记本系统采用UEFI启动，我计划安装Arch Linux搭配Xfce4桌面。sda将被格式化成1个分区，挂载到`/`，而nvme0n1p1将作为EFI分区。
+这篇文章关于我的小米笔记本的配置。
 
 <!-- more -->
+
+我有一个小米笔记本Air 13.3。笔记本上只有1个无线网卡，还有2块SSD（约240GB的nvme0n1和约480GB的sda），2块显卡（intel集显和Nvidia独显）。笔记本系统采用UEFI启动，我计划安装Arch Linux搭配Xfce4桌面。sda将被格式化成1个分区，挂载到`/`，而nvme0n1p1将作为EFI分区。
 
 ## 1 在安装光盘中
 
@@ -749,7 +751,13 @@ sed -i 's/plugins=(\(.*\))/plugins=(\1 pyenv)/' .zshrc
 
 使用`pyenv install VERSION`可以安装Python版本。使用`pyenv install --list`可以查看可用的安装版本。使用`pyenv local VERSION`可以设置本目录环境下的Python版本。使用`pyenv global VERSION`可以设置全局的Python版本。
 
-最后安装JupyterLab
+最后安装JupyterLab。
+
+安装一些常用的Python库。
+
+```bash
+yay -S python-numpy python-scipy python-matplotlib
+```
 
 ### 5.4 Node.js
 

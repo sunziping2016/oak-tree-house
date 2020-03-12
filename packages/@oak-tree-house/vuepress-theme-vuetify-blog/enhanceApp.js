@@ -86,6 +86,9 @@ export default ({ Vue, options, router, siteData }) => {
   })
   options.vuetify = new Vuetify((siteData.themeConfig && siteData.themeConfig.vuetifyConfig) || {})
   router.options.scrollBehavior = (to, from, savedPosition) => {
+    if (from.path === to.path && from.hash === to.hash) {
+      return false
+    }
     let scrollTo = 0
     if (savedPosition) {
       scrollTo = savedPosition.y

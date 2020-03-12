@@ -1,0 +1,66 @@
+div.marpit-mask {
+  content: '';
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: black;
+  z-index: 10;
+  transition: opacity .3s linear;
+  opacity: 0;
+}
+
+/* use in ENTER and PLAY status */
+div.marpit-mask.marpit-mask-status-play {
+  opacity: 1;
+}
+
+div.marpit > svg[data-marpit-svg] {
+  transition: top .3s linear, left .3s linear, width .3s linear, height .3s linear;
+}
+
+/*
+.marpit-section-transition-enter {
+  position: fixed;
+  box-shadow: none;
+  z-index: 11;
+  margin: 0;
+}
+
+.marpit-section-transition-exit {
+  position: fixed;
+  transition: top .3s, left .3s, width .3s, height .3s;
+  box-shadow: none;
+  z-index: 11;
+}
+*/
+
+div.marpit > svg[data-marpit-svg].marpit-section-status-except-not-play {
+  position: fixed;
+  box-shadow: none !important;
+  z-index: 11;
+  margin: 0 !important;
+}
+
+div.marpit > svg[data-marpit-svg].marpit-section-status-play {
+  left: 0;
+  top: 0;
+  z-index: 12;
+  width: 100%;
+  height: 100%;
+}
+
+div.marpit > svg[data-marpit-svg].marpit-section-status-left {
+  left: -100%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+div.marpit > svg[data-marpit-svg].marpit-section-status-right {
+  left: 100%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
