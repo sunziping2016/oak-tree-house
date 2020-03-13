@@ -29,7 +29,8 @@ export default {
     marpitMouseMoveTimeoutTime: 5000,
     marpitMouseMoveTimeout: null,
     marpitTouchPos: null,
-    marpitSavedScrollPos: NaN
+    marpitSavedScrollPos: NaN,
+    marpitExpectedPlaying: null
   }),
   mounted () {
     this.triggerUpdateMarp()
@@ -77,22 +78,22 @@ export default {
     this.marpitDock.appendChild(this.marpitExitPlayButton)
     this.marpitFirstButton.addEventListener('click', () => {
       if (this.marpitSections.length && this.marpitExpectedPlaying !== 0) {
-        this.$router.push({ query: { marpit: 0 }})
+        this.marpitApplyPlaying(0)
       }
     })
     this.marpitPrevButton.addEventListener('click', () => {
       if (this.marpitExpectedPlaying !== null && this.marpitExpectedPlaying > 0) {
-        this.$router.push({ query: { marpit: this.marpitExpectedPlaying - 1 }})
+        this.marpitApplyPlaying(this.marpitExpectedPlaying - 1)
       }
     })
     this.marpitNextButton.addEventListener('click', () => {
       if (this.marpitExpectedPlaying !== null && this.marpitExpectedPlaying + 1 < this.marpitSections.length) {
-        this.$router.push({ query: { marpit: this.marpitExpectedPlaying + 1 }})
+        this.marpitApplyPlaying(this.marpitExpectedPlaying + 1)
       }
     })
     this.marpitLastButton.addEventListener('click', () => {
       if (this.marpitSections.length && this.marpitExpectedPlaying !== this.marpitSections.length - 1) {
-        this.$router.push({ query: { marpit: this.marpitSections.length - 1 }})
+        this.marpitApplyPlaying(this.marpitSections.length - 1)
       }
     })
     this.marpitFullscreenButton.addEventListener('click', () => {
@@ -112,7 +113,7 @@ export default {
     })
     this.marpitExitPlayButton.addEventListener('click', () => {
       if (this.marpitExpectedPlaying !== null) {
-        this.$router.push({ query: {}})
+        this.marpitApplyPlaying(null)
       }
     })
     document.body.appendChild(this.marpitDock)
@@ -129,15 +130,23 @@ export default {
     }
   },
   computed: {
-    marpitExpectedPlaying () {
-      let newMarpitPlaying = parseInt(this.$route.query.marpit, 10)
-      if (isNaN(newMarpitPlaying)) {
-        newMarpitPlaying = null
-      }
-      return newMarpitPlaying
-    }
+    // marpitExpectedPlaying () {
+    //   let newMarpitPlaying = parseInt(this.$route.query.marpit, 10)
+    //   if (isNaN(newMarpitPlaying)) {
+    //     newMarpitPlaying = null
+    //   }
+    //   return newMarpitPlaying
+    // }
   },
   methods: {
+    marpitApplyPlaying (newPlaying) {
+      // if (newPlaying === null) {
+      //   this.$router.push({ query: {}})
+      // } else {
+      //   this.$router.push({ query: { marpit: newPlaying }})
+      // }
+      this.marpitExpectedPlaying = newPlaying
+    },
     marpitOnMouseMove (evt) {
       // Prevent receive mouse moving event on touching
       if (evt.movementX === 0 && evt.movementY === 0) {
@@ -169,11 +178,11 @@ export default {
       } else if (Math.abs(xDiff) > Math.abs(yDiff)) {
         if (xDiff > 0) {
           if (this.marpitExpectedPlaying !== null && this.marpitExpectedPlaying + 1 < this.marpitSections.length) {
-            this.$router.push({ query: { marpit: this.marpitExpectedPlaying + 1 }})
+            this.marpitApplyPlaying(this.marpitExpectedPlaying + 1)
           }
         } else {
           if (this.marpitExpectedPlaying !== null && this.marpitExpectedPlaying > 0) {
-            this.$router.push({ query: { marpit: this.marpitExpectedPlaying - 1 }})
+            this.marpitApplyPlaying(this.marpitExpectedPlaying - 1)
           }
         }
       }
@@ -181,9 +190,8 @@ export default {
     },
     marpitOnScroll () {
       const i = Math.round(pageYOffset / innerHeight)
-      const marpit = parseInt(this.$route.query.marpit, 10)
-      if (marpit !== i) {
-        this.$router.push({ query: { marpit: i }})
+      if (this.marpitExpectedPlaying !== i) {
+        this.marpitApplyPlaying(i)
       }
     },
     marpitResetMouseMoveTimeout () {
@@ -264,11 +272,15 @@ export default {
               section.status = 'NOT_PLAY'
             })
           }
+        } else if (status === 'PLAY') {
+          section.dom.classList.add('marpit-section-status-play')
+          section.status = 'ENTER'
+          this.marpitSectionAddTransitionHookOnce(section, () => {
+            scrollTo(pageXOffset, window.innerHeight * this.marpitSections.indexOf(section))
+            section.status = 'PLAY'
+          })
         } else {
-          if (status === 'PLAY') {
-            section.dom.classList.add('marpit-section-status-play')
-            section.status = 'ENTER'
-          } else if (status === 'LEFT') {
+          if (status === 'LEFT') {
             section.dom.classList.add('marpit-section-status-left')
             section.status = 'SLIDE_LEFT'
           } else if (status === 'RIGHT') {
@@ -349,9 +361,6 @@ export default {
         this.marpitResetMouseMoveTimeout()
         this.marpitSavedScrollPos = pageYOffset
         document.body.style.minHeight = `${this.marpitSections.length}00vh`
-        setTimeout(() => {
-          scrollTo(pageXOffset, window.innerHeight * newMarpitPlaying)
-        })
         document.addEventListener('scroll', this.marpitOnScroll)
         // console.log(document.body.offsetHeight, window.innerHeight)
       }
@@ -422,15 +431,15 @@ export default {
         return
       }
       if (event.code === 'ArrowLeft') {
-        if (this.marpitSections[this.marpitPlaying - 1]) {
-          this.$router.push({ query: { marpit: this.marpitPlaying - 1 }})
+        if (this.marpitSections[this.marpitExpectedPlaying - 1]) {
+          this.marpitApplyPlaying(this.marpitExpectedPlaying - 1)
         }
       } else if (event.code === 'ArrowRight') {
-        if (this.marpitSections[this.marpitPlaying + 1]) {
-          this.$router.push({ query: { marpit: this.marpitPlaying + 1 }})
+        if (this.marpitSections[this.marpitExpectedPlaying + 1]) {
+          this.marpitApplyPlaying(this.marpitExpectedPlaying + 1)
         }
       } else if (event.code === 'Escape') {
-        this.$router.push({ query: {}})
+        this.marpitApplyPlaying(null)
       }
     },
     triggerUpdateMarp () {
@@ -443,7 +452,8 @@ export default {
     updateMarp () {
       // Remove all mocked sections
       [...document.querySelectorAll('div.marpit > svg[data-marpit-mock]'),
-        ...document.querySelectorAll('div.marpit > div.marpit-play-button')
+        ...document.querySelectorAll('div.marpit > div.marpit-play-button'),
+        ...document.querySelectorAll('div.marpit > div.marpit-id')
       ].forEach(x => {
         x.parentNode.removeChild(x)
       })
@@ -451,6 +461,21 @@ export default {
       this.marpitSections = []
       for (let i = 0; i < realSections.length; ++i) {
         const realSection = realSections[i]
+        ;[...realSection.querySelectorAll((
+          this.$site.themeConfig.extractHeaders || ['h2', 'h3'])
+          .map(x => `${x}[id]`).join(','))].forEach(x => {
+          const id = x.getAttribute('id')
+          x.removeAttribute('id')
+          const divId = document.createElement(x.tagName)
+          divId.classList.add('marpit-id')
+          divId.setAttribute('id', id)
+          divId.innerHTML = x.innerHTML
+          const anchor = x.querySelector('a')
+          if (anchor) {
+            anchor.parentNode.removeChild(anchor)
+          }
+          realSection.parentNode.insertBefore(divId, realSection)
+        })
         const mockSection = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
         mockSection.dataset.marpitMock = ''
         mockSection.setAttribute('viewBox', realSection.getAttribute('viewBox'))
@@ -465,9 +490,9 @@ export default {
           realSection.dataset.marpitReal = ''
           // TODO: change to add buttons
           playButton.addEventListener('click', (event) => {
-            const marpit = parseInt(this.$route.query.marpit, 10)
-            if (marpit !== i) {
-              this.$router.push({ query: { marpit: i }})
+            if (this.marpitExpectedPlaying !== i) {
+              this.marpitApplyPlaying(i)
+              this.marpitApplyPlaying(i)
             }
           })
         }
@@ -477,6 +502,7 @@ export default {
           status: 'NOT_PLAY'
         })
       }
+      this.marpitExpectedPlaying = null
       this.updateMarpitRoute()
     }
   }

@@ -27,10 +27,10 @@ export function resolveHeaders (pages, currentPath, extractHeaders) {
     ]
     let headers
     if (page.path === currentPath) {
-      const headings = document.querySelectorAll(extractHeaders.map(x => `.content ${x}`).join(','))
+      const headings = document.querySelectorAll(extractHeaders.map(x => `.content ${x}[id]`).join(','))
       headers = [].map.call(headings, x => ({
         level: parseInt(x.tagName.slice(1), 10),
-        slug: x.id,
+        slug: x.getAttribute('id'),
         title: x.innerText.slice(1).trim()
       }))
     } else {

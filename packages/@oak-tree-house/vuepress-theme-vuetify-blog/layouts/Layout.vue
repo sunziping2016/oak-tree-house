@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="vuetify-app">
     <!-- Header -->
     <ClientOnly>
       <v-app-bar

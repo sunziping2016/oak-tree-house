@@ -20,7 +20,6 @@
     </v-treeview>
     <!-- For selector -->
     <div
-      v-if="!$page.frontmatter.marp"
       style="display: none"
     >
       <a

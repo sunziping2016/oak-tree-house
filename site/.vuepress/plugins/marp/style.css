@@ -105,3 +105,10 @@ div.marpit > svg[data-marpit-svg].marpit-section-status-right {
   min-width: 120px;
   text-align: center;
 }
+
+.marpit-id {
+  opacity: 0;
+  z-index: -1;
+  position: relative;
+  pointer-events: none;
+}
