@@ -41,6 +41,7 @@ export default {
         })
       }
     })
+    this.$on('updated', this.triggerUpdateMarp)
     this.marpitMask.dom = document.createElement('div')
     this.marpitMask.dom.classList.add('marpit-mask')
     this.marpitMask.dom.style.display = 'none'
@@ -450,6 +451,10 @@ export default {
       }
     },
     updateMarp () {
+      // Prevent hash change triggered update event
+      if (this.marpitPlaying !== null) {
+        return
+      }
       // Remove all mocked sections
       [...document.querySelectorAll('div.marpit > svg[data-marpit-mock]'),
         ...document.querySelectorAll('div.marpit > div.marpit-play-button'),
@@ -485,17 +490,13 @@ export default {
         const playButton = document.createElement('div')
         playButton.classList.add('marpit-play-button')
         playButton.innerHTML = '<i class="mdi mdi-play"></i>'
+        playButton.addEventListener('click', (event) => {
+          if (this.marpitExpectedPlaying !== i) {
+            this.marpitApplyPlaying(i)
+            this.marpitApplyPlaying(i)
+          }
+        })
         realSection.parentNode.insertBefore(playButton, realSection.nextSibling)
-        if (realSection.dataset.marpitReal === undefined) {
-          realSection.dataset.marpitReal = ''
-          // TODO: change to add buttons
-          playButton.addEventListener('click', (event) => {
-            if (this.marpitExpectedPlaying !== i) {
-              this.marpitApplyPlaying(i)
-              this.marpitApplyPlaying(i)
-            }
-          })
-        }
         this.marpitSections.push({
           dom: realSection,
           mock: mockSection,

@@ -53,9 +53,9 @@ module.exports = (options) => ({
       env = env || {}
       if (env.frontmatter.marp) {
         enableOrDisableMarp(md, true, originCoreProcess, marpCoreProccess)
-        const { html, css } = marpit.render(src, env)
-        md.$data.hoistedTags = md.$data.hoistedTags || []
-        md.$data.hoistedTags.push(`<style>${css}</style>`)
+        const { html } = marpit.render(src, env)
+        // md.$data.hoistedTags = md.$data.hoistedTags || []
+        // md.$data.hoistedTags.push(`<style>${css}</style>`)
         return html
       } else {
         enableOrDisableMarp(md, false, originCoreProcess, marpCoreProccess)

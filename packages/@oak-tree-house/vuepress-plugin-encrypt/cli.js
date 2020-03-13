@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const fs = require('fs')
+const yaml = require('js-yaml')
 const path = require('path')
 const readline = require('readline')
 const util = require('util')
@@ -251,6 +252,61 @@ class App {
     await this.ensureLoadKeyFile()
     await this.prepareMarkdown()
     await this.forFiles(async (frontmatter, content, filename) => {
+      // ==== File-level Encryption ===
+      if (typeof frontmatter.data.encrypt === 'object'
+        && typeof frontmatter.data.encrypt.key === 'string'
+        && Array.isArray(frontmatter.data.encrypt.owners)) {
+        const match = frontmatter.data.encrypt
+        if (!match.owners.includes(this.keyFile.user)) {
+          console.warn(chalk.yellow(`[WARN] Skip file with key "${match.key}" owned by other user`))
+          return
+        }
+        if (match.encrypted) {
+          console.warn(chalk.yellow(`[WARN] Skip encrypted file with key "${match.key}"`))
+          return
+        }
+        let encryptKey
+        if (this.keyFile.keys[match.key]) {
+          encryptKey = this.keyFile.keys[match.key]
+        } else {
+          encryptKey = await this.requestForNewKey(match.key)
+          if (!encryptKey) {
+            return
+          }
+          this.keyFile.keys[match.key] = encryptKey
+          await this.saveKeyFile()
+        }
+        const {
+          html
+        } = this.markdown.render(frontmatter.content, {
+          frontmatter: frontmatter.data,
+          relativePath: path.relative(this.options.sourceDir, filename)
+            .replace(/\\/g, '/')
+        })
+        const plaintext = JSON.stringify({
+          markdown: content,
+          component: {
+            template: `<div>${html}</div>`
+          }
+        })
+        // eslint-disable-next-line new-cap
+        const aesCtr = new aesjs.ModeOfOperation.ctr(aesjs.utils.hex.toBytes(md5(encryptKey)))
+        const encryptedText = Buffer.from(aesCtr.encrypt(aesjs.utils.utf8.toBytes(plaintext)))
+        // Support Marp
+        delete frontmatter.data.marp
+        frontmatter.data.encrypt.encrypted = true
+        const output = ''
+          + `---\n`
+          + yaml.safeDump(frontmatter.data)
+          + `---\n`
+          + `::: encrypt encrypted key=${match.key} owners=${match.owners.join(',')}\n`
+          + encryptedText.toString('base64').match(/.{1,79}/g).map(x => `${x}\n`).join('')
+          + `:::`
+        console.log(chalk.green(`[INFO] Encrypt file with key "${match.key}"`))
+        await util.promisify(fs.writeFile)(filename, output, 'utf8')
+        return
+      }
+      // ==== Block-level Encryption ===
       await this.forBlocks(frontmatter, content, filename, async (tokens, match, sourceMap) => {
         if (!match.owners.includes(this.keyFile.user)) {
           console.warn(chalk.yellow(`[WARN] Skip block with key "${match.key}" owned by other user`))
@@ -301,6 +357,34 @@ class App {
     await this.ensureLoadKeyFile()
     await this.prepareMarkdown()
     await this.forFiles(async (frontmatter, content, filename) => {
+      // ==== File-level Decryption ===
+      if (typeof frontmatter.data.encrypt === 'object'
+        && typeof frontmatter.data.encrypt.key === 'string'
+        && Array.isArray(frontmatter.data.encrypt.owners)) {
+        const match = frontmatter.data.encrypt
+        if (!match.owners.includes(this.keyFile.user)) {
+          console.warn(chalk.yellow(`[WARN] Skip file with key "${match.key}" owned by other user`))
+          return
+        }
+        if (!match.encrypted) {
+          console.warn(chalk.yellow(`[WARN] Skip decrypted file with key "${match.key}"`))
+          return
+        }
+        if (!this.keyFile.keys[match.key]) {
+          console.error(chalk.red(`[ERROR] Abort due to the missing key "${match.key}"`))
+          process.exit(1)
+        }
+        const file = frontmatter.content.split('\n').filter(x => !x.startsWith(':::')).join('\n')
+        const encryptKey = aesjs.utils.hex.toBytes(md5(this.keyFile.keys[match.key]))
+        // eslint-disable-next-line new-cap
+        const aesCtr = new aesjs.ModeOfOperation.ctr(encryptKey)
+        const plaintext = aesjs.utils.utf8.fromBytes(aesCtr.decrypt(Buffer.from(file.replace(/\s/g, ''), 'base64')))
+        const { markdown } = JSON.parse(plaintext)
+        await util.promisify(fs.writeFile)(filename, markdown, 'utf8')
+        console.log(chalk.green(`[INFO] Decrypt file with key "${match.key}"`))
+        return
+      }
+      // ==== Block-level Decryption ===
       await this.forBlocks(frontmatter, content, filename, async (tokens, match, sourceMap) => {
         if (!match.owners.includes(this.keyFile.user)) {
           console.warn(chalk.yellow(`[WARN] Skip block with key "${match.key}" owned by other user`))
