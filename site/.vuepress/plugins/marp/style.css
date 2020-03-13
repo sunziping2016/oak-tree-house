@@ -7,7 +7,7 @@ div.marpit-mask {
   bottom: 0;
   background-color: black;
   z-index: 10;
-  transition: opacity .3s linear;
+  transition: opacity .2s ease-in-out;
   opacity: 0;
 }
 
@@ -17,24 +17,8 @@ div.marpit-mask.marpit-mask-status-play {
 }
 
 div.marpit > svg[data-marpit-svg] {
-  transition: top .3s linear, left .3s linear, width .3s linear, height .3s linear;
+  transition: top .2s ease-in-out, left .2s ease-in-out, width .2s ease-in-out, height .2s ease-in-out, opacity .2s ease-in-out;
 }
-
-/*
-.marpit-section-transition-enter {
-  position: fixed;
-  box-shadow: none;
-  z-index: 11;
-  margin: 0;
-}
-
-.marpit-section-transition-exit {
-  position: fixed;
-  transition: top .3s, left .3s, width .3s, height .3s;
-  box-shadow: none;
-  z-index: 11;
-}
-*/
 
 div.marpit > svg[data-marpit-svg].marpit-section-status-except-not-play {
   position: fixed;
@@ -52,15 +36,72 @@ div.marpit > svg[data-marpit-svg].marpit-section-status-play {
 }
 
 div.marpit > svg[data-marpit-svg].marpit-section-status-left {
-  left: -100%;
+  left: calc(-100% - 20px);
   top: 0;
   width: 100%;
   height: 100%;
+  opacity: 0;
 }
 
 div.marpit > svg[data-marpit-svg].marpit-section-status-right {
-  left: 100%;
+  left: calc(100% + 20px);
   top: 0;
   width: 100%;
   height: 100%;
+  opacity: 0;
+}
+
+.marpit-play-button {
+  margin-top: -2.5em;
+  margin-right: 0.5em;
+  font-size: 1.4em;
+  position: relative;
+  color: green;
+  float: right;
+  cursor: pointer;
+}
+
+.marpit-dock {
+  background: rgba(0, 0, 0, .65);
+  border-radius: 7px;
+  font-size: 16px;
+  padding: 12px;
+  color: white;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 50px;
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  transition: opacity .2s;
+  opacity: 1;
+}
+
+.marpit-dock-disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.marpit-dock-first-button,
+.marpit-dock-prev-button,
+.marpit-dock-next-button,
+.marpit-dock-last-button,
+.marpit-dock-fullscreen-button,
+.marpit-dock-exit-button {
+  font-size: 24px;
+  cursor: pointer;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.marpit-dock .marpit-dock-button-disabled {
+  color: gray;
+  pointer-events: none;
+}
+
+.marpit-dock-page-text {
+  font-family: sans-serif;
+  min-width: 120px;
+  text-align: center;
 }
