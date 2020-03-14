@@ -1,6 +1,6 @@
 {
   "name": "@oak-tree-house/vuepress-plugin-code-toggle",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "VuePress Plugin to Add Buttons to Toggle Prompt in Python",
   "main": "index.js",
   "publishConfig": {

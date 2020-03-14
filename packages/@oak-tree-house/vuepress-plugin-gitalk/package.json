@@ -1,6 +1,6 @@
 {
   "name": "@oak-tree-house/vuepress-plugin-gitalk",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "VuePress Plugin to Add Gitalk Commenting System",
   "main": "index.js",
   "publishConfig": {

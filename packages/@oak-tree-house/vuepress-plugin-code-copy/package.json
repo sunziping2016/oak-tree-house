@@ -1,6 +1,6 @@
 {
   "name": "@oak-tree-house/vuepress-plugin-code-copy",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "VuePress Plugin to Add Buttons to Copy Code",
   "main": "index.js",
   "publishConfig": {

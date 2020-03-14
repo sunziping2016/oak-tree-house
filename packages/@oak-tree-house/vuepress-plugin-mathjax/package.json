@@ -1,6 +1,6 @@
 {
   "name": "@oak-tree-house/vuepress-plugin-mathjax",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "VuePress Plugin to Render MathJax",
   "main": "index.js",
   "publishConfig": {
