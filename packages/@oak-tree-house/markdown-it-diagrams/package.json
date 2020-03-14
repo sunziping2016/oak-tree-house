@@ -1,0 +1,27 @@
+{
+  "name": "@oak-tree-house/markdown-it-diagrams",
+  "version": "0.1.0",
+  "description": "MarkdownIt Plugin to Render Diagrams",
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sunziping2016/oak-tree-house.git",
+    "directory": "packages/@oak-tree-house/markdown-it-diagrams"
+  },
+  "keywords": [
+    "vue",
+    "vuepress"
+  ],
+  "author": "Sun Ziping",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sunziping2016/oak-tree-house/issues"
+  },
+  "homepage": "https://github.com/sunziping2016/oak-tree-house/tree/master/packages/%40oak-tree-house/markdown-it-diagrams#readme",
+  "dependencies": {
+    "md5": "^2.2.1"
+  }
+}

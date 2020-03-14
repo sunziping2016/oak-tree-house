@@ -1,3 +1,5 @@
+import event from '@gitalk-event'
+
 /* global MG_GITALK_CONFIG */
 
 export default {
@@ -24,11 +26,11 @@ export default {
         })
       }
     })
-    this.$on('updated', this.triggerLoadGitalk)
+    event.$on('contentReady', this.triggerLoadGitalk)
   },
   methods: {
     triggerLoadGitalk () {
-      if (this.ready && this.scriptGitalkLoaded) {
+      if (this.scriptGitalkLoaded) {
         const commentsContainer = document.getElementById('gitalk-container')
         if (commentsContainer) {
           if (commentsContainer.dataset.rendered === this.$route.path) {
@@ -44,8 +46,6 @@ export default {
           }, MG_GITALK_CONFIG))
           gitalk.render('gitalk-container')
         }
-      } else if (!this.ready) {
-        this.$once('ready', this.triggerLoadGitalk)
       } else {
         this.scriptGitalk.addEventListener('load', () => {
           this.triggerLoadGitalk()

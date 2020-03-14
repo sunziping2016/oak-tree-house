@@ -7,7 +7,6 @@
         color="primary"
         dark
         clipped-left
-        :hide-on-scroll="$vuetify.breakpoint.smAndDown"
       >
         <v-app-bar-nav-icon
           class="hidden-md-and-up"
@@ -61,8 +60,8 @@
           <ClientOnly>
             <MainEdit />
             <MainNav />
-            <div id="gitalk-container" />
           </ClientOnly>
+          <div id="gitalk-container" />
         </v-container>
       </slot>
     </MainContent>
@@ -101,6 +100,7 @@ import Snackbar from '@theme/components/Snackbar.vue'
 import MainEdit from '@theme/components/MainEdit.vue'
 import MainNav from '@theme/components/MainNav.vue'
 import NavDummy from '@theme/components/NavDummy.vue'
+import event from '@theme-event'
 
 export default {
   components: {
@@ -126,10 +126,11 @@ export default {
     drawer: false
   }),
   mounted () {
-    this.$emit('ready')
+    event.$emit('contentReady')
+    event.$on('notify', this.openSnackbar)
   },
-  updated () {
-    this.$emit('updated')
+  beforeDestroy () {
+    event.$off('notify', this.openSnackbar)
   },
   methods: {
     openSnackbar (text) {

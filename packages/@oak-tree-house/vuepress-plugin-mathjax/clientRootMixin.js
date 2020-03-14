@@ -1,3 +1,5 @@
+import event from '@mathjax-event'
+
 export default {
   data: () => ({
     scriptMathjax: null,
@@ -20,14 +22,12 @@ export default {
         })
       }
     })
-    this.$on('updated', this.triggerMathjaxTypeset)
+    event.$on('contentReady', this.triggerMathjaxTypeset)
   },
   methods: {
     triggerMathjaxTypeset () {
-      if (this.ready && this.scriptMathJaxLoaded) {
+      if (this.scriptMathJaxLoaded) {
         window.MathJax.typeset()
-      } else if (!this.ready) {
-        this.$once('ready', this.triggerMathjaxTypeset)
       } else {
         this.scriptMathjax.addEventListener('load', () => {
           this.triggerMathjaxTypeset()

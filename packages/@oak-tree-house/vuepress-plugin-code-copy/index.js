@@ -1,9 +1,12 @@
 const path = require('path')
 
 module.exports = (options) => ({
-  name: 'my-gitalk',
+  name: 'code-copy-button',
+  alias: {
+    '@code-copy-event': path.resolve(__dirname, 'event.js')
+  },
   define: {
-    MG_GITALK_CONFIG: options.config
+    'CC_COPY_ICON': options.copyIcon
   },
   clientRootMixin: path.resolve(__dirname, 'clientRootMixin.js')
 })

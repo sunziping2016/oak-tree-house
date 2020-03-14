@@ -1,8 +1,6 @@
 <template>
   <Layout
     :content-width="720"
-    @ready="e => $emit('ready', arguments)"
-    @updated="e => $emit('updated', arguments)"
   >
     <template slot="sidebar">
       <SidebarLinks
@@ -36,11 +34,6 @@ export default {
     Layout,
     SidebarLinks,
     IndexSidebarWordCloud
-  },
-  methods: {
-    openSnackbar () {
-      this.$children[0].openSnackbar.apply(this.$children[0], arguments)
-    }
   }
 }
 </script>

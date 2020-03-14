@@ -1,4 +1,10 @@
+import event from '@marp-event'
 import './style.css'
+
+/* global MARP_FIRST_SLIDE_ICON, MARP_PREVIOUS_SLIDE_ICON,
+  MARP_NEXT_SLIDE_ICON, MARP_LAST_SLIDE_ICON,
+  MARP_ENTER_FULLSCREEN_ICON, MARP_EXIT_FULLSCREEN_ICON,
+  MARP_ENTER_PLAY_ICON, MARP_EXIT_PLAY_ICON */
 
 export default {
   data: () => ({
@@ -33,15 +39,15 @@ export default {
     marpitExpectedPlaying: null
   }),
   mounted () {
-    this.triggerUpdateMarp()
+    this.updateMarp()
     this.$router.afterEach((to, from) => {
       if (from.path !== to.path) {
         this.$nextTick(() => {
-          this.triggerUpdateMarp()
+          this.updateMarp()
         })
       }
     })
-    this.$on('updated', this.triggerUpdateMarp)
+    event.$on('contentReady', this.updateMarp)
     this.marpitMask.dom = document.createElement('div')
     this.marpitMask.dom.classList.add('marpit-mask')
     this.marpitMask.dom.style.display = 'none'
@@ -52,30 +58,30 @@ export default {
     this.marpitDock.classList.add('marpit-dock-disabled')
     this.marpitFirstButton = document.createElement('span')
     this.marpitFirstButton.classList.add('marpit-dock-first-button')
-    this.marpitFirstButton.innerHTML = '<i class="mdi mdi-chevron-double-left"></i>'
+    this.marpitFirstButton.innerHTML = MARP_FIRST_SLIDE_ICON || '<i class="mdi mdi-chevron-double-left"></i>'
     this.marpitDock.appendChild(this.marpitFirstButton)
     this.marpitPrevButton = document.createElement('span')
     this.marpitPrevButton.classList.add('marpit-dock-prev-button')
-    this.marpitPrevButton.innerHTML = '<i class="mdi mdi-chevron-left"></i>'
+    this.marpitPrevButton.innerHTML = MARP_PREVIOUS_SLIDE_ICON || '<i class="mdi mdi-chevron-left"></i>'
     this.marpitDock.appendChild(this.marpitPrevButton)
     this.marpitPageText = document.createElement('span')
     this.marpitPageText.classList.add('marpit-dock-page-text')
     this.marpitDock.appendChild(this.marpitPageText)
     this.marpitNextButton = document.createElement('span')
     this.marpitNextButton.classList.add('marpit-dock-next-button')
-    this.marpitNextButton.innerHTML = '<i class="mdi mdi-chevron-right"></i>'
+    this.marpitNextButton.innerHTML = MARP_NEXT_SLIDE_ICON || '<i class="mdi mdi-chevron-right"></i>'
     this.marpitDock.appendChild(this.marpitNextButton)
     this.marpitLastButton = document.createElement('span')
     this.marpitLastButton.classList.add('marpit-dock-last-button')
-    this.marpitLastButton.innerHTML = '<i class="mdi mdi-chevron-double-right"></i>'
+    this.marpitLastButton.innerHTML = MARP_LAST_SLIDE_ICON || '<i class="mdi mdi-chevron-double-right"></i>'
     this.marpitDock.appendChild(this.marpitLastButton)
     this.marpitFullscreenButton = document.createElement('span')
     this.marpitFullscreenButton.classList.add('marpit-dock-fullscreen-button')
-    this.marpitFullscreenButton.innerHTML = '<i class="mdi mdi-fullscreen"></i>'
+    this.marpitFullscreenButton.innerHTML = MARP_ENTER_FULLSCREEN_ICON || '<i class="mdi mdi-fullscreen"></i>'
     this.marpitDock.appendChild(this.marpitFullscreenButton)
     this.marpitExitPlayButton = document.createElement('span')
     this.marpitExitPlayButton.classList.add('marpit-dock-exit-button')
-    this.marpitExitPlayButton.innerHTML = '<i class="mdi mdi-exit-to-app"></i>'
+    this.marpitExitPlayButton.innerHTML = MARP_EXIT_PLAY_ICON || '<i class="mdi mdi-exit-to-app"></i>'
     this.marpitDock.appendChild(this.marpitExitPlayButton)
     this.marpitFirstButton.addEventListener('click', () => {
       if (this.marpitSections.length && this.marpitExpectedPlaying !== 0) {
@@ -101,13 +107,13 @@ export default {
       if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen()
           .then(() => {
-            this.marpitFullscreenButton.innerHTML = '<i class="mdi mdi-fullscreen-exit"></i>'
+            this.marpitFullscreenButton.innerHTML = MARP_EXIT_FULLSCREEN_ICON || '<i class="mdi mdi-fullscreen-exit"></i>'
           })
       } else {
         if (document.exitFullscreen) {
           document.exitFullscreen()
             .then(() => {
-              this.marpitFullscreenButton.innerHTML = '<i class="mdi mdi-fullscreen"></i>'
+              this.marpitFullscreenButton.innerHTML = MARP_ENTER_FULLSCREEN_ICON || '<i class="mdi mdi-fullscreen"></i>'
             })
         }
       }
@@ -443,18 +449,7 @@ export default {
         this.marpitApplyPlaying(null)
       }
     },
-    triggerUpdateMarp () {
-      if (this.ready) {
-        this.updateMarp()
-      } else {
-        this.$once('ready', this.updateMarp)
-      }
-    },
     updateMarp () {
-      // Prevent hash change triggered update event
-      if (this.marpitPlaying !== null) {
-        return
-      }
       // Remove all mocked sections
       [...document.querySelectorAll('div.marpit > svg[data-marpit-mock]'),
         ...document.querySelectorAll('div.marpit > div.marpit-play-button'),
@@ -489,8 +484,8 @@ export default {
         realSection.parentNode.insertBefore(mockSection, realSection)
         const playButton = document.createElement('div')
         playButton.classList.add('marpit-play-button')
-        playButton.innerHTML = '<i class="mdi mdi-play"></i>'
-        playButton.addEventListener('click', (event) => {
+        playButton.innerHTML = MARP_ENTER_PLAY_ICON || '<i class="mdi mdi-play"></i>'
+        playButton.addEventListener('click', () => {
           if (this.marpitExpectedPlaying !== i) {
             this.marpitApplyPlaying(i)
             this.marpitApplyPlaying(i)

@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import event from '@theme-event'
 import { resolveHeaders } from '../util'
 
 export default {
@@ -47,7 +48,8 @@ export default {
   data: () => ({
     tocActive: [],
     tocOpen: [],
-    toc: []
+    toc: [],
+    routerHook: null
   }),
   computed: {
     tocWithoutParent () {
@@ -77,10 +79,16 @@ export default {
   mounted () {
     this.updateToc()
     this.updateTocOpenAndActive()
-    this.$root.$refs.layout.$on('updated', this.updateTocListener)
+    event.$on('contentReady', this.updateTocListener)
+    this.routerHook = this.$router.afterEach((to, from) => {
+      if (from.path !== to.path) {
+        this.updateTocListener()
+      }
+    })
   },
   beforeDestroy () {
-    this.$root.$refs.layout.$off('updated', this.updateTocListener)
+    this.routerHook()
+    event.$off('contentReady', this.updateTocListener)
   },
   methods: {
     updateTocListener () {

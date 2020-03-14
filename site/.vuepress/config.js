@@ -1,3 +1,4 @@
+const path = require('path')
 const execSync = require('child_process').execSync
 const os = require('os')
 
@@ -187,20 +188,10 @@ module.exports = {
       before: info => `<details class="custom-block details">${info ? `<summary>${info}</summary>` : ''}\n`,
       after: () => '</details>\n'
     }],
-    [require('./plugins/vuepress-plugin-rss.js'),
-      {
-        base_url: '/',
-        site_url: 'https://szp15.com',
-        count: 20
-      }
-    ],
-    [require('./plugins/additional-pages')],
-    [require('./plugins/code-copy-button'), {
-      codeCopiedText: '成功复制代码片段'
-    }],
-    [require('./plugins/code-toggle-prompt')],
-    [require('./plugins/my-mathjax')],
-    [require('./plugins/my-gitalk'), {
+    ['@oak-tree-house/code-copy'],
+    ['@oak-tree-house/code-toggle'],
+    ['@oak-tree-house/mathjax'],
+    ['@oak-tree-house/gitalk', {
       config: {
         clientID: 'bb23e02c8bd429ed1021',
         clientSecret: 'bee29c595c6ce8ec5b5c85698872bda46c5da0d6',
@@ -218,12 +209,11 @@ module.exports = {
       encryptedText: '这部分内容已被加密，你需要输入正确的密钥才能查看。',
       decryptedText: '内容被成功解密并显示在下方。',
       decryptButtonText: '解密',
-      decryptFailText: '解密失败！',
       unencryptedIcon: 'mdi mdi-lock-alert',
       encryptedIcon: 'mdi mdi-lock',
       decryptedIcon: 'mdi mdi-lock-open'
     }],
-    [require('./plugins/marp')],
+    ['@oak-tree-house/marp'],
     ['@vuepress/blog', {
       directories: [
         {
@@ -310,6 +300,22 @@ module.exports = {
           }
         }
       ]
+    }],
+    [{
+      name: 'additional-pages',
+      additionalPages: [{
+        path: '/readme/',
+        filePath: path.resolve(__dirname, '../../README.md')
+      }, {
+        path: '/todo/',
+        filePath: path.resolve(__dirname, '../../TODO.md')
+      }, {
+        path: '/license/',
+        filePath: path.resolve(__dirname, '../../LICENSE.md')
+      }, {
+        path: '/changelog/',
+        filePath: path.resolve(__dirname, '../../CHANGELOG.md')
+      }]
     }]
   ],
   markdown: {
@@ -332,7 +338,7 @@ module.exports = {
         rowspan: true,
         headerless: true
       })
-      md.use(require('./markdown-it-plugins/diagrams'))
+      md.use(require('@oak-tree-house/markdown-it-diagrams'))
     }
   },
   sass: {

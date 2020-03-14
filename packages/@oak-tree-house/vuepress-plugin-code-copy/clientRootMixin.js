@@ -1,25 +1,21 @@
-/* global CCB_CODE_COPIED_TEXT */
+import event from '@code-copy-event'
+import './style.css'
+
+/* global CC_COPY_ICON */
 
 export default {
   mounted () {
-    this.triggerUpdateCopyButtons()
+    this.updateCopyButtons()
     this.$router.afterEach((to, from) => {
       if (from.path !== to.path) {
         this.$nextTick(() => {
-          this.triggerUpdateCopyButtons()
+          this.updateCopyButtons()
         })
       }
     })
-    this.$on('updated', this.triggerUpdateCopyButtons)
+    event.$on('contentReady', this.updateCopyButtons)
   },
   methods: {
-    triggerUpdateCopyButtons () {
-      if (this.ready) {
-        this.updateCopyButtons()
-      } else {
-        this.$once('ready', this.updateCopyButtons)
-      }
-    },
     updateCopyButtons () {
       const codeblocks = [...document.querySelectorAll('div[class^="language-"]')]
       for (const block of codeblocks) {
@@ -28,7 +24,7 @@ export default {
         }
         const copyButton = document.createElement('span')
         copyButton.classList.add('copy-button')
-        copyButton.innerHTML = '<i class="mdi mdi-content-copy"></i>'
+        copyButton.innerHTML = CC_COPY_ICON || '<i class="mdi mdi-content-copy"></i>'
         block.prepend(copyButton)
         copyButton.addEventListener('click', () => {
           const innerBlock = block.querySelector('code')
@@ -38,9 +34,7 @@ export default {
           selection.removeAllRanges()
           selection.addRange(range)
           document.execCommand('Copy')
-          if (this.$refs.child && this.$refs.child.openSnackbar) {
-            this.$refs.child.openSnackbar(CCB_CODE_COPIED_TEXT)
-          }
+          event.$emit('code-copied')
         })
       }
     }

@@ -4,11 +4,11 @@
   >
     {{ snackbarText }}
     <v-btn
-      color="red"
+      :color="snackbarButtonColor"
       text
-      @click="snackbar = false"
+      @click="snackbarButtonAction"
     >
-      {{ $site.themeConfig.snackbarCloseText || 'close' }}
+      {{ snackbarButtonText }}
     </v-btn>
   </v-snackbar>
 </template>
@@ -17,15 +17,34 @@
 export default {
   data: () => ({
     snackbar: false,
-    snackbarText: ''
+    snackbarText: '',
+    snackbarButtonAction: null,
+    snackbarButtonText: '',
+    snackbarButtonColor: ''
   }),
   mounted () {
     this.$emit('ready')
   },
   methods: {
-    openSnackbar (text) {
-      this.snackbarText = text
-      this.snackbar = true
+    openSnackbar (action) {
+      if (typeof action === 'string') {
+        action = { text: action }
+      }
+      this.snackbarText = action.text
+      this.snackbarButtonAction = action.buttonAction || (() => {
+        this.snackbar = false
+      })
+      this.snackbarButtonText = action.buttonText
+        || this.$site.themeConfig.snackbarCloseText || 'close'
+      this.snackbarButtonColor = action.buttonColor || 'red'
+      if (this.snackbar === true) {
+        this.snackbar = false
+        this.$nextTick(() => {
+          this.snackbar = true
+        })
+      } else {
+        this.snackbar = true
+      }
     }
   }
 }

@@ -1,27 +1,23 @@
+import event from '@code-toggle-event'
+import './style.css'
+
 const pythonPromptStartHtml = '<span class="token operator">&gt;&gt;</span>'
   + '<span class="token operator">&gt;</span> '
 const pythonPromptStartHtml2 = '<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> '
 
 export default {
   mounted () {
-    this.triggerUpdateTogglePromptButtons()
+    this.updateTogglePromptButtons()
     this.$router.afterEach((to, from) => {
       if (from.path !== to.path) {
         this.$nextTick(() => {
-          this.triggerUpdateTogglePromptButtons()
+          this.updateTogglePromptButtons()
         })
       }
     })
-    this.$on('updated', this.triggerUpdateTogglePromptButtons)
+    event.$on('contentReady', this.updateTogglePromptButtons)
   },
   methods: {
-    triggerUpdateTogglePromptButtons () {
-      if (this.ready) {
-        this.updateTogglePromptButtons()
-      } else {
-        this.$once('ready', this.updateTogglePromptButtons)
-      }
-    },
     updateTogglePromptButtons () {
       const candidateBlocks = [...document.querySelectorAll('div.language-python')]
       const blocks = candidateBlocks.filter(x => x.innerText.startsWith('>>> '))

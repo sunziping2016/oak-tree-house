@@ -41,6 +41,19 @@ function enableOrDisableMarp (md, enable, originCoreProcess, marpCoreProccess) {
 module.exports = (options) => ({
   name: 'marp',
   clientRootMixin: path.resolve(__dirname, 'clientRootMixin.js'),
+  alias: {
+    '@marp-event': path.resolve(__dirname, 'event.js')
+  },
+  define: {
+    MARP_FIRST_SLIDE_ICON: options.firstSlideIcon,
+    MARP_PREVIOUS_SLIDE_ICON: options.prevSlideIcon,
+    MARP_NEXT_SLIDE_ICON: options.nextSlideIcon,
+    MARP_LAST_SLIDE_ICON: options.lastSlideIcon,
+    MARP_ENTER_FULLSCREEN_ICON: options.enterFullscreenIcon,
+    MARP_EXIT_FULLSCREEN_ICON: options.exitFullscreenIcon,
+    MARP_ENTER_PLAY_ICON: options.enterPlayIcon,
+    MARP_EXIT_PLAY_ICON: options.exitPlayIcon
+  },
   extendMarkdown (md) {
     const originCoreProcess = md.core.process
     const marpit = new Marpit({

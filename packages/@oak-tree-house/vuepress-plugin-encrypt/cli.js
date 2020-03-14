@@ -418,6 +418,11 @@ class App {
     await this.ensureLoadKeyFile()
     await this.prepareMarkdown()
     await this.forFiles(async (frontmatter, content, filename) => {
+      if (typeof frontmatter.data.encrypt === 'object' && frontmatter.data.encrypt.encrypted) {
+        console.error(chalk.red(`[EROR] Unencrypted file with key "${frontmatter.data.encrypt.key}" in file "${filename}"`))
+        hasUnencrypted = true
+        return
+      }
       await this.forBlocks(frontmatter, content, filename, async (tokens, match, sourceMap) => {
         if (match.encrypted) { return }
         if (!match.owners.includes(this.keyFile.user)) {

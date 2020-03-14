@@ -5,6 +5,8 @@ module.exports = (options, ctx) => {
     plugins: [
       ['@vuepress/active-header-links']
     ],
-    globalLayout: path.resolve(__dirname, 'layouts/GlobalLayout.vue')
+    alias: {
+      '@theme-event': path.resolve(__dirname, 'event.js')
+    }
   }
 }

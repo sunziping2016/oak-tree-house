@@ -54,11 +54,12 @@
 
 <script>
 /* global EN_CONTENT_TITLE, EN_UNENCRYPTED_TEXT, EN_ENCRYPTED_TEXT,
-  EN_DECRYPTED_TEXT, EN_DECRYPT_BUTTON_TEXT, EN_DECRYPT_FAIL_TEXT,
+  EN_DECRYPTED_TEXT, EN_DECRYPT_BUTTON_TEXT,
   EN_UNENCRYPTED_ICON, EN_ENCRYPTED_ICON, EN_DECRYPTED_ICON */
 
 import aesjs from 'aes-js'
 import md5 from 'md5'
+import event from '@encrypt-event'
 
 function base64ToArrayBuffer (base64) {
   const binaryString = window.atob(base64)
@@ -121,7 +122,6 @@ export default {
     if (this.encrypted && !this.encryptedContent) {
       this.encryptedContent = this.$refs.content.innerText.replace(/\s/g, '')
     }
-    this.$root.$refs.layout.$emit('updated')
   },
   methods: {
     onConfirm () {
@@ -134,16 +134,10 @@ export default {
         const { component } = JSON.parse(content)
         this.decryptedComponent = component
         this.$nextTick(() => {
-          this.$root.$refs.layout.$emit('updated')
+          event.$emit('decrypt-succeed')
         })
       } catch (e) {
-        if (this.$root.$refs.layout
-          && this.$root.$refs.layout.$refs.child
-          && this.$root.$refs.layout.$refs.child.openSnackbar) {
-          this.$root.$refs.layout.$refs.child.openSnackbar(EN_DECRYPT_FAIL_TEXT)
-        } else {
-          alert(EN_DECRYPT_FAIL_TEXT)
-        }
+        event.$emit('decrypt-failed')
       }
     }
   }

@@ -2,8 +2,6 @@
   <IndexPost
     :page-name="pageName"
     :breadcrumbs="breadcrumbs"
-    @ready="e => $emit('ready', arguments)"
-    @updated="e => $emit('updated', arguments)"
   />
 </template>
 
@@ -46,11 +44,6 @@ export default {
         exact: true
       })
       return items
-    }
-  },
-  methods: {
-    openSnackbar () {
-      this.$children[0].openSnackbar.apply(this.$children[0], arguments)
     }
   }
 }

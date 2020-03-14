@@ -1,0 +1,24 @@
+{
+  "name": "@oak-tree-house/vuepress-plugin-gitalk",
+  "version": "0.1.0",
+  "description": "VuePress Plugin to Add Gitalk Commenting System",
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sunziping2016/oak-tree-house.git",
+    "directory": "packages/@oak-tree-house/vuepress-plugin-gitalk"
+  },
+  "keywords": [
+    "vue",
+    "vuepress"
+  ],
+  "author": "Sun Ziping",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sunziping2016/oak-tree-house/issues"
+  },
+  "homepage": "https://github.com/sunziping2016/oak-tree-house/tree/master/packages/%40oak-tree-house/vuepress-plugin-gitalk#readme"
+}

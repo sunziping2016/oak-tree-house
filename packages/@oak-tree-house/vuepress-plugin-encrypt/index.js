@@ -22,14 +22,16 @@ module.exports = (options) => {
         }
       })
     },
-    alias: { vue: 'vue/dist/vue.esm.js' },
+    alias: {
+      vue: 'vue/dist/vue.esm.js',
+      '@encrypt-event': path.resolve(__dirname, 'event.js')
+    },
     define: {
       'EN_CONTENT_TITLE': options.contentTitle || 'Encrypted Content',
       'EN_UNENCRYPTED_TEXT': options.unencryptedText || 'The content is shown below. It should be encrypted when published.',
       'EN_ENCRYPTED_TEXT': options.encryptedText || 'This part of content is encrypted. To view it, you need to enter the correct key in the input field below.',
       'EN_DECRYPTED_TEXT': options.decryptedText || 'The encrypted content is successfully decrypted and shown below.',
       'EN_DECRYPT_BUTTON_TEXT': options.decryptButtonText || 'Decrypt',
-      'EN_DECRYPT_FAIL_TEXT': options.decryptFailText || 'Failed to decrypt!',
       'EN_UNENCRYPTED_ICON': options.unencryptedIcon,
       'EN_ENCRYPTED_ICON': options.encryptedIcon,
       'EN_DECRYPTED_ICON': options.decryptedIcon
