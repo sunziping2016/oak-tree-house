@@ -42,7 +42,5 @@ All notable changes to this project will be documented in this file.
 - Refactor event system
 - Make PWA notification use snackbar
 
-### Added
-
-[Unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/olivierlacan/keep-a-changelog/releases/tag/v1.0.0
+[Unreleased]: https://github.com/sunziping2016/oak-tree-house/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/sunziping2016/oak-tree-house/releases/tag/v1.0.0
