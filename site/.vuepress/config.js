@@ -1,3 +1,37 @@
+const execSync = require('child_process').execSync
+const os = require('os')
+
+function getVersion () {
+  // Tag CommitId Time Host
+  let tag
+  try {
+    tag = execSync('git describe --tags $(git rev-list --tags --max-count=1)', {
+      encoding: 'utf-8'
+    }).trim()
+  } catch (e) {
+    // do nothing
+  }
+  let commitId
+  try {
+    commitId = execSync('git log --format="%h" -n 1', {
+      encoding: 'utf-8'
+    }).trim()
+  } catch (e) {
+    // do nothing
+  }
+  const time = new Date().toLocaleString('zh-CN')
+  const hostname = process.env.BUILD_HOST || os.hostname()
+  if (tag && commitId) {
+    return `版本${tag}#${commitId}<br>${hostname}构建于${time}`
+  } else if (tag) {
+    return `版本${tag}<br>${hostname}构建于${time}`
+  } else if (commitId) {
+    return `版本${commitId}<br>${hostname}构建于${time}`
+  } else {
+    return `${hostname}构建于${time}`
+  }
+}
+
 module.exports = {
   title: '橡树屋',
   description: '欢迎来到孙子平的博客',
@@ -93,7 +127,7 @@ module.exports = {
     editLinks: true,
     editLinkText: '在 GitHub 上编辑此页',
     lastUpdated: '上次更新',
-    footer: '© 2016-2020 Ziping Sun <br> 京ICP备 17062397号',
+    footer: `<i class="mdi mdi-copyright"></i>2016-2020 Ziping Sun<br>京ICP备 17062397号<br>${getVersion()}`,
     snackbarCloseText: '关闭',
     notFoundText: '回到主页',
     indexHeading: '`${date.getFullYear()}年${date.getMonth() + 1}月`',

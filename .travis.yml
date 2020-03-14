@@ -5,6 +5,8 @@ cache:
   yarn: true
   directories:
     - .git/lfs
+env:
+  - BUILD_HOST=travis-ci
 git:
   lfs_skip_smudge: true
 install:

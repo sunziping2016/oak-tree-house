@@ -35,8 +35,9 @@
 - [x] Checker for whether everything is encrypted
 - [x] Display frontmatter in dialog
 - [x] PWA loads app
+- [x] Add version number to footer
+- [x] Support Marp like VsCode
 - [ ] Make PWA notification use snackbar
-- [ ] Support marp like VsCode
 - [ ] Support diagrams listed in [here](https://medium.com/technical-writing-is-easy/diagrams-in-documentation-markdown-guide-4e78419e8d2f)
 - [ ] Reimplement medium zoom
 - [ ] Update sass loader (wait for VuePress to solve issue #2148)
