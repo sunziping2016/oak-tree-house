@@ -89,7 +89,6 @@ module.exports = {
         type: 'menu', text: '此网站', items: [
           { text: '相关文档', subheader: true },
           { text: 'README', link: '/readme/', icon: 'mdi-book' },
-          { text: '计划列表', link: '/todo/', icon: 'mdi-format-list-checks' },
           { text: '更新日志', link: '/changelog/', icon: 'mdi-file-document-box' },
           { text: '授权', link: '/license/', icon: 'mdi-license' },
           { text: '项目链接', subheader: true },
@@ -306,9 +305,6 @@ module.exports = {
       additionalPages: [{
         path: '/readme/',
         filePath: path.resolve(__dirname, '../../README.md')
-      }, {
-        path: '/todo/',
-        filePath: path.resolve(__dirname, '../../TODO.md')
       }, {
         path: '/license/',
         filePath: path.resolve(__dirname, '../../LICENSE.md')

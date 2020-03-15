@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Bug Fixed
+
+- [ ] **$vuepress-plugin-encrypt**: does not emit `contentReady` for decrypted content due to  `ClientOnly`
+
+### Feature
+
+- [ ] **$markdown-it-diagrams**: support diagrams listed in [here](https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams)
+- [ ] reimplement medium zoom
+- [ ] update sass loader (wait for VuePress to solve issue #2148)
+
+
+### Content
+
+- [x] remove TODO from additional pages
+- [ ] add more about Tsmart code review (under process)
+
 ## [1.0.0]
 
 - Transfer origin site
