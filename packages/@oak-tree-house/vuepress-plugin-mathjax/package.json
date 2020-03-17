@@ -21,5 +21,11 @@
   "bugs": {
     "url": "https://github.com/sunziping2016/oak-tree-house/issues"
   },
-  "homepage": "https://github.com/sunziping2016/oak-tree-house/tree/master/packages/%40oak-tree-house/vuepress-plugin-mathjax#readme"
+  "homepage": "https://github.com/sunziping2016/oak-tree-house/tree/master/packages/%40oak-tree-house/vuepress-plugin-mathjax#readme",
+  "dependencies": {
+    "deasync": "^0.1.19",
+    "katex": "^0.11.1",
+    "mathjax-full": "^3.0.1",
+    "mathjax-node": "^2.1.1"
+  }
 }

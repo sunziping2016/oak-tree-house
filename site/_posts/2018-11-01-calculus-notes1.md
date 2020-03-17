@@ -19,7 +19,7 @@ tags: [微积分, 数学]
 
 **确界定理**：有上界的非空数集必有上确界，有下界的非空数集必有下确界。
 
-**上确界的刻画**：$\xi=\sup A\Leftrightarrow\xi$是$Ａ$的上界，且$\forall\epsilon>0,\exists x\in A, x>\xi-\epsilon$。同样也有下确界的刻画。
+**上确界的刻画**：$\xi=\sup A\Leftrightarrow\xi$是$A$的上界，且$\forall\epsilon>0,\exists x\in A, x>\xi-\epsilon$。同样也有下确界的刻画。
 
 ### 1.2 数列极限的基本概念
 

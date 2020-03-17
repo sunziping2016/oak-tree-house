@@ -1,4 +1,16 @@
-module.exports = function extendMarkdown (md) {
+const fs = require('fs')
+const path = require('path')
+const katex = require('katex')
+const mjAPI = require('mathjax-node')
+const deasync = require('deasync')
+
+module.exports = function extendMarkdown (md, options, context) {
+  mjAPI.config({
+    displayErrors: false
+  })
+  const outDir = path.join(context.outDir, options.formulaDir
+    || 'assets' + path.sep + 'formulas')
+  fs.mkdirSync(outDir, { recursive: true })
   function isValidDelim (state, pos) {
     const max = state.posMax
     const prevChar = pos > 0 ? state.src.charCodeAt(pos - 1) : -1
@@ -129,11 +141,41 @@ module.exports = function extendMarkdown (md) {
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;')
   }
+  function mathRender (content, inline) {
+    // return katex.renderToString(content, {
+    //   throwOnError: false
+    // })
+    let data
+    let done = false
+    mjAPI.typeset({
+      ex: 8,
+      cjkCharWidth: 16,
+      math: content,
+      format: inline ? 'inline-TeX' : 'TeX',
+      svg: true,
+      timeout: 30 * 1000
+    }, (d) => {
+      data = d
+      done = true
+    })
+    deasync.loopWhile(() => !done)
+    if (data.errors) {
+      console.error(`Failed to render formula: ${content}`)
+      data.errors.forEach(x => console.error(x))
+      return `<span style="color:red">Failed to render formula: ${
+        escapeHtml(content)
+      }</span>`
+    } else {
+      return data.svg
+    }
+  }
   function inlineMathRender (tokens, idx) {
-    return '$' + escapeHtml(tokens[idx].realContent) + '$'
+    return mathRender(tokens[idx].realContent, true)
+    // return '$' + escapeHtml(tokens[idx].realContent) + '$'
   }
   function blockMathRender (tokens, idx) {
-    return '$$' + escapeHtml(tokens[idx].realContent) + '$$\n'
+    return mathRender(tokens[idx].realContent, false)
+    // return '$$' + escapeHtml(tokens[idx].realContent) + '$$'
   }
   md.inline.ruler.after('escape', 'inline_math', inlineMath)
   md.block.ruler.after('blockquote', 'block_math', blockMath, {

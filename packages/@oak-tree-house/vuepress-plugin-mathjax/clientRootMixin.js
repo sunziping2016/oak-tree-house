@@ -6,6 +6,10 @@ export default {
     scriptMathJaxLoaded: false
   }),
   mounted () {
+    // const linkKatex = document.createElement('link')
+    // linkKatex.href = 'https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css'
+    // linkKatex.rel = 'stylesheet'
+    // document.body.append(linkKatex)
     window.MathJax = { tex: { inlineMath: [['$', '$']] }}
     this.scriptMathjax = document.createElement('script')
     this.scriptMathjax.id = 'MathJax-script'
