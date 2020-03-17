@@ -56,6 +56,13 @@ Python可以被用于写爬虫，做网站，进行数据处理或者机器学�
 - `pip uninstall xxx`：卸载`xxx`包；
 - `pip install -r requirements.txt`：将`requirements.txt`列出的包全部安装，许多Python项目会将需要安装的包列出在`requirements.txt`中，方便大家下载。
 
+由于`pip`需要从国外下载包，这样网速会非常慢，遇到这种情况的可以考虑改一个源，从国内下载。比如可以改为清华TUNA的源，执行下面的命令即可。
+
+```bash
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
 ### 1.5 尝试安装JupyterLab
 
 JupyterLab可以更方便交互式地编辑运行代码。它是Jupyter Notebook的改进版。它还能显示表格和图片，如果你要做数据处理和可视化，那它会是很好的工具。它的界面是通过浏览器查看的。它将代码、输出及其他信息保存成后缀为`.ipynb`的格式。安装它需要费一番力气，接下来介绍如何在Windows上安装它，你大概需要7G的存储（主要是Visual Studio占的）。跳过这一节也无妨。

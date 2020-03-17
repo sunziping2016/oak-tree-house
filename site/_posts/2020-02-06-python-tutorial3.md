@@ -1,5 +1,5 @@
 ---
-title: Python教程3 - 复习实践篇
+title: Python教程3 - 内置对象
 author: 孙子平
 date: 2020-02-06T09:17:42Z
 category: Python
@@ -265,7 +265,7 @@ True
 
 这里我们使用`import`语句导入了一个包，我们会在之后的课程里讲解这些。
 
-注意浮点数的零有正零和负零之分，但是正零和父零是相等的：
+注意浮点数的零有正零和负零之分，但是正零和负零是相等的：
 
 ```python
 >>> +0
@@ -529,7 +529,7 @@ False
 >>> mono = ['a']
 ```
 
-类似地，使用圆括号`()`括起，逗号分割的表达式就能表示一个**元组**，最后一个表达式尾部可以有一个可选的逗号。**当只有一个元素的时候，这个逗号是必须的**，如果不添加逗号，就成了一个加了括号改变优先级的表达式。
+类似地，使用圆括号`()`括起，逗号分隔的表达式就能表示一个**元组**，最后一个表达式尾部可以有一个可选的逗号。**当只有一个元素的时候，这个逗号是必须的**，如果不添加逗号，就成了一个加了括号改变优先级的表达式。
 
 ```python
 >>> (1, 2, 3)
@@ -638,16 +638,16 @@ True
 
 |操作|结果|来源|
 |:-|:-|:-|
-|`iter(iterable)`{.text-no-wrap}|返回`iterable`的迭代器|`Iterable`要求的方法|
-|`min(iterable)`{.text-no-wrap}|`iterable`最小的元素|`Iterable`提供的方法|
-|`max(iterable)`{.text-no-wrap}|`iterable`最大的元素|^^|
-|`sorted(iterable)`{.text-no-wrap}|返回一个迭代器，是排好序的`iterable`，排序是stable的|^^|
-|`sum(iterable, start=0)`{.text-no-wrap}|从`start`开始左往右对所有数据求和|^^|
-|`all(iterable)`{.text-no-wrap}|`iterable`所有元素是否都是真|^^|
-|`any(iterable)`{.text-no-wrap}|`iterable`是否存在某个元素是真|^^|
-|`enumerate(iterable, start=0)`{.text-no-wrap}|返回一个迭代器，这个迭代器返回的元素是一个由序号（从`start`开始编号）和原可迭代对象的值组成的二元组，经常被用于`for`循环|^^|
-|`map(function, iterable)`{.text-no-wrap}|返回一个迭代器，这个迭代器返回的元素是传给`function`得到`True`的元素|^^|
-|`filter(function, iterable)`{.text-no-wrap}|返回一个迭代器，这个迭代器返回的是传给`iterable`元素给`function`得到的结果|^^|
+|`iter(iterable)`|返回`iterable`的迭代器|`Iterable`要求的方法|
+|`min(iterable)`|`iterable`最小的元素|`Iterable`提供的方法|
+|`max(iterable)`|`iterable`最大的元素|^^|
+|`sorted(iterable)`|返回一个迭代器，是排好序的`iterable`，排序是stable的|^^|
+|`sum(iterable, start=0)`|从`start`开始左往右对所有数据求和|^^|
+|`all(iterable)`|`iterable`所有元素是否都是真|^^|
+|`any(iterable)`|`iterable`是否存在某个元素是真|^^|
+|`enumerate(iterable, start=0)`|返回一个迭代器，这个迭代器返回的元素是一个由序号（从`start`开始编号）和原可迭代对象的值组成的二元组，经常被用于`for`循环|^^|
+|`map(function, iterable)`|返回一个迭代器，这个迭代器返回的元素是传给`function`得到`True`的元素|^^|
+|`filter(function, iterable)`|返回一个迭代器，这个迭代器返回的是传给`iterable`元素给`function`得到的结果|^^|
 |`zip(*iterables)`|返回一个迭代器，这个迭代器依次同时取出所有可迭代对象的元素，组成一个元组返回，经常用于`for`循环中|^^|
 
 下面给出一些例子：
@@ -716,18 +716,18 @@ digraph {
 
 |操作|结果|注释|来源|
 |:-|:-|:-|:-|
-|`x in s`{.text-no-wrap}|如果`s`的一个元素为`x`，则为`True`否则为`False`|如`str`、`bytes`和`bytearray`的一些序列使用`in`进行子串匹配|`Sequence`提供的方法|
-|`x not in s`{.text-no-wrap}|如果`s`的一个元素为`x`，则为`False`否则为`True`|^^|^^|
-|`s + t`{.text-no-wrap}|连接序列`s`和`t`，返回新的序列|这种连接如果需要执行多次会有较高的时间开销|某些序列拥有的额外方法，`range`之类的序列没有|
-|`s * n`{.text-no-wrap}和`n * s`{.text-no-wrap}|重复序列`s` `n`次|如果`n`为负，则当做0处理返回空串，注意`s`中的对象发生的是浅拷贝|^^|
-|`s[i]`{.text-no-wrap}|第$i$个元素，从0开始计数|如果$i$或$j$是负数，则分别等价于`len(s) + i`或`len(s) + j`，但`-0`仍是`0`|`Sequence`要求的方法|
-|`s[i:j]`{.text-no-wrap}|找出所有下标$k$满足$k\in[i, j)$|^^|^^|
-|`s[i:j:k]`{.text-no-wrap}|找出所有下标$x$满足$\exists n\in [0,\frac{j-i}{k}), x=i+nk$|^^|^^|
-|`len(s)`{.text-no-wrap}|`s`的长度| |^^|
-|`iter(s)`{.text-no-wrap}|返回`s`的迭代器| |`Sequence`提供的方法|
-|`reversed(s)`{.text-no-wrap}|返回`s`的反向迭代器| |`Sequence`提供的方法|
-|`s.index(x[, i[, j]])`{.text-no-wrap}|`x`出现在`s`中的第一次位置的下标，额外的参数基本等价于`s[i:j].index(x)`，找不到会抛出`ValueError`异常| |^^|
-|`s.count(x)`{.text-no-wrap}|`s`中出现了`x`的总数| |^^|
+|`x in s`|如果`s`的一个元素为`x`，则为`True`否则为`False`|如`str`、`bytes`和`bytearray`的一些序列使用`in`进行子串匹配|`Sequence`提供的方法|
+|`x not in s`|如果`s`的一个元素为`x`，则为`False`否则为`True`|^^|^^|
+|`s + t`|连接序列`s`和`t`，返回新的序列|这种连接如果需要执行多次会有较高的时间开销|某些序列拥有的额外方法，`range`之类的序列没有|
+|`s * n`和`n * s`|重复序列`s` `n`次|如果`n`为负，则当做0处理返回空串，注意`s`中的对象发生的是浅拷贝|^^|
+|`s[i]`|第$i$个元素，从0开始计数|如果$i$或$j$是负数，则分别等价于`len(s) + i`或`len(s) + j`，但`-0`仍是`0`|`Sequence`要求的方法|
+|`s[i:j]`|找出所有下标$k$满足$k\in[i, j)$|^^|^^|
+|`s[i:j:k]`|找出所有下标$x$满足$\exists n\in [0,\frac{j-i}{k}), x=i+nk$|^^|^^|
+|`len(s)`|`s`的长度| |^^|
+|`iter(s)`|返回`s`的迭代器| |`Sequence`提供的方法|
+|`reversed(s)`|返回`s`的反向迭代器| |`Sequence`提供的方法|
+|`s.index(x[, i[, j]])`|`x`出现在`s`中的第一次位置的下标，额外的参数基本等价于`s[i:j].index(x)`，找不到会抛出`ValueError`异常| |^^|
+|`s.count(x)`|`s`中出现了`x`的总数| |^^|
 
 下面是一些示例代码：
 
@@ -773,20 +773,20 @@ True
 
 |操作|结果|注释|来源|
 |:-|:-|:-|:-|
-|`s[i] = x`{.text-no-wrap}|`s`中的第`i`个元素被替换为`x`| |`MutableSequence`要求的方法|
-|`s[i:j] = t`{.text-no-wrap}|`s`从`i`到`j`（不包括`j`）的切片被替换为序列`t`| |^^|
-|`del s[i:j]`{.text-no-wrap}|等价于`s[i:j] = []`| |^^|
-|`s[i:j:k] = t`{.text-no-wrap}|将`s[i:j:k]`中的元素替换为序列`t`|切片和`t`的长度必须相等|^^|
-|`del s[i:j:k]`{.text-no-wrap}|移除`s[i:j:k]`中的元素| |^^|
-|`s.append(x)`{.text-no-wrap}|将`x`添加到`s`的末尾，等价于`s[len(s):len(s)] = [x]`| |`MutableSequence`提供的方法|
-|`s.clear()`{.text-no-wrap}|移除`s`中的所有元素，等价于`del s[:]`|Python 3.3新加入的方法|某些可变序列拥有的额外方法|
-|`s.copy()`{.text-no-wrap}|创建`s`的浅拷贝，等价于`s[:]`|^^|^^|
-|`s.extend(t)`{.text-no-wrap}和`s += t`{.text-no-wrap}|用序列`t`扩展`s`，等价于`s[len(s):len(s)] = t`| |`MutableSequence`提供的方法|
-|`s *= n`{.text-no-wrap}|更新`s`的内容重复`n`词|内容会被浅拷贝|某些可变序列拥有的额外方法|
-|`s.insert(i, x)`{.text-no-wrap}|将`x`插入到`s`下表为`i`的地方，等价于`s[i:i] = [x]`| |`MutableSequence`要求的方法|
-|`s.pop([i])`{.text-no-wrap}|返回下表为`i`的元素并且移除它，默认`i`为`-1`| |`MutableSequence`提供的方法|
-|`s.remove(x)`{.text-no-wrap}|移除第一个值等于`x`的元素，没找到时抛出`ValueError`异常| |^^|
-|`s.reverse()`{.text-no-wrap}|将`s`中的元素倒过来| |^^|
+|`s[i] = x`|`s`中的第`i`个元素被替换为`x`| |`MutableSequence`要求的方法|
+|`s[i:j] = t`|`s`从`i`到`j`（不包括`j`）的切片被替换为序列`t`| |^^|
+|`del s[i:j]`|等价于`s[i:j] = []`| |^^|
+|`s[i:j:k] = t`|将`s[i:j:k]`中的元素替换为序列`t`|切片和`t`的长度必须相等|^^|
+|`del s[i:j:k]`|移除`s[i:j:k]`中的元素| |^^|
+|`s.append(x)`|将`x`添加到`s`的末尾，等价于`s[len(s):len(s)] = [x]`| |`MutableSequence`提供的方法|
+|`s.clear()`|移除`s`中的所有元素，等价于`del s[:]`|Python 3.3新加入的方法|某些可变序列拥有的额外方法|
+|`s.copy()`|创建`s`的浅拷贝，等价于`s[:]`|^^|^^|
+|`s.extend(t)`和`s += t`|用序列`t`扩展`s`，等价于`s[len(s):len(s)] = t`| |`MutableSequence`提供的方法|
+|`s *= n`|更新`s`的内容重复`n`词|内容会被浅拷贝|某些可变序列拥有的额外方法|
+|`s.insert(i, x)`|将`x`插入到`s`下表为`i`的地方，等价于`s[i:i] = [x]`| |`MutableSequence`要求的方法|
+|`s.pop([i])`|返回下表为`i`的元素并且移除它，默认`i`为`-1`| |`MutableSequence`提供的方法|
+|`s.remove(x)`|移除第一个值等于`x`的元素，没找到时抛出`ValueError`异常| |^^|
+|`s.reverse()`|将`s`中的元素倒过来| |^^|
 
 下面是示例代码：
 
@@ -971,7 +971,7 @@ squares = [x**2 for x in range(10)]
 
 #### 1.6.1 字典的字面量
 
-字典的字面量是由一对花括号`{}`，逗号分割的键值对`key: value`组成，最后一个键值对的末尾可以有逗号`,`，这里`key`和`value`可以是任意表达式，但需要注意`key`表达式的结果一定是**可哈希对象（hashable）**，想知道那些对象是可哈希对象可以查看[本章开头](#_1-内置对象)的那张图，继承自`Hashable`的对象都是可哈希对象，所有的数学类型、元组、字符串、bytes是可哈希的。在Python标准库中不可变对象都是可哈希的，可变对象都不是可哈希的，但实际上可变和可哈希没有必然的联系。
+字典的字面量是由一对花括号`{}`，逗号分隔的键值对`key: value`组成，最后一个键值对的末尾可以有逗号`,`，这里`key`和`value`可以是任意表达式，但需要注意`key`表达式的结果一定是**可哈希对象（hashable）**，想知道那些对象是可哈希对象可以查看[本章开头](#_1-内置对象)的那张图，继承自`Hashable`的对象都是可哈希对象，所有的数学类型、元组、字符串、bytes是可哈希的。在Python标准库中不可变对象都是可哈希的，可变对象都不是可哈希的，但实际上可变和可哈希没有必然的联系。
 
 可能大家还是不清楚什么叫“哈希”，哈希的意思是将对象的内容映射到一个整数，这种映射就像一个指纹，这对于哈希表这种数据结构是必须的，而哈希表在存储键值对的数据中有很优秀的性能。
 
@@ -991,10 +991,19 @@ TypeError: unhashable type: 'list'
 ```
 
 :::tip
+
 所谓可哈希对象必须满足两个条件：
 
-- `hashable.__hash__()`方法返回一个整数，这个整数在对象存在期间不会发生变化；
-- `hashable.__eq__(self)`方法可以判断对象是否相等，对于相等的对象，它们的哈希值必须相等。
+- `hashable.__hash__()`方法返回一个整数，这个整数在对象存在期间不会发生变化。该函数会被内置函数`hash(object)`调用；
+- `hashable.__eq__(other)`方法可以判断对象是否相等，对于相等的对象，它们的哈希值必须相等。该函数会被二元运算符`==`调用。
+
+一旦定义了`__hash__()`方法，从逻辑上而言必须定义`__eq__(other)`方法。
+
+对于一个用户自定义的类，默认就是有上述两个方法的，这个时候`x == y`，等价于`x`和`y`就是同一个对象。且这时，`x`和`y`拥有相同的哈希值即`hash(x) == hash(y)`。
+
+如果一个自定义的类覆盖了`__eq__()`方法，却没定义`__hash__()`方法，则其`__hash__`会隐式地成为`None`，这会使得它被`hash()`调用时返回`TypeError`。如果这个类是一个子类，它可以通过`__hash__ = ParentClass.__hash__`沿用父类的哈希方法。
+
+如果一个自定义类想彻底禁用哈希，可以`__hash__ = None`。
 
 :::
 
@@ -1060,17 +1069,17 @@ digraph {
 
 |操作|结果|来源|
 |:-|:-|:-|
-|`d[k]`{.text-no-wrap}|返回键`k`对应的值，如果该值不存在，抛出`KeyError`异常|`Mapping`要求的方法|
-|`len(d)`{.text-no-wrap}|返回`d`中元素的个数|^^|
-|`iter(d)`{.text-no-wrap}|返回遍历`d`所有键的迭代器，等价于`iter(d.keys())`|^^|
-|`d[k] = v`{.text-no-wrap}|将`d[k]`设置为`v`，如果'k'存在会更新，不存在会插入|`MutableMapping`要求的方法|
-|`del d[k]`{.text-no-wrap}|删除`d[k]`，如果`k`存在会抛出`KeyError`异常|^^|
-|`k in d`{.text-no-wrap}和`k not in d`{.text-no-wrap}|判断键`k`是否存在|`Mapping`提供的方法|
-|`d1 == d2`{.text-no-wrap}和`d1 != d2`{.text-no-wrap}|判断两个字典是否相等，只要有相同的键值对的字典就认为相同，这与插入顺序无关|^^|
-|`d.keys()`{.text-no-wrap}|返回字典键的视图，这是一个包含了字典所有键的集合，详见[字典的试图](#_1-6-4-字典的视图)|^^|
-|`d.items()`{.text-no-wrap}|返回字典键值对的试图，这是一个包含了`(key, value)`二元组的集合，详见[字典的试图](#_1-6-4-字典的视图)|^^|
-|`d.values()`{.text-no-wrap}|返回字典值的试图，这是一个包含了所有值的迭代器，注意`d.values() == d.values()`为`False`|^^|
-|`d.get(key, default=None)`{.text-no-wrap}|类似`d[key]`，只是如果该值不存在会返回`default`|^^|
+|`d[k]`|返回键`k`对应的值，如果该值不存在，抛出`KeyError`异常|`Mapping`要求的方法|
+|`len(d)`|返回`d`中元素的个数|^^|
+|`iter(d)`|返回遍历`d`所有键的迭代器，等价于`iter(d.keys())`|^^|
+|`d[k] = v`|将`d[k]`设置为`v`，如果'k'存在会更新，不存在会插入|`MutableMapping`要求的方法|
+|`del d[k]`|删除`d[k]`，如果`k`存在会抛出`KeyError`异常|^^|
+|`k in d`和`k not in d`|判断键`k`是否存在|`Mapping`提供的方法|
+|`d1 == d2`和`d1 != d2`|判断两个字典是否相等，只要有相同的键值对的字典就认为相同，这与插入顺序无关|^^|
+|`d.keys()`|返回字典键的视图，这是一个包含了字典所有键的集合，详见[字典的试图](#_1-6-4-字典的视图)|^^|
+|`d.items()`|返回字典键值对的试图，这是一个包含了`(key, value)`二元组的集合，详见[字典的试图](#_1-6-4-字典的视图)|^^|
+|`d.values()`|返回字典值的试图，这是一个包含了所有值的迭代器，注意`d.values() == d.values()`为`False`|^^|
+|`d.get(key, default=None)`|类似`d[key]`，只是如果该值不存在会返回`default`|^^|
 |`d.pop(key[, default])`|如果`key`在字典中，移除它并返回，否则返回`default`，如果`default`也没指定，抛出`KeyError`异常|`MutableMapping`提供的方法|
 |`d.popitem()`|返回`(key, value)`二元组键值对，并移除它，如果字典空会抛出`KeyError`，对于字典，最后插入的会最先pop出来|^^|
 |`d.clear()`|移除字典中所有的元素|^^|
@@ -1158,9 +1167,9 @@ digraph {
 
 |操作|结果|来源|
 |:-|:-|:-|
-|`len(view)`{.text-no-wrap}|得到字典元素的个数|`MappingView`提供的方法|
-|`iter(view)`{.text-no-wrap}|按照插入顺序遍历，边遍历边插入删除元素会抛出`RuntimeError`|`ItemsView`、`KeysView`和`ValuesView`提供的方法|
-|`x in view`{.text-no-wrap}|判断`x`是否是键、值或键值对|^^|
+|`len(view)`|得到字典元素的个数|`MappingView`提供的方法|
+|`iter(view)`|按照插入顺序遍历，边遍历边插入删除元素会抛出`RuntimeError`|`ItemsView`、`KeysView`和`ValuesView`提供的方法|
+|`x in view`|判断`x`是否是键、值或键值对|^^|
 
 `dict.keys()`返回的对象类似集合，而如果字典的值也是可哈希对象，`dict.items()`返回的对象也类似集合。这里类似集合是指可以用判断是否相等的运算（`==`和`!=`）、判断子集的运算（`<`、`<=`、`>`和`>=`）、交（`&`）、并（`|`）、差（`-`）、对称差（`^`）和`isdisjoint()`。具体集合的操作可以查看[1.7 集合和frozenset](#_1-7-集合和frozenset)。
 
@@ -1208,7 +1217,163 @@ digraph {
 {2: 4, 4: 16, 6: 36}
 ```
 
-### 1.7 集合和FrozenSet
+### 1.7 集合和frozenset
+
+集合是一序列互不相同的可哈希对象组成的无序容器，它们可以被用于测试`in`关系（比一般的序列快），去重，以及进行交并补计算。`set`和`frozenset`的差别在于前者是可变的、不可哈希的，而`frozenset`是不可变的、可哈希的。
+
+#### 1.7.1 集合字面量
+
+集合的字面量和字典的字面量比较类似，都是用一对花括号`{}`括起的，并用逗号分隔的。不同之处是字典是键值对`key: value`组成的一对表达式，而集合则只包含一个表达式：
+
+```python
+>>> {1, 3, 2}          # 集合元素迭代的顺序不一定遵循插入顺序
+{1, 2, 3}
+>>> {1, 1, 3.0, 3, 2}  # 集合会去除掉重复的元素
+{1, 2, 3.0}
+```
+
+集合字面量同样支持可迭代对象的解包：
+
+```python
+>>> a = [1, 2, 3]
+>>> b = [2, 3, 4]
+>>> {*a, *b}
+{1, 2, 3, 4}
+```
+
+#### 1.7.2 可迭代对象构与集合和frozenset之间的转换
+
+集合和`frozenset`本身就是可迭代对象，这意味着你获取字典和`frozenset`的迭代器、将他们转换成列表或元组、用`for`循环遍历，具体支持的操作可以看[1.5.3 可迭代对象的操作](#_1-5-3-可迭代对象的操作)，当然仍需要指出**集合和frozenset迭代的顺序不一定遵循插入顺序**。
+
+```python
+>>> a = {1, 3, 2}
+>>> [2 * i for i in a]
+[2, 4, 6]
+>>> tuple(a)
+(1, 2, 3)
+```
+
+另一方面集合`set`和`frozenset`的构造函数可以接受一个可迭代对象，构建出新的集合和`frozenset`对象，其中重复的元素会被消除掉。
+
+```python
+>>> a = [1, 2, 3, 2, 1]
+>>> set(a)
+{1, 2, 3}
+>>> frozenset(a)
+frozenset({1, 2, 3})
+```
+
+所以这两个操作和在一起，先把可迭代对象转成集合，再从集合转换为可迭代对象可以成功地消除重复的元素：
+
+```python
+>>> a = [1, 2, 3, 2, 1]
+>>> list(set(a))         # 一个典型的去重操作
+[1, 2, 3]
+```
+
+#### 1.7.3 集合和frozenset的操作
+
+```graphviz [render]
+digraph {
+  graph [rankdir=BT]
+  subgraph abstract {
+    MutableSet -> Set -> Iterable
+  }
+  subgraph concret {
+    node [shape=box]
+    set, fronzenset
+  }
+  set -> MutableSet
+  fronzenset -> Set
+}
+```
+
+从上图我们可以看到集合和`frozenset`的继承关系，首先我们可以看到**所有集合**都共有的一些操作：
+
+|操作|结果|来源|
+|:-|:-|:-|
+|`len(s)`|`s`的元素个数|`Set`要求的方法|
+|`x in s` / `x not in s`|测试`s`是否包含/不包含`x`|^^|
+|`set.isdisjoint(other)`|返回两个集合是否没有相同的元素|`Set`提供的方法|
+|`set <= other_set` / `set < other_set` / `set >= other_set` / `set > other_set`|测试`set`是否是`other_set`的子集/真子集/超集/真超集|^^|
+|`set | other_set` / `set & other_set` / `set - other_set` / `set ^ other_set`|返回`set`和`other_set`的并集/交集/差集/对称差|^^|
+|`issubset(other_iterable)` / `issuperset(other_iterable)`|几乎等价于`set <= other`/`set >= other`|`set`和`frozenset`特有的方法|
+|`set.union(*other_iterables)` / `set.intersection(*other_iterables)` / `set.difference(*other_iterables)`|几乎等价于`set | other | ...`/`set & other & ...`/`set - other - ...` |^^|
+|`set.symmetric_difference(other_iterable)`|几乎等价于`set ^ other`|^^|
+|`set.copy()`|返回`set`的浅拷贝|^^|
+
+这里需要指出交、并、差、对称差这4个操作和子集、超集都有对应的两个版本：运算符和方法。这两个我们说是“几乎”等价的，差别在于运算符版要求操作数必须同样是集合类型的，而方法则可以接受可迭代对象，除此之外，某些方法还接受任意多参数。下面我们即将讲到的可变集合操作也类似。
+
+集合和`frozenset`之间是可以混合运算的，所以我们有`set('abc') == frozenset('abc')`。对于交、并、差、对称差，如果存在混合操作，返回的类型是第一个操作数的类型。
+
+这里我们需要指出，集合之间的`<`，`>`和`==`并不组成全序关系，也就是说可能存在两个集合`a`和`b`，`a < b`、`a > b`和`a == b`都为假，这和我们学习到的实数之类的序的关系是不一样的。
+
+集合的交、并和对称差`&`、`|`、`^`可能对于新手不那么容易记，这3个符号来自于C系语言位运算，和集合运算也恰恰是对应上的。之后我们会在表达式中再次遇到这3个运算符作用在整数上的情况。
+
+接下来我们来看看上面运算的例子：
+
+```python
+>>> a = {1, 2, 3}
+>>> b = {2, 3, 4}
+>>> c = {1, 2, 3, 4}
+>>> len(c)
+4
+>>> a.isdisjoint(b)
+False
+>>> a < c                 # 真子集
+True
+>>> a & b                 # 交
+{2, 3}
+>>> a ^ b                 # 对称差
+{1, 4}
+>>> c.intersection(a, b)  # a、b和c的交集
+{2, 3}
+```
+
+上面所讲的是普通集合，也就是集合和`frozenset`都支持的操作。下面我们来讲可变集合，也就是集合`set`支持的操作。
+
+|操作|结果|来源|
+|:-|:-|:-|
+|`set |= other_set` / `set &= other_set` / `set -= other_set` / `set ^= other_set`|等价于`set = set | other_set`（并）/`set = set & other_set`（交）/`set = set - other_set`（差）/`set = set ^ other_set`（对称差）|`MutableSet`提供的方法|
+|`set.update(*other_iterables)` / `set.intersection_update(*other_iterables)` / `set.difference_update(*other_iterables)`|等价于`set = set.union(*other_iterables)`/`set = set.intersection(*other_iterables)`/`set = set.difference(*other_iterables)`|`set`特有的方法|
+|`set.symmetric_difference_update(other_iterable)`|等价于`set =set.symmetric_difference(other_iterable)`|^^|
+|`set.add(elem)`|向`set`中添加元素`elem`|`MutableSet`要求的方法|
+|`set.discard(elem)`|向`set`中移除元素`elem`，如果`elem`不存在不报错|^^|
+|`set.remove(eleme)`|从`set`中移除元素`elem`，如果`elem`不存在则抛出`KeyError`错误|`MutableSet`提供的方法|
+|`set.pop()`|移除一个元素并返回它|^^|
+|`set.clear()`|移除集合中的所有元素|^^|
+
+同样地，我们来看一下例子：
+
+```python
+>>> a = {1, 2, 3}
+>>> b = {4, 5}
+>>> a |= b
+>>> a
+{1, 2, 3, 4, 5}
+>>> a.add(7)
+>>> a.discard(6)
+>>> a.remove(6)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+KeyError: 6
+>>> a.pop()
+1
+>>> a
+{2, 3, 4, 5, 7}
+>>> a.clear()
+>>> a
+set()
+```
+
+#### 1.7.4 集合推导式
+
+集合的推导式和列表的很像，只是使用了花括号括起：
+
+```python
+>>> {x**2 for x in (2, 4, 6)}
+{16, 4, 36}
+```
 
 ### 1.8 复数
 
@@ -1216,21 +1381,9 @@ digraph {
 
 ### 1.10 range和enumerate
 
-## 2 表达式
+## 2 习题
 
-注释
-
-数学、比较、逻辑
-
-## 3 语句
-
-赋值、复合赋值
-
-## 4 函数
-
-## 5 习题
-
-### 5.1 A+B问题
+### 2.1 A+B问题
 
 #### 题目要求
 
@@ -1263,7 +1416,7 @@ if __name__ == '__main__':
 
 :::
 
-### 5.2 判断正负
+### 2.2 判断正负
 
 #### 题目要求
 
@@ -1297,7 +1450,7 @@ if __name__ == '__main__':
 
 :::
 
-### 5.3 最大值与最小值
+### 2.3 最大值与最小值
 
 #### 题目要求
 
@@ -1372,7 +1525,7 @@ if __name__ == '__main__':
 
 :::
 
-### 5.4 判断回文串
+### 2.4 判断回文串
 
 #### 题目要求
 
@@ -1432,7 +1585,7 @@ if __name__ == '__main__':
 
 :::
 
-### 5.5 统计字符数目
+### 2.5 统计字符数目
 
 #### 题目要求
 
@@ -1469,7 +1622,7 @@ if __name__ == '__main__':
 
 :::
 
-### 5.6 统计单词数目
+### 2.6 统计单词数目
 
 #### 题目要求
 
@@ -1508,7 +1661,7 @@ if __name__ == '__main__':
 
 :::
 
-### 5.7 考拉兹猜想
+### 2.7 考拉兹猜想
 
 #### 题目要求
 
@@ -1556,7 +1709,7 @@ if __name__ == '__main__':
 
 :::
 
-### 5.8 快速幂
+### 2.8 快速幂
 
 #### 题目要求
 
