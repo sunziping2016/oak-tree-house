@@ -187,7 +187,7 @@ module.exports = function extendMarkdown (md, options, context) {
           containerWidth: 80 * 16
         })
         const svg = adaptor.innerHTML(node)
-        const png = execSync(`rsvg-convert -z 1.2`, { input: svg })
+        const png = execSync(`rsvg-convert -z 1.4`, { input: svg })
         fs.writeFileSync(wholeFilename, png)
       }
       const result = inline

@@ -1,4 +1,5 @@
 img.mathjax-inline {
+  margin: 0 3px;
   max-width: 100%;
   vertical-align: middle;
 }
@@ -8,5 +9,6 @@ img.mathjax-inline {
 }
 
 .mathjax-block img {
+  margin: 0 3px;
   max-width: 100%;
 }
