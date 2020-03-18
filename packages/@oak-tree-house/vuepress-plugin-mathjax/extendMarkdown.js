@@ -1,4 +1,45 @@
-module.exports = function extendMarkdown (md) {
+const fs = require('fs')
+const path = require('path')
+const { execSync } = require('child_process')
+const md5 = require('md5')
+const mathjax = require('mathjax-full/js/mathjax.js').mathjax
+const TeX = require('mathjax-full/js/input/tex.js').TeX
+const SVG = require('mathjax-full/js/output/svg.js').SVG
+const LiteAdaptor = require('mathjax-full/js/adaptors/liteAdaptor.js').LiteAdaptor
+const RegisterHTMLHandler = require('mathjax-full/js/handlers/html.js').RegisterHTMLHandler
+const AllPackages = require('mathjax-full/js/input/tex/AllPackages.js').AllPackages
+
+class MyAdaptor extends LiteAdaptor {
+  nodeSize (node, em = 1, local = null) {
+    const cjk = this.options.cjkWidth
+    const width = this.options.normalWidth
+    const text = this.textContent(node)
+    let w = 0
+    for (const c of text.split('')) {
+      w += (c.codePointAt(0) > 128 ? cjk : width)
+    }
+    return [w, 0]
+  }
+}
+
+MyAdaptor.OPTIONS = {
+  ...LiteAdaptor.OPTIONS,
+  cjkWidth: 1,
+  normalWidth: 0.6
+}
+
+const adaptor = new MyAdaptor({
+  cjkWidth: 1,
+  normalWidth: 0.6
+})
+RegisterHTMLHandler(adaptor)
+
+const tex = new TeX({ packages: AllPackages })
+const svg = new SVG({ fontCache: 'local' })
+const html = mathjax.document('', { InputJax: tex, OutputJax: svg })
+
+module.exports = function extendMarkdown (md, options, context) {
+  fs.mkdirSync(options.outDir, { recursive: true })
   function isValidDelim (state, pos) {
     const max = state.posMax
     const prevChar = pos > 0 ? state.src.charCodeAt(pos - 1) : -1
@@ -129,11 +170,47 @@ module.exports = function extendMarkdown (md) {
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;')
   }
+  const cache = {}
+  function mathRender (content, inline) {
+    try {
+      if (cache[content]) {
+        return cache[content]
+      }
+      const hash = md5(content)
+      const filename = `${hash}.png`
+      const wholeFilename = path.join(options.outDir, filename)
+      if (!fs.existsSync(wholeFilename)) {
+        const node = html.convert(content, {
+          display: !inline,
+          em: 16,
+          ex: 8,
+          containerWidth: 80 * 16
+        })
+        const svg = adaptor.innerHTML(node)
+        const png = execSync(`rsvg-convert -z 1.4`, { input: svg })
+        fs.writeFileSync(wholeFilename, png)
+      }
+      const result = inline
+        ? `<img class="mathjax-inline" alt="formula" data-formula="${escapeHtml(content)}" src="/${options.formulaDir}/${filename}">`
+        : `<p class="mathjax-block"><img alt="formula" data-formula="${escapeHtml(content)}" src="/${options.formulaDir}/${filename}"></p>`
+      cache[content] = result
+      return result
+    } catch (e) {
+      console.error(`Failed to render formula: ${content}`)
+      console.error(e)
+      return ''
+          + `<${inline ? 'span' : 'div'} style="color:red">`
+          + `Failed to render formula: ${escapeHtml(content)}`
+          + `</${inline ? 'span' : 'div'}>`
+    }
+  }
   function inlineMathRender (tokens, idx) {
-    return '$' + escapeHtml(tokens[idx].realContent) + '$'
+    return mathRender(tokens[idx].realContent, true)
+    // return '$' + escapeHtml(tokens[idx].realContent) + '$'
   }
   function blockMathRender (tokens, idx) {
-    return '$$' + escapeHtml(tokens[idx].realContent) + '$$\n'
+    return mathRender(tokens[idx].realContent, false)
+    // return '$$' + escapeHtml(tokens[idx].realContent) + '$$'
   }
   md.inline.ruler.after('escape', 'inline_math', inlineMath)
   md.block.ruler.after('blockquote', 'block_math', blockMath, {

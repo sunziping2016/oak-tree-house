@@ -41,16 +41,14 @@ tags: [控制]
 
 **劳斯判据**（根稳定性判别方法）：对于6次方程$F(s)=a_0s^6+a_1s^5+\cdots+a_5s+a_6$，如下列出前两行：
 
-| | | | | |
 |-|-|-|-|-|
 | $s^6$ | $a_0$ | $a_2$ | $a_4$ | $a_6$ |
 | $s^5$ | $a_1$ | $a_3$ | $a_5$ | 0 |
 
-然后按照$a_{ij}=-\frac{1}{a_{i-1,1}}\begin{vmatrix} a_{i-2,1} | a_{i-2,j+1} \\ a_{i-1,1} | a_{i-1,j+1} \end{vmatrix}$，填充其它行。第一列符号改变次数等于右半平面根数。若劳斯判据第一列无符号改变，则根稳定。
+然后按照$a_{ij}=-\frac{1}{a_{i-1,1}}\begin{vmatrix} a_{i-2,1} & a_{i-2,j+1} \\ a_{i-1,1} & a_{i-1,j+1} \end{vmatrix}$，填充其它行。第一列符号改变次数等于右半平面根数。若劳斯判据第一列无符号改变，则根稳定。
 
 **劳斯判据第一列为0**：如果某一行第一个元素为0，其余元素不为0，将0代替为一个小的正数$\epsilon$；如果某一行第一个元素为0，其余元素也为0，则有关于原点对称的根，这时使用辅助多项式，求其微分作为新的一行，例子如下。
 
-| | | |
 |-|-|-|
 | $s^3$ | 6 | 6 |
 | $s^2$ | 4 | 4 |
@@ -58,7 +56,6 @@ tags: [控制]
 
 这时辅助多项式为$A(s)=4s^2+4$，则$\frac{dA(s)}{ds}=8s$，故最后的表格如下。
 
-| | | |
 |-|-|-|
 | $s^3$ | 6 | 6 |
 | $s^2$ | 4 | 4 |
@@ -104,12 +101,12 @@ $\frac{1}{s}$越多，稳态性能越好。
 
 **二阶系统定量分析**：传递函数为$\frac{\omega^2}{s^2+2\xi\omega s+\omega^2}$。$\xi>0$则稳定。
 $$\sigma=\begin{cases}
-0 | \xi\geq 1 \\
-e^{-\frac{\pi\xi}{\sqrt{1-\xi^2}}} | 0<\xi<1
+0 & \xi\geq 1 \\
+e^{-\frac{\pi\xi}{\sqrt{1-\xi^2}}} & 0<\xi<1
 \end{cases}$$
 $$t_s\begin{cases}
-\frac{3.2}{\xi\omega} | 0<\xi<0.69 \\
-\frac{2.8+6.5(\xi-0.7)}{\omega} | \xi\geq 0.69
+\frac{3.2}{\xi\omega} & 0<\xi<0.69 \\
+\frac{2.8+6.5(\xi-0.7)}{\omega} & \xi\geq 0.69
 \end{cases}$$
 
 **高阶系统的近似简化**：设传递函数为$M(s)=\frac{K(s-z_1)\cdots(s-z_m)}{(s-p_1)\cdots(s-p_n)}$，1) *零极点相消*，$|p_k-z_r|$很小时对消，结果为$\bar{M}(s)=\frac{Kz_r}{p_k}\frac{\prod\limits_{j=1,k\neq r}^m(s-z_j)}{\prod\limits_{i=1,i\neq k}^n(s-p_i)}$，右半平面的零、极点不能对消；2) *远极点消除*，对于$\mathrm{Re}(p_k)$很小的情况，可消除该极点，结果为$\bar{M}(s)=\frac{K}{p_k}\frac{\prod\limits_{j=1}^m(s-z_j)}{\prod\limits_{i=1,i\neq k}^n(s-p_i)}$。**消除时稳态放大倍数应不变**。
@@ -128,11 +125,11 @@ y(t)=Cx(t)+Du(t)
 
 **传递函数到状态方程的转换**：设$G(s)=\frac{Y(s)}{U(s)}=\frac{b_0s^m+b_1s^{m-1+\cdots+b_{m-1}s+b_m}}{s^n+a_1s^{n-1}+\cdots+a_{n-1}s+a_n}$。若$n>m$，则
 $$A=\begin{bmatrix}
-0 | 1 | 0 | \cdots | 0 \\
-0 | 0 | 1 | \cdots | 0 \\
-\vdots | \vdots | \vdots | \ddots | \vdots \\
-0 | 0 | 0 | \cdots | 1 \\
--a_n | -a_{n-1} | -a_{n-2} | \cdots | -a_1
+0 & 1 & 0 & \cdots & 0 \\
+0 & 0 & 1 & \cdots & 0 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 0 & 0 & \cdots & 1 \\
+-a_n & -a_{n-1} & -a_{n-2} & \cdots & -a_1
 \end{bmatrix}
 B=\begin{bmatrix}
 0 \\
@@ -143,17 +140,19 @@ B=\begin{bmatrix}
 \end{bmatrix}$$
 $$
 C = \begin{bmatrix}
-b_m | b_{m-1} | \cdots | b_1 | b_0 | 0 | \cdots | 0
+b_m & b_{m-1} & \cdots & b_1 & b_0 & 0 & \cdots & 0
 \end{bmatrix},
 D = 0
 $$
 若$n=m$，则$D=b_0$。
 
 **非线性系统的线性化**：
-\begin{align*}
-\frac{dx(t)}{dt}=f(x,u)\approx f(x_0,u_0)|+\frac{\partial f(x,u)}{\partial x}\bigg\rvert_{(x_0,u_0)}(x-x_0) \\
-|+\frac{\partial f(x,u)}{\partial u}\bigg\rvert_{(x_0,u_0)}(u-u_0)
-\end{align*}
+
+$$\begin{align*}
+\frac{dx(t)}{dt}=f(x,u)\approx f(x_0,u_0)&+\frac{\partial f(x,u)}{\partial x}\bigg\rvert_{(x_0,u_0)}(x-x_0) \\
+&+\frac{\partial f(x,u)}{\partial u}\bigg\rvert_{(x_0,u_0)}(u-u_0)
+\end{align*}$$
+
 选择工作点$f(x_0,u_0)=0$，令$\tilde{x}=x-x_0, \tilde{u}=u-u_0$。
 
 *步骤*：
