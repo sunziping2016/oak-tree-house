@@ -1,0 +1,12 @@
+img.mathjax-inline {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+.mathjax-block {
+  text-align: center;
+}
+
+.mathjax-block img {
+  max-width: 100%;
+}
