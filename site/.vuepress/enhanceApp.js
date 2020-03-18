@@ -1,5 +1,4 @@
 import themeEvent from '@theme-event'
-import mathjaxEvent from '@mathjax-event'
 import encryptEvent from '@encrypt-event'
 import codeCopyEvent from '@code-copy-event'
 import codeToggleEvent from '@code-toggle-event'
@@ -9,7 +8,6 @@ import swEvent from '@sw-event'
 
 export default () => {
   themeEvent.$on('contentReady', () => {
-    mathjaxEvent.$emit('contentReady')
     codeCopyEvent.$emit('contentReady')
     codeToggleEvent.$emit('contentReady')
     marpEvent.$emit('contentReady')

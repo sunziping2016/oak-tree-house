@@ -19,7 +19,7 @@ script:
 addons:
   ssh_known_hosts: szp15.com
 before_install:
-  - sudo apt-get -y install ditaa graphviz
+  - sudo apt-get -y install ditaa graphviz librsvg2-bin
   - export TZ=Asia/Shanghai
   - openssl aes-256-cbc -K $encrypted_93d5d24fc098_key -iv $encrypted_93d5d24fc098_iv
     -in deploy_rsa.enc -out /tmp/deploy_rsa -d

@@ -7,9 +7,6 @@ module.exports = function (options, context) {
   options.outDir = options.outDir || path.join(context.outDir, options.formulaDir)
   return {
     name: 'my-mathjax',
-    alias: {
-      '@mathjax-event': path.resolve(__dirname, 'event.js')
-    },
     extendMarkdown (md) {
       extendMarkdown(md, options, context)
     },
