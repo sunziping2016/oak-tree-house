@@ -41,8 +41,10 @@ const tex = new TeX({ packages: AllPackages })
 const svg = new SVG({ fontCache: 'local' })
 const html = mathjax.document('', { InputJax: tex, OutputJax: svg })
 
+const devicePixelRatio = 4
+
 module.exports = function (options, context) {
-  options.formulaPath = options.formulaPath || '/assets/formulas'
+  const formulaPath = options.formulaPath || '/assets/formulas'
   const tempFormulaPath = path.join(context.tempPath, 'formulas')
   if (context.isProd) {
     rimraf.sync(tempFormulaPath)
@@ -182,7 +184,7 @@ module.exports = function (options, context) {
           .replace(/'/g, '&#039;')
       }
       const cache = {}
-      function mathRender (content, inline) {
+      function mathRender (content, inline, env) {
         try {
           if (cache[content]) {
             return cache[content]
@@ -197,14 +199,20 @@ module.exports = function (options, context) {
           const width = Math.round(parseFloat(adaptor.getAttribute(node, 'width').slice(0, -2)) * 8)
           const height = Math.round(parseFloat(adaptor.getAttribute(node, 'height').slice(0, -2)) * 8)
           const verticalAlign = parseFloat(adaptor.getStyle(node, 'vertical-align').slice(0, -2)) * 8
-          const png = execSync(`rsvg-convert --width ${width} --height ${height} `, { input: output })
-          const hash = md5(png)
-          const filename = `${hash}.png`
-          const wholeFilename = path.join(tempFormulaPath, filename)
-          fs.writeFileSync(wholeFilename, png)
+          const png = execSync(`rsvg-convert --width ${width * devicePixelRatio} --height ${height * devicePixelRatio} `, { input: output })
+          let src
+          if (env.forceInline) {
+            src = `data:image/png;base64,${png.toString('base64')}`
+          } else {
+            const hash = md5(png)
+            const filename = `${hash}.png`
+            const wholeFilename = path.join(tempFormulaPath, filename)
+            fs.writeFileSync(wholeFilename, png)
+            src = `${formulaPath}/${filename}`
+          }
           const result = inline
-            ? `<img class="mathjax-inline" style="vertical-align: ${verticalAlign}px" width="${width}" height="${height}" alt="formula" data-formula="${escapeHtml(content)}" src="${options.formulaPath}/${filename}">`
-            : `<p class="mathjax-block"><img style="vertical-align: ${verticalAlign}px" width="${width}" height="${height}" alt="formula" data-formula="${escapeHtml(content)}" src="${options.formulaPath}/${filename}"></p>`
+            ? `<img class="mathjax-inline" style="vertical-align: ${verticalAlign}px; width: ${width}px" width="${width}" height="${height}" alt="formula" data-formula="${escapeHtml(content)}" src="${src}">`
+            : `<p class="mathjax-block"><img style="vertical-align: ${verticalAlign}px; width: ${width}px" width="${width}" height="${height}" alt="formula" data-formula="${escapeHtml(content)}" src="${src}"></p>`
           cache[content] = result
           return result
         } catch (e) {
@@ -216,11 +224,11 @@ module.exports = function (options, context) {
             + `</${inline ? 'span' : 'div'}>`
         }
       }
-      function inlineMathRender (tokens, idx) {
-        return mathRender(tokens[idx].realContent, true)
+      function inlineMathRender (tokens, idx, _, env) {
+        return mathRender(tokens[idx].realContent, true, env)
       }
-      function blockMathRender (tokens, idx) {
-        return mathRender(tokens[idx].realContent, false)
+      function blockMathRender (tokens, idx, _, env) {
+        return mathRender(tokens[idx].realContent, false, env)
       }
       md.inline.ruler.after('escape', 'inline_math', inlineMath)
       md.block.ruler.after('blockquote', 'block_math', blockMath, {
@@ -231,7 +239,7 @@ module.exports = function (options, context) {
     },
     enhanceAppFiles: path.resolve(__dirname, 'enhanceApp.js'),
     beforeDevServer (app, server) {
-      app.get(`${options.formulaPath}/:id`, (req, res) => {
+      app.get(`${formulaPath}/:id`, (req, res) => {
         const filePath = path.join(tempFormulaPath, req.params.id)
         if (fs.existsSync(filePath)) {
           res.sendFile(filePath)
@@ -242,7 +250,7 @@ module.exports = function (options, context) {
     },
     async generated () {
       await (promisify(ncp)(tempFormulaPath,
-        context.outDir + options.formulaPath.replace(/\//g, path.sep)))
+        context.outDir + formulaPath.replace(/\//g, path.sep)))
     }
   }
 }

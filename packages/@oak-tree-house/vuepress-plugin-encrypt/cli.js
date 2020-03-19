@@ -281,7 +281,8 @@ class App {
         } = this.markdown.render(frontmatter.content, {
           frontmatter: frontmatter.data,
           relativePath: path.relative(this.options.sourceDir, filename)
-            .replace(/\\/g, '/')
+            .replace(/\\/g, '/'),
+          forceInline: true
         })
         const plaintext = JSON.stringify({
           markdown: content,
@@ -330,7 +331,8 @@ class App {
         const html = this.markdown.renderer.render(tokens.slice(1, -1), this.markdown.options, {
           frontmatter: frontmatter.data,
           relativePath: path.relative(this.options.sourceDir, filename)
-            .replace(/\\/g, '/')
+            .replace(/\\/g, '/'),
+          forceInline: true
         })
         const origin = frontmatter.content.slice(sourceMap.contentBegin, sourceMap.contentEnd)
         const plaintext = JSON.stringify({

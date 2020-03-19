@@ -1,0 +1,29 @@
+{
+  "name": "@oak-tree-house/vuepress-plugin-diagrams",
+  "version": "1.0.0",
+  "description": "VuePress Plugin to Render Diagrams",
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sunziping2016/oak-tree-house.git",
+    "directory": "packages/@oak-tree-house/vuepress-plugin-diagrams"
+  },
+  "keywords": [
+    "vue",
+    "vuepress"
+  ],
+  "author": "Sun Ziping",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sunziping2016/oak-tree-house/issues"
+  },
+  "homepage": "https://github.com/sunziping2016/oak-tree-house/tree/master/packages/%40oak-tree-house/vuepress-plugin-diagrams#readme",
+  "dependencies": {
+    "md5": "^2.2.1",
+    "ncp": "^2.0.0",
+    "rimraf": "^3.0.2"
+  }
+}

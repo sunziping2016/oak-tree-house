@@ -190,6 +190,7 @@ module.exports = {
     ['@oak-tree-house/code-copy'],
     ['@oak-tree-house/code-toggle'],
     ['@oak-tree-house/mathjax'],
+    ['@oak-tree-house/diagrams'],
     ['@oak-tree-house/gitalk', {
       config: {
         clientID: 'bb23e02c8bd429ed1021',
@@ -334,7 +335,6 @@ module.exports = {
         rowspan: true,
         headerless: true
       })
-      md.use(require('@oak-tree-house/markdown-it-diagrams'))
     }
   },
   sass: {

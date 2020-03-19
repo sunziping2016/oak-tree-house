@@ -31,7 +31,7 @@ Python的类型之间是有父子关系的。子类型会拥有父类型的所�
 
 下图是一些内置类型的继承关系，其中方框是内置类型，椭圆来自`collection.abc`，每个椭圆的内容都提供一些方法。以后如果有机会，我会再来介绍每个节点是什么含义，你可以点击[此处](https://docs.python.org/3.7/library/collections.abc.html#collections-abstract-base-classes)查看相关文档。
 
-```graphviz [render]
+```graphviz [render p-class="text-center"]
 digraph abc {
   graph [rankdir=RL]
   subgraph abstract {
@@ -692,7 +692,7 @@ True
 
 所谓**序列**就是那些能够通过整数索引元素`s[i]`、并能通过`len()`函数获取长度的对象，所有的序列对象一定是**可迭代对象**（在先前的继承图中你可以看到`Sequence`继承自`Iterable`）。**可变的序列**是普通**序列**的子类型，除继承得到的方法之外，更进一步支持了对索引赋值`s[i] = value`、删除索引`del s[i]`和插入元素`s.insert(index, value)`这一些操作。这些继承关系可以用下图表示。
 
-```graphviz [render]
+```graphviz [render p-class="text-center"]
 digraph {
   graph [rankdir=BT]
   subgraph abstract {
@@ -761,7 +761,7 @@ True
 
 对于索引和切片下标值的含义，我们还是祭出下方的这个图，这是字符串`Python`的索引对应的位置。索引从0开始计数，索引6是个非法的索引，它**越界**了。此外还要注意切片是左闭右开的。
 
-```ditaa [render no-separation]
+```ditaa [render no-separation p-class="text-center"]
  +---+---+---+---+---+---+
  | P | y | t | h | o | n |
  +---+---+---+---+---+---+
@@ -1040,7 +1040,7 @@ TypeError: unhashable type: 'list'
 
 #### 1.6.3 映射的操作
 
-```graphviz [render]
+```graphviz [render p-class="text-center"]
 digraph {
   graph [rankdir=BT]
   subgraph abstract {
@@ -1139,7 +1139,7 @@ True
 
 `dict.keys()`、`dict.values()`和`dict.items()`返回的是视图对象。它们是**动态的**，也就是说如果字典发生了变化，这些视图也会发生变化。下面这张图是[上面](#_1-6-3-映射的操作)图的子图，显示了各个视图对象的关系。
 
-```graphviz [render]
+```graphviz [render p-class="text-center"]
 digraph {
   graph [rankdir=BT]
   subgraph abstract {
@@ -1273,7 +1273,7 @@ frozenset({1, 2, 3})
 
 #### 1.7.3 集合和frozenset的操作
 
-```graphviz [render]
+```graphviz [render p-class="text-center"]
 digraph {
   graph [rankdir=BT]
   subgraph abstract {
