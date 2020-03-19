@@ -1,7 +1,10 @@
 const fs = require('fs')
 const path = require('path')
+const { promisify } = require('util')
 const { execSync } = require('child_process')
 const md5 = require('md5')
+const rimraf = require('rimraf')
+const ncp = require('ncp').ncp
 const mathjax = require('mathjax-full/js/mathjax.js').mathjax
 const TeX = require('mathjax-full/js/input/tex.js').TeX
 const SVG = require('mathjax-full/js/output/svg.js').SVG
@@ -39,10 +42,12 @@ const svg = new SVG({ fontCache: 'local' })
 const html = mathjax.document('', { InputJax: tex, OutputJax: svg })
 
 module.exports = function (options, context) {
-  options.formulaDir = options.formulaDir || 'assets/formulas'
-  options.outDir = options.outDir || path.join(context.outDir, options.formulaDir)
-  const generated = {}
-  fs.mkdirSync(options.outDir, { recursive: true })
+  options.formulaPath = options.formulaPath || '/assets/formulas'
+  const tempFormulaPath = path.join(context.tempPath, 'formulas')
+  if (context.isProd) {
+    rimraf.sync(tempFormulaPath)
+  }
+  fs.mkdirSync(tempFormulaPath, { recursive: true })
   return {
     name: 'my-mathjax',
     extendMarkdown (md) {
@@ -182,27 +187,24 @@ module.exports = function (options, context) {
           if (cache[content]) {
             return cache[content]
           }
-          const hash = md5(content)
+          const node = adaptor.firstChild(html.convert(content, {
+            display: !inline,
+            em: 16,
+            ex: 8,
+            containerWidth: 80 * 16
+          }))
+          const output = adaptor.outerHTML(node)
+          const width = Math.round(parseFloat(adaptor.getAttribute(node, 'width').slice(0, -2)) * 8)
+          const height = Math.round(parseFloat(adaptor.getAttribute(node, 'height').slice(0, -2)) * 8)
+          const verticalAlign = parseFloat(adaptor.getStyle(node, 'vertical-align').slice(0, -2)) * 8
+          const png = execSync(`rsvg-convert --width ${width} --height ${height} `, { input: output })
+          const hash = md5(png)
           const filename = `${hash}.png`
-          const wholeFilename = path.join(options.outDir, filename)
-          if (context.isProd) {
-            generated[wholeFilename] = { content, inline }
-          } else {
-            if (!fs.existsSync(wholeFilename)) {
-              const node = html.convert(content, {
-                display: !inline,
-                em: 16,
-                ex: 8,
-                containerWidth: 80 * 16
-              })
-              const svg = adaptor.innerHTML(node)
-              const png = execSync(`rsvg-convert -z 1.4`, { input: svg })
-              fs.writeFileSync(wholeFilename, png)
-            }
-          }
+          const wholeFilename = path.join(tempFormulaPath, filename)
+          fs.writeFileSync(wholeFilename, png)
           const result = inline
-            ? `<img class="mathjax-inline" alt="formula" data-formula="${escapeHtml(content)}" src="/${options.formulaDir}/${filename}">`
-            : `<p class="mathjax-block"><img alt="formula" data-formula="${escapeHtml(content)}" src="/${options.formulaDir}/${filename}"></p>`
+            ? `<img class="mathjax-inline" style="vertical-align: ${verticalAlign}px" alt="formula" data-formula="${escapeHtml(content)}" src="${options.formulaPath}/${filename}">`
+            : `<p class="mathjax-block"><img style="vertical-align: ${verticalAlign}px" alt="formula" data-formula="${escapeHtml(content)}" src="${options.formulaPath}/${filename}"></p>`
           cache[content] = result
           return result
         } catch (e) {
@@ -216,11 +218,9 @@ module.exports = function (options, context) {
       }
       function inlineMathRender (tokens, idx) {
         return mathRender(tokens[idx].realContent, true)
-        // return '$' + escapeHtml(tokens[idx].realContent) + '$'
       }
       function blockMathRender (tokens, idx) {
         return mathRender(tokens[idx].realContent, false)
-        // return '$$' + escapeHtml(tokens[idx].realContent) + '$$'
       }
       md.inline.ruler.after('escape', 'inline_math', inlineMath)
       md.block.ruler.after('blockquote', 'block_math', blockMath, {
@@ -229,10 +229,10 @@ module.exports = function (options, context) {
       md.renderer.rules.inline_math = inlineMathRender
       md.renderer.rules.block_math = blockMathRender
     },
-    // enhanceAppFiles: path.resolve(__dirname, 'enhanceApp.js'),
+    enhanceAppFiles: path.resolve(__dirname, 'enhanceApp.js'),
     beforeDevServer (app, server) {
-      app.get(`/${options.formulaDir}/:id`, (req, res) => {
-        const filePath = path.join(options.outDir, req.params.id)
+      app.get(`${options.formulaPath}/:id`, (req, res) => {
+        const filePath = path.join(tempFormulaPath, req.params.id)
         if (fs.existsSync(filePath)) {
           res.sendFile(filePath)
         } else {
@@ -241,21 +241,8 @@ module.exports = function (options, context) {
       })
     },
     async generated () {
-      fs.mkdirSync(options.outDir, { recursive: true })
-      for (const wholeFilename of Object.keys(generated)) {
-        if (!fs.existsSync(wholeFilename)) {
-          const { content, inline } = generated[wholeFilename]
-          const node = html.convert(content, {
-            display: !inline,
-            em: 16,
-            ex: 8,
-            containerWidth: 80 * 16
-          })
-          const svg = adaptor.innerHTML(node)
-          const png = execSync(`rsvg-convert -z 1.4`, { input: svg })
-          fs.writeFileSync(wholeFilename, png)
-        }
-      }
+      await (promisify(ncp)(tempFormulaPath,
+        context.outDir + options.formulaPath.replace(/\//g, path.sep)))
     }
   }
 }
