@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Bug Fixed
 
-- [ ] **$vuepress-plugin-encrypt**: does not emit `contentReady` for decrypted content due to  `ClientOnly`
+- [ ] **$vuepress-plugin-encrypt**: does not emit `contentReady` for decrypted content due to `ClientOnly`
 
 ### Feature
 
@@ -23,7 +23,7 @@ All notable changes to this project will be documented in this file.
 - [x] remove TODO from additional pages
 - [x] add more about Tsmart code review
 - [x] add pip configuration part to python tutorial 1
-- [ ] add hashable objects and `set` parts to python tutorial 3
+- [x] add hashable objects and `set` parts to python tutorial 3
 
 ## [1.0.0]
 

@@ -16,7 +16,7 @@ module.exports = function (options, context) {
     rimraf.sync(tempDiagramPath)
   }
   fs.mkdirSync(tempDiagramPath, { recursive: true })
-  function generateFromPng(png, options, env) {
+  function generateFromPng (png, options, env) {
     let src
     if (options.inline || env.forceInline) {
       src = `data:image/png;base64,${png.toString('base64')}`
