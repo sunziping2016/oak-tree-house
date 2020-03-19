@@ -1,4 +1,3 @@
 !/site/.vuepress
 /site/.vuepress/dist
-/packages/@oak-tree-house/vuepress-plugin-encrypt/node_modules
-/packages/@oak-tree-house/vuepress-theme-vuetify-blog/node_modules
+**/node_modules
