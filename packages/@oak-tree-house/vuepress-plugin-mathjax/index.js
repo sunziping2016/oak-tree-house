@@ -203,8 +203,8 @@ module.exports = function (options, context) {
           const wholeFilename = path.join(tempFormulaPath, filename)
           fs.writeFileSync(wholeFilename, png)
           const result = inline
-            ? `<img class="mathjax-inline" style="vertical-align: ${verticalAlign}px" alt="formula" data-formula="${escapeHtml(content)}" src="${options.formulaPath}/${filename}">`
-            : `<p class="mathjax-block"><img style="vertical-align: ${verticalAlign}px" alt="formula" data-formula="${escapeHtml(content)}" src="${options.formulaPath}/${filename}"></p>`
+            ? `<img class="mathjax-inline" style="vertical-align: ${verticalAlign}px" width="${width}" height="${height}" alt="formula" data-formula="${escapeHtml(content)}" src="${options.formulaPath}/${filename}">`
+            : `<p class="mathjax-block"><img style="vertical-align: ${verticalAlign}px" width="${width}" height="${height}" alt="formula" data-formula="${escapeHtml(content)}" src="${options.formulaPath}/${filename}"></p>`
           cache[content] = result
           return result
         } catch (e) {
