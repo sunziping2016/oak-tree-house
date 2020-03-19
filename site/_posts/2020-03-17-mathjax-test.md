@@ -17,3 +17,9 @@ $$\text{整数} \underbrace{. \text{小数}}_{\text{小数部分}} \overbrace{\t
 $$\text{我爱Python}\neq\text{我爱OOP}$$
 
 行内：$x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}$
+
+超长的行内公式：$1 + 2 + 3 + 4 + 5 + \cdots + 95 + 96 + 97 +98 + 99 + 100 = \frac{(1 + 100)}{2}\times 100 = 5050$
+
+超长的非行内公式：
+
+$$1 + 2 + 3 + 4 + 5 + \cdots + 95 + 96 + 97 +98 + 99 + 100 = \frac{(1 + 100)}{2}\times 100 = 5050$$
