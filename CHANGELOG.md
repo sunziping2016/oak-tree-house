@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 
 ### Feature
 
+- [x] **$vuepress-plugin-mathjax**: render TeX formula into PNGs at server side
 - [ ] **$markdown-it-diagrams**: support diagrams listed in [here](https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams)
 - [ ] reimplement medium zoom
 - [ ] update sass loader (wait for VuePress to solve issue #2148)

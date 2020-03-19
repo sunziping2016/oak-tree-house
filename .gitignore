@@ -6,6 +6,4 @@ yarn-error.log
 /site/.vuepress/dist
 /external-link-list.txt
 /keys.json
-/.temp-build
-/.temp-dev
-/.temp-encrypt
+/.temp

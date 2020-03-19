@@ -20,7 +20,10 @@ function getVersion () {
   } catch (e) {
     // do nothing
   }
-  const time = new Date().toLocaleString('zh-CN', { hour12: false })
+  const time = new Date().toLocaleString('zh-CN', {
+    timeZone: 'Asia/Shanghai',
+    hour12: false
+  })
   const hostname = process.env.BUILD_HOST || os.hostname()
   if (tag && commitId) {
     return `版本${tag}#${commitId}<br>${hostname}构建于${time}`
