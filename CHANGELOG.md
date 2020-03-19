@@ -13,9 +13,9 @@ All notable changes to this project will be documented in this file.
 - [x] **$vuepress-plugin-mathjax**: render TeX formula into PNGs at server side
 - [x] **$vuepress-plugin-diagrams**: render diagrams to PNGs at server side
 - [x] **$vuepress-plugin-diagrams**: support add classes and styles to graphs
+- [x] **$site**: update sass loader (wait for VuePress to solve issue #2148)
 - [ ] **$vuepress-plugin-diagrams**: support diagrams listed in [here](https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams)
 - [ ] reimplement medium zoom
-- [ ] update sass loader (wait for VuePress to solve issue #2148)
 
 
 ### Content

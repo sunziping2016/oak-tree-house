@@ -23,6 +23,6 @@
   },
   "homepage": "https://github.com/sunziping2016/oak-tree-house/tree/master/packages/%40oak-tree-house/vuepress-plugin-marp#readme",
   "dependencies": {
-    "@marp-team/marpit": "^1.5.0"
+    "@marp-team/marpit": "^1.5.1"
   }
 }

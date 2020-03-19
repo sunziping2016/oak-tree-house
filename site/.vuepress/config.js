@@ -337,15 +337,26 @@ module.exports = {
       })
     }
   },
-  sass: {
-    implementation: require('sass'),
-    fiber: require('fibers'),
-    data: "@import '@theme/styles/variables.scss'"
-  },
-  scss: {
-    implementation: require('sass'),
-    fiber: require('fibers'),
-    data: "@import '@theme/styles/variables.scss';"
+  chainWebpack (config, isServer) {
+    for (const lang of ['sass', 'scss']) {
+      for (const name of ['modules', 'normal']) {
+        const rule = config.module.rule(lang).oneOf(name)
+        rule.uses.delete('sass-loader')
+        rule
+          .use('sass-loader')
+          .loader('sass-loader')
+          .options({
+            implementation: require('sass'),
+            sassOptions: {
+              fiber: require('fibers'),
+              indentedSyntax: lang === 'sass'
+            },
+            prependData: lang === 'sass'
+              ? '@import "@theme/styles/variables.scss"'
+              : '@import "@theme/styles/variables.scss";'
+          })
+      }
+    }
   },
   configureWebpack: (config, isServer) => {
     config.plugins = config.plugins || []
