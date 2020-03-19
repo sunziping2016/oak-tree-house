@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Bug Fixed
 
-- [ ] **$vuepress-plugin-encrypt**: does not emit `contentReady` for decrypted content due to `ClientOnly`
+- [x] **$vuepress-plugin-encrypt**: does not emit `contentReady` for decrypted content due to `ClientOnly`
 
 ### Feature
 

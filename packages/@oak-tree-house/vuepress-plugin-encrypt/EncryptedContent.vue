@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ClientOnly>
+    <MyClientOnly @contentReady="onContentReady">
       <div
         class="encrypted-header"
       >
@@ -48,7 +48,7 @@
         :is="decryptedComponent"
         v-if="decryptedComponent"
       />
-    </ClientOnly>
+    </MyClientOnly>
   </div>
 </template>
 
@@ -60,6 +60,7 @@
 import aesjs from 'aes-js'
 import md5 from 'md5'
 import event from '@encrypt-event'
+import MyClientOnly from './MyClientOnly.vue'
 
 function base64ToArrayBuffer (base64) {
   const binaryString = window.atob(base64)
@@ -73,6 +74,9 @@ function base64ToArrayBuffer (base64) {
 
 export default {
   name: 'EncryptedContent',
+  components: {
+    MyClientOnly
+  },
   props: {
     keyName: {
       type: String,
@@ -118,12 +122,16 @@ export default {
       }
     }
   },
-  updated () {
-    if (this.encrypted && !this.encryptedContent) {
-      this.encryptedContent = this.$refs.content.innerText.replace(/\s/g, '')
-    }
-  },
   methods: {
+    onContentReady () {
+      this.$nextTick(() => {
+        if (this.encrypted) {
+          this.encryptedContent = this.$refs.content.innerText.replace(/\s/g, '')
+        } else {
+          event.$emit('decrypt-already')
+        }
+      })
+    },
     onConfirm () {
       try {
         const encryptedContent = base64ToArrayBuffer(this.encryptedContent)

@@ -26,6 +26,9 @@ export default () => {
     })
     themeEvent.$emit('contentReady')
   })
+  encryptEvent.$on('decrypt-already', () => {
+    themeEvent.$emit('contentReady')
+  })
   codeCopyEvent.$on('code-copied', () => {
     themeEvent.$emit('notify', '成功复制代码片段！')
   })
