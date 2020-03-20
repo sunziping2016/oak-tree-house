@@ -1,151 +1,172 @@
 <template>
-  <div
-    class="posts"
+  <component
+    :is="$vuetify.breakpoint.smAndDown ? 'div' : 'v-timeline'"
+    class="posts my-0 my-md-4 ml-0 ml-md-n8"
+    :dense="$vuetify.breakpoint.smAndDown ? undefined : true"
+    :align-top="$vuetify.breakpoint.smAndDown ? undefined : true"
   >
     <template v-for="(page, index) in $pagination.pages">
-      <div
+      <component
+        :is="$vuetify.breakpoint.smAndDown ? 'div' : 'v-timeline-item'"
         v-if="$site.themeConfig.indexHeading && (index === 0 ||
           indexHeading(page) !== indexHeading($pagination.pages[index - 1]))"
-        :id="`_${indexHeading(page)}`"
         :key="`${page.path}-date`"
-        class="subtitle-1 post-heading"
+        :color="$vuetify.breakpoint.smAndDown ? undefined : 'red'"
       >
-        <a
-          :href="`#_${indexHeading(page)}`"
-          class="header-anchor"
-        />
-        {{ indexHeading(page) }}
-      </div>
-      <v-card
-        :key="page.path"
-        class="my-2 post"
-      >
-        <v-img
-          v-if="page.frontmatter.cover"
-          class="align-end"
-          height="180px"
-          :src="page.frontmatter.cover"
-        />
-        <v-card-title
-          class="post-title"
+        <div
+          :id="`_${indexHeading(page)}`"
+          class="post-heading"
         >
-          <router-link
-            :to="page.path"
-          >
-            {{ page.title }}
-          </router-link>
-        </v-card-title>
-        <v-card-subtitle>
-          <div
-            v-if="page.frontmatter.author"
-            class="post-tags"
-            title="作者"
-          >
-            <v-icon
-              size="18"
+          <a
+            :href="`#_${indexHeading(page)}`"
+            class="header-anchor"
+          />
+          {{ indexHeading(page) }}
+        </div>
+      </component>
+      <component
+        :is="$vuetify.breakpoint.smAndDown ? 'div' : 'v-timeline-item'"
+        :key="page.path"
+        :color="$vuetify.breakpoint.smAndDown ? undefined : 'purple'"
+        class="post"
+        :small="$vuetify.breakpoint.smAndDown ? undefined : true"
+      >
+        <v-hover>
+          <template v-slot="{ hover }">
+            <v-card
+              :key="page.path"
+              :elevation="hover ? 6 : 2"
+              class="my-2"
             >
-              mdi-account-outline
-            </v-icon>
-            <router-link
-              class="post-link"
-              :to="`/author/${page.frontmatter.author}/`"
-            >
-              {{ page.frontmatter.author }}
-            </router-link>
-          </div>
-          <div
-            v-if="page.frontmatter.tags"
-            class="post-tags"
-            title="标签"
-          >
-            <v-icon
-              size="18"
-            >
-              mdi-tag-outline
-            </v-icon>
-            <router-link
-              v-for="tag in page.frontmatter.tags"
-              :key="tag"
-              class="post-link post-tag"
-              :to="`/tag/${tag}/`"
-            >
-              {{ tag }}
-            </router-link>
-          </div>
-          <div
-            v-if="page.frontmatter.category"
-            class="post-tags"
-            title="分类"
-          >
-            <v-icon
-              size="18"
-            >
-              mdi-file-tree
-            </v-icon>
-            <router-link
-              class="post-link"
-              :to="`/category/${page.frontmatter.category}/`"
-            >
-              {{ page.frontmatter.category }}
-            </router-link>
-          </div>
-          <div
-            v-if="page.frontmatter.series"
-            class="post-tags"
-            title="连载文章"
-          >
-            <v-icon
-              size="18"
-            >
-              mdi-bookshelf
-            </v-icon>
-            <router-link
-              class="post-link"
-              :to="`/series/${page.frontmatter.series}/`"
-            >
-              {{ page.frontmatter.series }}
-            </router-link>
-          </div>
-        </v-card-subtitle>
-        <!-- eslint-disable vue/no-v-html -->
-        <v-card-text
-          class="post-summary content"
-          v-html="page.excerpt || page.frontmatter.summary"
-        />
-        <v-card-actions>
-          <div
-            v-if="page.frontmatter.date"
-            class="post-tags"
-            title="发布时间"
-          >
-            <v-icon
-              size="18"
-            >
-              mdi-calendar-month-outline
-            </v-icon>
-            <span>{{ new Date(page.frontmatter.date.trim()).toLocaleDateString($lang) }}</span>
-          </div>
-          <v-spacer />
-          <v-btn
-            v-if="sourceLink(page)"
-            color="accent"
-            :href="sourceLink(page)"
-            target="_blank"
-            text
-          >
-            {{ $site.themeConfig.viewSourceText || 'View Source' }}
-          </v-btn>
-          <v-btn
-            color="accent"
-            text
-            :to="page.path"
-          >
-            {{ $site.themeConfig.readMoreText || 'Read More' }}
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+              <v-img
+                v-if="page.frontmatter.cover"
+                class="align-end"
+                height="180px"
+                :src="page.frontmatter.cover"
+              />
+              <v-card-title
+                class="post-title"
+              >
+                <router-link
+                  :to="page.path"
+                >
+                  {{ page.title }}
+                </router-link>
+              </v-card-title>
+              <v-card-subtitle>
+                <div
+                  v-if="page.frontmatter.author"
+                  class="post-tags"
+                  title="作者"
+                >
+                  <v-icon
+                    size="18"
+                  >
+                    mdi-account-outline
+                  </v-icon>
+                  <router-link
+                    class="post-link"
+                    :to="`/author/${page.frontmatter.author}/`"
+                  >
+                    {{ page.frontmatter.author }}
+                  </router-link>
+                </div>
+                <div
+                  v-if="page.frontmatter.tags"
+                  class="post-tags"
+                  title="标签"
+                >
+                  <v-icon
+                    size="18"
+                  >
+                    mdi-tag-outline
+                  </v-icon>
+                  <router-link
+                    v-for="tag in page.frontmatter.tags"
+                    :key="tag"
+                    class="post-link post-tag"
+                    :to="`/tag/${tag}/`"
+                  >
+                    {{ tag }}
+                  </router-link>
+                </div>
+                <div
+                  v-if="page.frontmatter.category"
+                  class="post-tags"
+                  title="分类"
+                >
+                  <v-icon
+                    size="18"
+                  >
+                    mdi-file-tree
+                  </v-icon>
+                  <router-link
+                    class="post-link"
+                    :to="`/category/${page.frontmatter.category}/`"
+                  >
+                    {{ page.frontmatter.category }}
+                  </router-link>
+                </div>
+                <div
+                  v-if="page.frontmatter.series"
+                  class="post-tags"
+                  title="连载文章"
+                >
+                  <v-icon
+                    size="18"
+                  >
+                    mdi-bookshelf
+                  </v-icon>
+                  <router-link
+                    class="post-link"
+                    :to="`/series/${page.frontmatter.series}/`"
+                  >
+                    {{ page.frontmatter.series }}
+                  </router-link>
+                </div>
+              </v-card-subtitle>
+              <!-- eslint-disable vue/no-v-html -->
+              <v-card-text
+                class="post-summary content"
+                v-html="page.excerpt || page.frontmatter.summary"
+              />
+              <v-card-actions>
+                <div
+                  v-if="page.frontmatter.date"
+                  class="post-tags"
+                  title="发布时间"
+                >
+                  <v-icon
+                    size="18"
+                  >
+                    mdi-calendar-month-outline
+                  </v-icon>
+                  <span>{{ new Date(page.frontmatter.date.trim()).toLocaleDateString($lang) }}</span>
+                </div>
+                <v-spacer />
+                <v-btn
+                  v-if="sourceLink(page)"
+                  color="accent"
+                  :href="sourceLink(page)"
+                  target="_blank"
+                  text
+                >
+                  {{ $site.themeConfig.viewSourceText || 'View Source' }}
+                </v-btn>
+                <v-btn
+                  color="accent"
+                  text
+                  :to="page.path"
+                >
+                  {{ $site.themeConfig.readMoreText || 'Read More' }}
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </template>
+        </v-hover>
+      </component>
     </template>
-  </div>
+  </component>
 </template>
 
 <script>
@@ -197,10 +218,10 @@ export default {
 .post {
 
   &-heading {
-    padding-left: 2px;
     color: $accentColor;
-    margin-top: -72px;
+    margin-top: -64px;
     padding-top: 72px;
+    font-size: 1.2em;
   }
 
   &-title {
@@ -247,6 +268,17 @@ export default {
     }
     p + p {
       margin: 1rem 0 !important;
+    }
+  }
+}
+
+.posts {
+  .v-timeline-item {
+    padding-bottom: 8px;
+  }
+  .post {
+    .v-timeline-item__dot {
+      margin-top: 16px;
     }
   }
 }

@@ -756,7 +756,7 @@ sed -i 's/plugins=(\(.*\))/plugins=(\1 pyenv)/' .zshrc
 安装一些常用的Python库。
 
 ```bash
-yay -S python-numpy python-scipy python-matplotlib
+yay -S python-numpy python-scipy python-matplotlib python-pillow python-pytorch-cuda
 ```
 
 ### 5.4 Node.js

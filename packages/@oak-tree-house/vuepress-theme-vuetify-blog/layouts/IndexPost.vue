@@ -1,12 +1,12 @@
 <template>
   <Layout
-    :content-width="720"
+    :content-width="840"
   >
     <template slot="sidebar">
       <SidebarLinks
-        class="hidden-md-and-up"
+        class="hidden-lg-and-up"
       />
-      <v-divider v-if="$vuetify.breakpoint.smAndDown" />
+      <v-divider v-if="$vuetify.breakpoint.mdAndDown" />
       <IndexSidebarToc
         :page-name="tocName"
         class="mt-4"

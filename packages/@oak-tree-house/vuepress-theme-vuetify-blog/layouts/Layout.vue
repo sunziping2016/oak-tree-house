@@ -9,7 +9,7 @@
         clipped-left
       >
         <v-app-bar-nav-icon
-          class="hidden-md-and-up"
+          class="hidden-lg-and-up"
           @click="drawer = !drawer"
         />
         <!-- Logo -->
@@ -20,22 +20,22 @@
           v-if="$site.themeConfig.algolia"
         />
         <!-- Menu -->
-        <NavLinks class="hidden-sm-and-down" />
+        <NavLinks class="hidden-md-and-down" />
       </v-app-bar>
       <v-navigation-drawer
         v-model="drawer"
         :width="320"
         app
         clipped
-        :permanent="$vuetify.breakpoint.mdAndUp"
-        :mobile-break-point="$vuetify.breakpoint.thresholds.md"
+        :permanent="$vuetify.breakpoint.lgAndUp"
+        :mobile-break-point="$vuetify.breakpoint.thresholds.lg"
       >
         <slot name="sidebar">
           <!-- menu -->
           <SidebarLinks
-            class="hidden-md-and-up"
+            class="hidden-lg-and-up"
           />
-          <v-divider v-if="$vuetify.breakpoint.smAndDown" />
+          <v-divider v-if="$vuetify.breakpoint.mdAndDown" />
           <!-- TOC -->
           <SidebarToc
             class="mt-4"

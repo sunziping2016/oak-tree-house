@@ -35,7 +35,10 @@ import Vuetify, {
   VSpeedDial,
   VDialog,
   VProgressCircular,
-  VSwitch
+  VSwitch,
+  VTimeline,
+  VTimelineItem,
+  VHover
 } from 'vuetify/lib'
 import { Scroll } from 'vuetify/lib/directives'
 import goTo from 'vuetify/es5/services/goto'
@@ -78,7 +81,10 @@ export default ({ Vue, options, router, siteData }) => {
       VSpeedDial,
       VDialog,
       VProgressCircular,
-      VSwitch
+      VSwitch,
+      VTimeline,
+      VTimelineItem,
+      VHover
     },
     directives: {
       Scroll

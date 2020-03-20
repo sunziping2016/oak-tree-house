@@ -1,5 +1,5 @@
 ---
-title: Python教程3 - 内置对象
+title: Python教程3 - 复习：内置对象
 author: 孙子平
 date: 2020-02-06T09:17:42Z
 category: Python
@@ -13,7 +13,7 @@ sidebar:
 
 （施工中）
 
-这篇文章是对我们之前所学知识的复习，也教授了一些新的知识，并且提供了一些习题来巩固大家所学的知识。由于我们已经大致掌握了Python命令式编程的设施，这里我就把很多细节补全，并且不再是按照人的学习顺序组织。这篇文章的内容适合不仅适合那些Python新手，也适合已经熟练运用Python的人巩固知识
+这篇文章是对我们之前所学知识的复习，也教授了一些新的知识，并且提供了一些习题来巩固大家所学的知识。由于我们已经大致掌握了Python命令式编程的设施，这里我就把很多细节补全，并且不再是按照人的学习顺序组织。这篇文章的内容适合不仅适合那些Python新手，也适合已经熟练运用Python的人巩固知识或作为参考查询。
 
 <!-- more -->
 
@@ -1377,9 +1377,31 @@ set()
 
 ### 1.8 复数
 
-### 1.9 slice
+Python有内置对复数的支持。
 
-### 1.10 range和enumerate
+Python提供了构造纯虚数的方法，通过在一个整数或浮点数后面添加`j`或`J`就能产生实部为0，虚部为该数的纯虚数。这里要注意单位虚数$i$不是写作`j`，而是`1j`。同时复数也有构造函数，分别接受实部和虚部，构造新的复数。
+
+```python
+>>> 1 + 1j  # 产生复杂复数的方法
+(1+1j)
+>>> complex(1, 2)
+(1+2j)
+```
+
+复数支持加减乘除和次方运算，此外还有一些额外的操作，见下面的例子：
+
+```python
+>>> a = 1 + 2j
+>>> abs(a)  # 求模
+2.23606797749979
+>>> a.real  # 取实部
+1.0
+>>> a.imag  # 取虚部
+2.0
+>>> a.conjugate() # 求共轭复数
+```
+
+更多的复数操作在`cmath`中，比如获取复数的幅角，计算附属的指对、三角等函数。
 
 ## 2 习题
 
@@ -1764,3 +1786,67 @@ if __name__ == '__main__':
 ```
 
 :::
+
+### 2.9 统计新出现的单词
+
+#### 题目要求
+
+输入两行字符串，这两行字符串包含若干单词（单词中不包含空白符），单词之间有空白符，输出那些出现在第二行但不出现在第一行单词。
+
+#### 样例输入输出
+
+```text
+Please input the first line: how are you today
+Please input the second line: how old are you
+old
+```
+
+### 2.10 绘制曼德博集合
+
+#### 题目要求
+
+在做这个项目之前你需要执行下面的命令，来安装两个依赖：
+
+```bash
+pip install numpy matplotlib
+```
+
+曼德博集合$M$是一个复平面上美丽的分形图形。我们的目标就是用Python绘制这样一个图形。它的定义是这样的：对于一个复数$c$，构建一个数列：
+
+$$\begin{cases}
+z_0 = 0 \\
+z_{n+1}=z_n^2+c, n=0,1,2,\dots
+\end{cases}$$
+
+如果数列$\{z_n\}$的绝对值$\{|z_n|\}$是发散的，那我们就说$c\in M$。
+
+在我们的这次题目中，问题被简化。我们不太可能迭代无穷次来判断数列是否发散。此外我们发现只要存在$n$使$z_n\geq 2$，那么$c\notin M$。所以，总而言之，你需要做的就是完善下面代码中的`mandelbrot`函数。你需要最多迭代`MAX_ITER`次，计算出$z_1,z_2,\dots,z_{256}$，一旦遇到某个$z_n\geq2$，就返回$n - 1$，如果始终没有遇到，就返回`MAX_ITER`。
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+MAX_ITER = 256
+
+
+def mandelbrot(c):
+    # TODO
+    pass
+
+
+def main():
+    resolution = 512
+    c = np.linspace(-2, 1, resolution)[np.newaxis, :] \
+        + 1j * np.linspace(-1.5, 1.5, resolution)[:, np.newaxis]
+    result = np.vectorize(mandelbrot)(c)
+    plt.imshow(np.log(result + 1))
+    plt.show()
+
+
+if __name__ == '__main__':
+    main()
+```
+
+#### 样例输出
+
+![Mandelbrot Set](/assets/blog/python-tutorial3/mandelbrot.png)

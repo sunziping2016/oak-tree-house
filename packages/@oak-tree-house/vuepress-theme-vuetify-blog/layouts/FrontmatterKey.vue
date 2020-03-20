@@ -4,9 +4,9 @@
   >
     <template slot="sidebar">
       <SidebarLinks
-        class="hidden-md-and-up"
+        class="hidden-lg-and-up"
       />
-      <v-divider v-if="$vuetify.breakpoint.smAndDown" />
+      <v-divider v-if="$vuetify.breakpoint.mdAndDown" />
       <IndexSidebarWordCloud />
     </template>
     <ul style="display: none">
