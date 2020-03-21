@@ -35,7 +35,7 @@
           <SidebarLinks
             class="hidden-lg-and-up"
           />
-          <v-divider v-if="$vuetify.breakpoint.mdAndDown" />
+          <v-divider class="hidden-lg-and-up" />
           <!-- TOC -->
           <SidebarToc
             class="mt-4"
@@ -139,4 +139,3 @@ export default {
   }
 }
 </script>
-

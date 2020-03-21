@@ -24,7 +24,8 @@ All notable changes to this project will be documented in this file.
 - [x] remove TODO from additional pages
 - [x] add more about Tsmart code review
 - [x] add pip configuration part to python tutorial 1
-- [x] add hashable objects and `set` parts to python tutorial 3
+- [x] finish python tutorial 3
+- [ ] write python tutorial 4
 
 ## [1.0.0]
 

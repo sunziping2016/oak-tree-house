@@ -9,6 +9,7 @@ sidebar:
   - /_posts/2019-11-01-python-tutorial1.html
   - /_posts/2019-11-11-python-tutorial2.html
   - /_posts/2020-02-06-python-tutorial3.html
+  - /_posts/2020-03-21-python-tutorial4.html
 ---
 
 本文是Python教程的第2篇。我们会在第1和第2节分别介绍语句和函数，第3节介绍代码风格，第4节介绍PyCharm IDE的使用，最后1节复习我们所学的知识。这篇教程还有Jupyter Notebook版本，点击[此处](/assets/blog/python-tutorial2/tutorial2.ipynb)下载。这篇教程的内容主要来自[4. 其他流程控制工具 — Python 3.7.5 文档](https://docs.python.org/zh-cn/3.7/tutorial/controlflow.html)。

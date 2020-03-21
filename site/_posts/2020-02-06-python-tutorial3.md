@@ -9,6 +9,7 @@ sidebar:
   - /_posts/2019-11-01-python-tutorial1.html
   - /_posts/2019-11-11-python-tutorial2.html
   - /_posts/2020-02-06-python-tutorial3.html
+  - /_posts/2020-03-21-python-tutorial4.html
 ---
 
 （施工中）
