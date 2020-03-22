@@ -1,0 +1,52 @@
+<template>
+  <p
+    ref="diagram"
+    :class="pClass"
+    :style="pStyle"
+  />
+</template>
+
+<script>
+import { loadScript } from './util'
+import event from '@diagrams-event'
+
+export default {
+  props: {
+    pStyle: {
+      type: String,
+      default: undefined
+    },
+    pClass: {
+      type: String,
+      default: undefined
+    }
+  },
+  data: () => ({
+    content: ''
+  }),
+  mounted () {
+    this.content = this.$slots.default.map(vnode => (vnode.text || vnode.elm.innerText)).join('')
+    if (event.flowchartDiagramsStatus === 2) {
+      this.render()
+    } else {
+      event.$once('flowcharDiagramsReady', this.render)
+    }
+    if (event.flowchartDiagramsStatus === 0) {
+      event.flowchartDiagramsStatus = 1
+      loadScript('https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js', 'script-raphael')
+        .then(() =>
+          loadScript('https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.13.0/flowchart.min.js', 'script-flowchart'))
+        .then(() => {
+          event.flowchartDiagramsStatus = 2
+          event.$emit('flowcharDiagramsReady')
+        })
+    }
+  },
+  methods: {
+    render () {
+      const diagram = window.flowchart.parse(this.content)
+      diagram.drawSVG(this.$refs.diagram)
+    }
+  }
+}
+</script>

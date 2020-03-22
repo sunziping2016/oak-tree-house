@@ -39,6 +39,9 @@ module.exports = function (options, context) {
   }
   return {
     name: 'vuepress-plugin-diagrams',
+    alias: {
+      '@diagrams-event': path.resolve(__dirname, 'event.js')
+    },
     extendMarkdown (md) {
       const defaultRenderers = {
         graphviz (options, content, env) {
@@ -72,6 +75,28 @@ module.exports = function (options, context) {
           execSync(command + ` "${textFilename}"`)
           const png = fs.readFileSync(path.join(os.tmpdir(), `${id}.png`))
           return generateFromPng(png, options, env)
+        },
+        sequence (options, content) {
+          if (!options.render) {
+            return
+          }
+          return `<SequenceDiagram${
+            options['svg-class'] ? ` svg-class="${options['svg-class']}"` : ''
+          }${
+            options['p-style'] ? ` p-style="${options['p-style']}"` : ''
+          }${
+            options['p-class'] ? ` p-class="${options['p-class']}"` : ''
+          }>${content}</SequenceDiagram>`
+        },
+        flowchart (options, content) {
+          if (!options.render) {
+            return
+          }
+          return `<FlowchartDiagram${
+            options['p-style'] ? ` p-style="${options['p-style']}"` : ''
+          }${
+            options['p-class'] ? ` p-class="${options['p-class']}"` : ''
+          }>${content}</FlowchartDiagram>`
         }
       }
       const fence = md.renderer.rules.fence
@@ -130,6 +155,20 @@ module.exports = function (options, context) {
     async generated () {
       await (promisify(ncp)(tempDiagramPath,
         context.outDir + diagramPath.replace(/\//g, path.sep)))
-    }
+    },
+    plugins: [
+      ['@vuepress/register-components', {
+        components: [
+          {
+            name: 'SequenceDiagram',
+            path: path.resolve(__dirname, 'SequenceDiagram.vue')
+          },
+          {
+            name: 'FlowchartDiagram',
+            path: path.resolve(__dirname, 'FlowchartDiagram.vue')
+          }
+        ]
+      }]
+    ]
   }
 }
