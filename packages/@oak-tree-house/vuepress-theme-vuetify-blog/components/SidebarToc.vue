@@ -92,7 +92,10 @@ export default {
   },
   methods: {
     updateTocListener () {
-      this.$nextTick(() => this.updateToc())
+      this.$nextTick(() => {
+        this.updateToc()
+        this.updateTocOpenAndActive()
+      })
     },
     resolveHeaders,
     updateToc () {

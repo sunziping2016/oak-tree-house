@@ -3,14 +3,20 @@
     ref="diagram"
     :class="pClass"
     :style="pStyle"
-  />
+  >
+    <Loader v-if="!ready" />
+  </p>
 </template>
 
 <script>
 import { loadScript } from './util'
+import Loader from './Loader.vue'
 import event from '@diagrams-event'
 
 export default {
+  components: {
+    Loader
+  },
   props: {
     pStyle: {
       type: String,
@@ -19,10 +25,19 @@ export default {
     pClass: {
       type: String,
       default: undefined
+    },
+    svgStyle: {
+      type: String,
+      default: undefined
+    },
+    svgClass: {
+      type: String,
+      default: undefined
     }
   },
   data: () => ({
-    content: ''
+    content: '',
+    ready: false
   }),
   mounted () {
     this.content = this.$slots.default.map(vnode => (vnode.text || vnode.elm.innerText)).join('')
@@ -46,6 +61,20 @@ export default {
     render () {
       const diagram = window.flowchart.parse(this.content)
       diagram.drawSVG(this.$refs.diagram)
+      this.ready = true
+      this.$nextTick(() => {
+        const svg = this.$refs.diagram.children[0]
+        const width = svg.getAttribute('width')
+        const height = svg.getAttribute('height')
+        svg.setAttribute('viewBox', `0 0 ${width} ${height}`)
+        svg.removeAttribute('height')
+        if (this.svgStyle) {
+          svg.setAttribute('style', this.svgStyle)
+        }
+        if (this.svgClass) {
+          svg.setAttribute('class', this.svgClass)
+        }
+      })
     }
   }
 }

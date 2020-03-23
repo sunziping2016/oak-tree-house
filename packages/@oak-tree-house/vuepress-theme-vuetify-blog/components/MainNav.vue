@@ -94,7 +94,6 @@ export default {
     min-height: 2rem;
     margin-top: 0;
     padding-top: 1rem;
-    overflow: auto; // clear float
   }
 
   .next {

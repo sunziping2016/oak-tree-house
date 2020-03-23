@@ -9,6 +9,23 @@ const { execSync } = require('child_process')
 
 const GENERAL_RE = /^\s*([\w-]+)(?:\s*\[(\s*(?:[\w-]+(?:=(?:[\w-]+|"(?:[^\\"]|\\.)*"))?)(?:\s+(?:[\w-]+(?:=(?:[\w-]+|"(?:[^\\"]|\\.)*"))?))*)?\s*])?\s*$/
 
+function generateDiagramAttributes (options) {
+  let attributes = ''
+  if (options['p-style']) {
+    attributes += ` p-style="${options['p-style']}"`
+  }
+  if (options['p-class']) {
+    attributes += ` p-class="${options['p-class']}"`
+  }
+  if (options['svg-style']) {
+    attributes += ` svg-style="${options['svg-style']}"`
+  }
+  if (options['svg-class']) {
+    attributes += ` svg-class="${options['svg-class']}"`
+  }
+  return attributes
+}
+
 module.exports = function (options, context) {
   const diagramPath = options.diagramPath || '/assets/diagrams'
   const tempDiagramPath = path.join(context.tempPath, 'diagrams')
@@ -80,23 +97,19 @@ module.exports = function (options, context) {
           if (!options.render) {
             return
           }
-          return `<SequenceDiagram${
-            options['svg-class'] ? ` svg-class="${options['svg-class']}"` : ''
-          }${
-            options['p-style'] ? ` p-style="${options['p-style']}"` : ''
-          }${
-            options['p-class'] ? ` p-class="${options['p-class']}"` : ''
-          }>${content}</SequenceDiagram>`
+          return `<SequenceDiagram${generateDiagramAttributes(options)}>${content}</SequenceDiagram>`
         },
         flowchart (options, content) {
           if (!options.render) {
             return
           }
-          return `<FlowchartDiagram${
-            options['p-style'] ? ` p-style="${options['p-style']}"` : ''
-          }${
-            options['p-class'] ? ` p-class="${options['p-class']}"` : ''
-          }>${content}</FlowchartDiagram>`
+          return `<FlowchartDiagram${generateDiagramAttributes(options)}>${content}</FlowchartDiagram>`
+        },
+        mermaid (options, content) {
+          if (!options.render) {
+            return
+          }
+          return `<MermaidDiagram${generateDiagramAttributes(options)}>${content}</MermaidDiagram>`
         }
       }
       const fence = md.renderer.rules.fence
@@ -166,6 +179,10 @@ module.exports = function (options, context) {
           {
             name: 'FlowchartDiagram',
             path: path.resolve(__dirname, 'FlowchartDiagram.vue')
+          },
+          {
+            name: 'MermaidDiagram',
+            path: path.resolve(__dirname, 'MermaidDiagram.vue')
           }
         ]
       }]

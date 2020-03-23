@@ -98,3 +98,33 @@ True
 ```
 
 在遇到`import foo`的时候，Python会去加载并执行`foo.py`。这时遇到了`import fibonacci`，又去加载并执行`fibonacci.py`，这就输出了第一条`initializing fibonacci`。执行完`fibonacci.py`，完成了`foo.py`中的`import fibonacci`就执行到输出`initializing foo`。最后`foo.py`执行完成，`import foo`也完成了。
+
+```sequence [render p-class="svg-diagram"]
+Python->foo.py:"import foo"\nstarted
+foo.py->fibonacci.py:"import fibonacci"\nstarted
+Note right of fibonacci.py: "print('initializing\n fibonacci')"
+Note right of fibonacci.py: "def fib(n):\n..."
+Note right of fibonacci.py: "if __name__ == '__main__':\n..."
+fibonacci.py->foo.py:"import fibonacci"\nfinished
+Note right of foo.py: "print('initializing\n foo')"
+foo.py->Python:"import foo"\nfinished
+```
+
+然后我们在交互式命令行输入的`import fibonacci`并没有触发重新加载，没有`initializing fibonacci`被打印出来。实际上可以看出，在`foo.py`中导入的`fibonacci`（`foo.fibonacci`）和我们刚刚命令行导入的`fibonacci`是一个对象。
+
+### 2.2 模块的独立全局作用域
+
+我们可以看到每个模块都有自己的全局作用域，比如在上一个例子中，被导入的`foo.py`的所有全局对象都存放在`foo`这个对象下，而`fibonacci.py`的所有全局对象存放在`foo.fibonacci`和`fibonacci`共同指向的对象下。这样每个模块的全局作用域都是独立的，模块的开发者就不用担心自己需要使用的全局对象和别人的冲突。
+
+`import`语句一般放在文件的开始，但是这不是必须的。
+
+### 2.3 import语句的变体
+
+<style lang="scss">
+p.svg-diagram {
+  text-align: center;
+  svg {
+    max-width: 100%;
+  }
+}
+</style>

@@ -142,18 +142,18 @@ therefore cannot be used for our training.
 
 ### 3.1 Prepare Dataset
 
-We downloaded three datasets. One is real person photos, and the other two
-belongs to anime avatars. The datasets are shown in following table,
-and some examples drawn from datasets are shown in following figures.
-
 | name | category | no of samples |
 |:-:|:-:|:-:|
 | Anime | labeled anime avatars | 115087 |
 | Thumbs | unlabeled real photos | 3666 |
 | Faces | unlabeled anime avatars | 51223 |
 
-|![Examples from Thumbs](/assets/blog/anime-avatar-gan/thumbs-examples.png)|![Examples from Faces](/assets/blog/anime-avatar-gan/faces-examples.png)|
+We downloaded three datasets. One is real person photos, and the other two
+belongs to anime avatars. The datasets are shown in following table,
+and some examples drawn from datasets are shown in following figures.
+
 |:-:|:-:|
+|![Examples from Thumbs](/assets/blog/anime-avatar-gan/thumbs-examples.png)|![Examples from Faces](/assets/blog/anime-avatar-gan/faces-examples.png)|
 |Examples from Thumbs|Examples from Faces|
 {.image-table}
 
@@ -161,8 +161,8 @@ and some examples drawn from datasets are shown in following figures.
 
 The following two figures are architecture of DCGAN. Here the number of k represents kernel size, n is the output size and s is stride. The first figure is generator architecture of DCGAN, and the second figure is discriminator architecture of DCGAN.
 
-|![Generator Architecture of DCGAN](/assets/blog/anime-avatar-gan/dcgan-g.jpg)|![Discriminator Architecture of DCGAN](/assets/blog/anime-avatar-gan/dcgan-d.jpg)|
 |:-:|:-:|
+|![Generator Architecture of DCGAN](/assets/blog/anime-avatar-gan/dcgan-g.jpg)|![Discriminator Architecture of DCGAN](/assets/blog/anime-avatar-gan/dcgan-d.jpg)|
 |Generator Architecture of DCGAN|Discriminator Architecture of DCGAN|
 {.image-table}
 
@@ -199,8 +199,8 @@ thinking they are real.
 
 ### 3.3 Transfer from Real Photos Using CycleGAN
 
-|![Whole Architecture of CycleGAN](/assets/blog/anime-avatar-gan/cyclegan-arch.jpg)|![Generator of CycleGAN](/assets/blog/anime-avatar-gan/cyclegan-g.jpg)|![Discriminator of CycleGAN](/assets/blog/anime-avatar-gan/cyclegan-d.jpg)|
 |:-:|:-:|:-:|
+|![Whole Architecture of CycleGAN](/assets/blog/anime-avatar-gan/cyclegan-arch.jpg)|![Generator of CycleGAN](/assets/blog/anime-avatar-gan/cyclegan-g.jpg)|![Discriminator of CycleGAN](/assets/blog/anime-avatar-gan/cyclegan-d.jpg)|
 |Whole Architecture of CycleGAN|Generator of CycleGAN|Architecture of CycleGAN|
 {.image-table}
 
@@ -244,8 +244,8 @@ discriminator remember its historical decision.
 
 The following two figures are architecture of CartoonGAN. The first figure is generator architecture of CartoonGAN, and the second figure is discriminator architecture of CartoonGAN.
 
-|![Generator of CartoonGAN](/assets/blog/anime-avatar-gan/cartoongan-g.jpg)|![Discriminator of CartoonGAN](/assets/blog/anime-avatar-gan/cartoongan-d.jpg)|
 |:-:|:-:|
+|![Generator of CartoonGAN](/assets/blog/anime-avatar-gan/cartoongan-g.jpg)|![Discriminator of CartoonGAN](/assets/blog/anime-avatar-gan/cartoongan-d.jpg)|
 |Generator of CartoonGAN|Discriminator of CartoonGAN|
 {.image-table}
 
@@ -295,8 +295,8 @@ train the networks. These losses are:
 
 ### 4.1 DCGAN
 
-|![Generator Loss](/assets/blog/anime-avatar-gan/dcgan-loss_g.png)|![Discriminator Loss](/assets/blog/anime-avatar-gan/dcgan-loss_d.png)|
 |:-:|:-:|
+|![Generator Loss](/assets/blog/anime-avatar-gan/dcgan-loss_g.png)|![Discriminator Loss](/assets/blog/anime-avatar-gan/dcgan-loss_d.png)|
 |Generator loss curve for DCGAN|Discriminator loss curve for DCGAN|
 {.image-table}
 
@@ -305,8 +305,8 @@ losses is shown in above figures. From above figures, we can draw the conclusion
 generator and the discriminator develop well, but soon the descriminator gets
 the upper hand leading to the increase of generator loss.
 
-|![Avatars generated from random noises](/assets/blog/anime-avatar-gan/dcgan-result-random.png)|![Avatars generated from continuous noises](/assets/blog/anime-avatar-gan/dcgan-result-transition.png)|![Avatars generated from different epochs](/assets/blog/anime-avatar-gan/dcgan-result-training.png)|
 |:-:|:-:|:-:|
+|![Avatars generated from random noises](/assets/blog/anime-avatar-gan/dcgan-result-random.png)|![Avatars generated from continuous noises](/assets/blog/anime-avatar-gan/dcgan-result-transition.png)|![Avatars generated from different epochs](/assets/blog/anime-avatar-gan/dcgan-result-training.png)|
 |Avatars generated from random noises by DCGAN|Avatars generated from continuous noises by DCGAN|Avatars generated from different epochs by DCGAN. The leftmost is selected from epoch 10, and the rightmost is selected from epoch 100|
 {.image-table}
 
@@ -314,8 +314,8 @@ the upper hand leading to the increase of generator loss.
 
 Below are training loss curve for CycleGAN. The training process is interrupted three times and resumed from the checkpoints.
 
-|![Identity loss1](/assets/blog/anime-avatar-gan/cyclegan-loss_idt_a.png)|![Identity loss2](/assets/blog/anime-avatar-gan/cyclegan-loss_idt_b.png)|![GAN loss1](/assets/blog/anime-avatar-gan/cyclegan-loss_g_a.png)|![GAN loss2](/assets/blog/anime-avatar-gan/cyclegan-loss_g_b.png)|
 |:-:|:-:|:-:|:-:|
+|![Identity loss1](/assets/blog/anime-avatar-gan/cyclegan-loss_idt_a.png)|![Identity loss2](/assets/blog/anime-avatar-gan/cyclegan-loss_idt_b.png)|![GAN loss1](/assets/blog/anime-avatar-gan/cyclegan-loss_g_a.png)|![GAN loss2](/assets/blog/anime-avatar-gan/cyclegan-loss_g_b.png)|
 |Identity loss: similarity loss between $G_{A2B}(B)$ and $B$|Identity loss: similarity loss between $G_{B2A}(A)$ and $A$|GAN loss: BCE loss of $D_B(G_{A2B}(A))$ and real label|GAN loss: BCE loss of $D_A(G_{B2A}(B))$ and real label|
 |![Cycle loss1](/assets/blog/anime-avatar-gan/cyclegan-loss_cycle_a.png)|![Cycle loss2](/assets/blog/anime-avatar-gan/cyclegan-loss_cycle_b.png)|![Discriminator loss1](/assets/blog/anime-avatar-gan/cyclegan-loss_d_a.png)|![Discriminator loss2](/assets/blog/anime-avatar-gan/cyclegan-loss_d_b.png)|
 |Cycle loss: similarity loss between $G_{B2A}(G_{A2B}(A))$ and $A$|Cycle loss: similarity loss between $G_{A2B}(G_{B2A}(B))$ and $B$|Discriminator loss on $A$|Discriminator loss on $B$|
@@ -344,8 +344,8 @@ origin faces and the patched ones are not consistent.
 
 The following figures are CycleGAN generated images: origin, generated and reconstructed ones.
 
-|![Cycle Result Source](/assets/blog/anime-avatar-gan/cycle-result-source.png)|![Cycle Result Target](/assets/blog/anime-avatar-gan/cycle-result-target.png)|
 |:-:|:-:|
+|![Cycle Result Source](/assets/blog/anime-avatar-gan/cycle-result-source.png)|![Cycle Result Target](/assets/blog/anime-avatar-gan/cycle-result-target.png)|
 |From left to right are $A$, $G_{A2B}(A)$, $G_{B2A}(G_{A2B}(A))$|From left to right are $B$, $G_{B2A}(B)$, $G_{A2B}(G_{B2A}(B))$|
 {.image-table}
 
@@ -415,17 +415,15 @@ reseach is needed.
 [^yeh2016semantic]: R. Yeh, C. Chen, T. Y. Lim, M. Hasegawa-Johnson, and M. N. Do. Semantic image inpainting with perceptual and contextual losses. *arXiv preprint arXiv:1607.07539*, 2:3, 2016.
 [^CycleGAN2017]: J.-Y. Zhu, T. Park, P. Isola, and A. A. Efros. Unpaired image-to-image translation using cycle-consistent adversarial networkss. In *Computer Vision (ICCV), 2017 IEEE International Conference on*, 2017.
 
-<style lang="scss">
+<style lang="scss" scoped>
 .image-table {
-  th, td {
+  th, td, tr {
     border: none !important;
+    background-color: unset !important;
   }
-  tr {
-    border: none !important;
-  }
-  thead tr, tbody tr:nth-child(2n + 1) {
+  tbody tr:nth-child(2n + 1) {
     td {
-      padding: 0 !important;;
+      padding: 0 !important;
     }
   }
 }

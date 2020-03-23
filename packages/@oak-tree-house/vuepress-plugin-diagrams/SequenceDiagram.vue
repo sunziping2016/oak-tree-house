@@ -3,22 +3,24 @@
     ref="diagram"
     :class="pClass || undefined"
     :style="pStyle || undefined"
-  />
+  >
+    <Loader v-if="!ready" />
+  </p>
 </template>
 
 <script>
 import { loadScript } from './util'
+import Loader from './Loader.vue'
 import event from '@diagrams-event'
 
 export default {
+  components: {
+    Loader
+  },
   props: {
     theme: {
       type: String,
       default: 'simple'
-    },
-    svgClass: {
-      type: String,
-      default: undefined
     },
     pStyle: {
       type: String,
@@ -27,10 +29,19 @@ export default {
     pClass: {
       type: String,
       default: undefined
+    },
+    svgStyle: {
+      type: String,
+      default: undefined
+    },
+    svgClass: {
+      type: String,
+      default: undefined
     }
   },
   data: () => ({
-    content: ''
+    content: '',
+    ready: false
   }),
   mounted () {
     this.content = this.$slots.default.map(vnode => (vnode.text || vnode.elm.innerText)).join('')
@@ -56,10 +67,30 @@ export default {
   },
   methods: {
     render () {
-      const diagram = window.Diagram.parse(this.content)
-      diagram.drawSVG(this.$refs.diagram, {
+      const options = {
         theme: this.theme,
         css_class: this.svgClass
+      }
+      if (!(options.theme in window.Diagram.themes)) {
+        throw new Error('Unsupported theme: ' + options.theme)
+      }
+      const Theme = window.Diagram.themes[options.theme]
+      new Theme(window.Diagram.parse(this.content), options, (drawing) => {
+        this.ready = true
+        this.$nextTick(() => {
+          drawing.draw(this.$refs.diagram)
+          const svg = this.$refs.diagram.children[0]
+          const width = svg.getAttribute('width').slice(0, -2)
+          const height = svg.getAttribute('height').slice(0, -2)
+          svg.setAttribute('viewBox', `0 0 ${width} ${height}`)
+          svg.removeAttribute('height')
+          if (this.svgStyle) {
+            svg.setAttribute('style', this.svgStyle)
+          }
+          if (this.svgClass) {
+            svg.setAttribute('class', this.svgClass)
+          }
+        })
       })
     }
   }
