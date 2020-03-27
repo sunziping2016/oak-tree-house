@@ -35,10 +35,13 @@ def fib(n):   # 返回小于n的斐波那契数列
         a, b = b, a+b
     return result
 
-if __name__ == '__main__':
+def main():
     print('Fibonacci less than 100:')
     for i in fib(100):
         print(i)
+
+if __name__ == '__main__':
+    main()
 ```
 
 然后你可以执行它，就像我们先前做的那样，这时`fib.py`这个文件就成了主模块，`__name__`的值为`'__main__'`，`if`语句成立。
@@ -55,7 +58,7 @@ if __name__ == '__main__':
 
 上面的代码中`import fibonacci`就是Python导入模块的方式，这里`import fibonacci`，会执行`fibonacci.py`中的代码，并将其中的全局对象（全局变量和全局函数等）收集起来，存放到`fibonacci`这个对象中，供导入`fibonacci.py`的模块或交互解释器使用。这样你就可以通过`fibonacci`这个对象去访问`fibonacci.py`中的全局对象了。由于`__name__`的值为`'fibonacci'`，所以在导入的过程中没有像运行的过程中那样输出东西。
 
-## 2 进一步关于模块
+## 2 关于模块
 
 ### 2.1 模块只初始化一次
 
@@ -72,10 +75,13 @@ def fib(n):   # 返回小于n的斐波那契数列
         a, b = b, a+b
     return result
 
-if __name__ == '__main__':
+def main():
     print('Fibonacci less than 100:')
     for i in fib(100):
         print(i)
+
+if __name__ == '__main__':
+    main()
 ```
 
 在同一目录添加一个`foo.py`，内容如下：
@@ -104,6 +110,7 @@ Python->foo.py:"import foo"\nstarted
 foo.py->fibonacci.py:"import fibonacci"\nstarted
 Note right of fibonacci.py: "print('initializing\n fibonacci')"
 Note right of fibonacci.py: "def fib(n):\n..."
+Note right of fibonacci.py: "def main():\n..."
 Note right of fibonacci.py: "if __name__ == '__main__':\n..."
 fibonacci.py->foo.py:"import fibonacci"\nfinished
 Note right of foo.py: "print('initializing\n foo')"
@@ -119,6 +126,88 @@ foo.py->Python:"import foo"\nfinished
 `import`语句一般放在文件的开始，但是这不是必须的。
 
 ### 2.3 import语句的变体
+
+首先你可以使用`from module import name1, name2`只导入模块中的某些全局对象：
+
+```python
+>>> from fibonacci import fib, main
+initializing fibonacci
+```
+
+此外你也可以使用`from module import *`导入模块的所有全局对象。它会导入那些不以`_`开头的名字。这在写代码的时候是不建议的，但如果你只是在交互式解释器里尝试，这是可以的。
+
+```python
+>>> from fibonacci import *
+initializing fibonacci
+>>> fib(10)
+[0, 1, 1, 2, 3, 5, 8]
+```
+
+接着你可以通过`import module as name`来给导入的模块设置新的名字，这样做使得导入多个同名的模块成为了可能。
+
+```python
+>>> import fibonacci as fib
+initializing fibonacci
+>>> fib.fib(10)
+[0, 1, 1, 2, 3, 5, 8]
+```
+
+最后你可以结合上面两种导入语句的方式，通过`from module import name1 as name2`来给导入的模块的全局对象设置新的名字，这使得导入多个同名的（不同模块的）全局对象成为了可能。
+
+```python
+>>> from fibonacci import fib as func
+initializing fibonacci
+>>> func(10)
+[0, 1, 1, 2, 3, 5, 8]
+```
+
+### 2.4 模块搜索路径
+
+当我们在命令行中输入`import foo`的时候，Python会在哪些地方搜索模块`foo.py`是否存在呢？从先到后它会查询这些路径：
+
+1. 包含主模块的目录×如果是在交互模式中，则是当前路径）；
+2. 环境变量`PYTHONPATH`中指定的路径；
+3. 与安装环境相关的默认路径。
+
+#### 2.4.1 环境变量
+
+这里我介绍一下环境变量的相关概念。每个进程（运行着的程序）都会有各自的环境变量，你可以理解环境变量是字符串到字符串的键值对。默认情况下，当新的进程被创建时，它会继承父进程的所有环境变量。通过环境变量，父进程可以向子进程传递一些信息。
+
+在各种环境变量中，最著名的是`PATH`环境变量，它存放着启动进程时的搜索路径，Windows系统上是分号`;`分隔的路径列表，POSIX系统上是冒号`:`分隔的路径列表。这个环境变量决定了你在命令行（如Windows的cmd，`Win + R`启动的运行对话框）里输入的命令会在哪里查找并且被启动，比如Windows上，命令行里输入`notepad`，这时候Windows就会顺着环境变量`PATH`里的目录查找，直到找到`C:\Windows\system32`这个路径，发现下面有`notepad.exe`就启动该程序。
+
+如果你想要查看命令行中的环境变量，在Windows上可以输入`echo %PATH%`，在POSIX系统上可以输入`echo $PATH`。你也可以在命令行里**临时**设置环境变量，如添加`foo`路径到`PATH`里，Windows上可以`set PATH="foo;%PATH%"`，POSIX上可以`export PATH="foo:$PATH"`。如果你想要在Windows上永久地修改环境变量，你可以右击“计算机”，选择“属性”，点击左侧“高级系统设置”，选择“高级”Tab页，点击“环境变量”进行编辑。
+
+`PYTHONPATH`和`PATH`环境变量是类似的，它们拥有相同的分隔符（Windows分号，POSIX冒号）。
+
+#### 2.4.2 sys.path
+
+`sys`是一个Python内置的模块，它里面包含了很多系统信息。其中它的`path`变量是一个字符串的列表，存放了Python的搜索路径。
+
+```python
+>>> import sys
+>>> sys.path
+['', '/usr/lib/python38.zip', '/usr/lib/python3.8', '/usr/lib/python3.8/lib-dynload', '/usr/lib/python3.8/site-packages']
+```
+
+这里我的环境是ArchLinux，所以具体的输出会有所差别。这里我们注意到列表的第一个是空目录，这表示当前交互式环境所在的目录。如果你将下面的代码保存成一个文件。第一个路径会变为主模块所在的文件夹。
+
+```python
+import sys
+print(sys.path)
+```
+
+Python程序可以在运行时修改sys.path的值，从而改变搜索路径。
+
+## 3 编译的Python文件
+
+Python虽然是解释型语言，但它也有编译这个操作。这个编译和我们一般所指的C/C++之类的语言编译成机器指令是不同的，它会编译成一种非文本的字节码，这种字节码最后仍会被Python解释执行，是平台无关的，其执行速度与普通Python代码是一样的，但是其加载速度会快出很多。为了加速加载，Python会把每个模块编译后的版本存放到同目录下的`__pycache__/module.version.pyc`，如对`spam`模块，使用的是CPython 3.8，会编译成`__pycache__/spam.cpython-38.pyc`。
+
+当运行的时候，Python会检查源文件和编译后文件的时间戳，如果发现源文件编译过了就会重新编译。
+
+Python有两种情况不会检查编译后的缓存文件：
+
+- 主模块一定会被重新编译；
+- 没有对应源文件的缓存。
 
 <style lang="scss">
 p.svg-diagram {
