@@ -1,6 +1,5 @@
 const path = require('path')
 const execSync = require('child_process').execSync
-const os = require('os')
 
 function getVersion () {
   // Tag CommitId Time Host
@@ -20,20 +19,19 @@ function getVersion () {
   } catch (e) {
     // do nothing
   }
-  const time = new Date().toLocaleString('zh-CN', { hour12: false })
-  const hostname = process.env.BUILD_HOST || os.hostname()
   if (tag && commitId) {
-    return `版本${tag}#${commitId}<br>${hostname}构建于${time}`
+    return `${tag}#${commitId}`
   } else if (tag) {
-    return `版本${tag}<br>${hostname}构建于${time}`
+    return `${tag}`
   } else if (commitId) {
-    return `版本${commitId}<br>${hostname}构建于${time}`
+    return `${commitId}`
   } else {
-    return `${hostname}构建于${time}`
+    return undefined
   }
 }
 
 module.exports = {
+  // base: '/~sun/', // for test
   title: '橡树屋',
   description: '欢迎来到孙子平的博客',
   locales: {
@@ -45,7 +43,7 @@ module.exports = {
     ['link', { rel: 'icon', sizes: '32x32', href: '/assets/icons/favicon-32x32.png' }],
     ['link', { rel: 'icon', sizes: '16x16', href: '/assets/icons/favicon-16x16.png' }],
     ['link', { rel: 'manifest', href: '/manifest.json' }],
-    ['meta', { name: 'theme-color', content: '#9A7ED8' }],
+    // ['meta', { name: 'theme-color', content: '#9A7ED8' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'default' }],
     ['link', { rel: 'apple-touch-icon', href: '/assets/icons/icon152.png' }],
@@ -60,22 +58,20 @@ module.exports = {
       theme: {
         themes: {
           light: {
-            primary: '#9A7ED8',
-            accent: '#FF6699'
+            primary: '#9c27b0'
+          },
+          dark: {
+            primary: '#ce93d8'
           }
-        }
-      },
-      breakpoint: {
-        thresholds: {
-          xs: 420,
-          sm: 720,
-          md: 960,
-          lg: 1280
         }
       }
     },
-    logo: '/assets/icons/icon-light.png',
+    logo: {
+      light: '/assets/icons/icon-purple.png',
+      dark: '/assets/icons/icon-light.png'
+    },
     nav: [
+      { text: '索引', link: '/', icon: 'mdi-format-list-bulleted' },
       {
         type: 'menu', text: '归档', items: [
           { text: '检索页面', subheader: true },
@@ -121,13 +117,22 @@ module.exports = {
       apiKey: '5eac05703da4f5923e426c2e44baa411',
       indexName: 'szp'
     },
+    sidebarHeader: {
+      avatar: '/assets/site/avatar.png',
+      background: '/assets/site/shanghai.png',
+      bio: '正在尝试着热爱生活<br>从热爱自己开始'
+    },
+    sidebarFooter: {
+      version: getVersion()
+    },
     extractHeaders: ['h2', 'h3', 'h4'],
+    tocLayouts: ['Layout', 'Post'],
     repo: 'sunziping2016/oak-tree-house',
     docsDir: 'site',
     editLinks: true,
     editLinkText: '在 GitHub 上编辑此页',
     lastUpdated: '上次更新',
-    footer: `<i class="mdi mdi-copyright"></i>2016-2020 Ziping Sun<br>京ICP备 17062397号<br>${getVersion()}`,
+    footer: `<i class="mdi mdi-copyright"></i>2016-2020 Ziping Sun<br>京ICP备 17062397号`,
     snackbarCloseText: '关闭',
     notFoundText: '回到主页',
     indexHeading: '`${date.getFullYear()}年${date.getMonth() + 1}月`',
@@ -350,10 +355,7 @@ module.exports = {
             sassOptions: {
               fiber: require('fibers'),
               indentedSyntax: lang === 'sass'
-            },
-            prependData: lang === 'sass'
-              ? '@import "@theme/styles/variables.scss"'
-              : '@import "@theme/styles/variables.scss";'
+            }
           })
       }
     }

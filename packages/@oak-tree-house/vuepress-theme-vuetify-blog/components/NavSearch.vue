@@ -1,9 +1,9 @@
 <template>
   <v-responsive
-    class="mr-0 mr-md-6 shrink search-wrapper"
+    class="shrink app-search"
   >
     <v-text-field
-      id="search"
+      id="app-search-text-field"
       ref="search"
       v-model="search"
       :label="label"
@@ -13,7 +13,7 @@
       hide-details
       prepend-inner-icon="mdi-magnify"
       rounded
-      solo-inverted
+      solo
       @blur="onBlur"
       @keydown.esc="onEsc"
     />
@@ -24,18 +24,10 @@
 export default {
   data: () => ({
     docSearch: {},
-    isSearching: false,
     label: '',
     search: ''
   }),
   watch: {
-    isSearching (val) {
-      if (val) {
-        this.$refs.search.focus()
-        return
-      }
-      this.resetSearch()
-    },
     search (val) {
       if (val) return
       this.docSearch.autocomplete.autocomplete.close()
@@ -63,7 +55,7 @@ export default {
           {},
           vm.$site.themeConfig.algolia,
           {
-            inputSelector: '#search',
+            inputSelector: '#app-search-text-field',
             handleSelected (input, event, suggestion) {
               const { pathname, hash } = new URL(suggestion.url)
               vm.$router.push(`${pathname}${hash}`)
@@ -79,7 +71,9 @@ export default {
       this.$refs.search.blur()
     },
     resetSearch () {
-      this.$nextTick(() => (this.search = undefined))
+      this.$nextTick(() => {
+        this.search = ''
+      })
     }
   }
 }
@@ -88,29 +82,24 @@ export default {
 <style lang="scss">
 @import '~vuetify/src/styles/styles';
 
-.search-wrapper {
-  overflow: visible;
+.app-search {
+  overflow: visible !important;
 }
 
-.v-input--is-focused>.v-input__control>.v-input__slot {
-  background: #fff !important;
-}
-
-#search {
-  width: 10rem;
+#app-search-text-field {
+  width: 12rem;
   transition: width $primary-transition;
 }
 
 @media #{map-get($display-breakpoints, 'sm-and-down')} {
-  .search-wrapper {
-    .v-input__slot {
+  .app-search {
+    :not(.v-input--is-focused) > .v-input__control > .v-input__slot {
       padding: 0 0 0 14px !important;
-      background: hsla(0, 0%, 100%, 0) !important;
+      background: rgba(255, 255, 255, 0) !important;
     }
   }
-  #search {
+  #app-search-text-field {
     width: 0;
-
     &:focus {
       width: 12rem;
     }
@@ -118,10 +107,12 @@ export default {
 }
 
 @media #{map-get($display-breakpoints, 'xs-only')} {
-  #search:focus {
-    width: 8rem;
+  #app-search-text-field {
+    &:focus {
+      width: 6rem;
+    }
   }
-  .search-wrapper {
+  .app-search {
     .ds-dropdown-menu {
       min-width: calc(100vw - 32px) !important;
       max-width: calc(100vw - 32px) !important;
@@ -152,4 +143,5 @@ export default {
     }
   }
 }
+
 </style>

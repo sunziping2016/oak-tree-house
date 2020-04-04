@@ -1,7 +1,7 @@
 <template>
   <component
     :is="$vuetify.breakpoint.smAndDown ? 'div' : 'v-timeline'"
-    class="posts my-0 my-md-4 ml-0 ml-md-n8"
+    class="posts my-0 my-md-4"
     :dense="$vuetify.breakpoint.smAndDown ? undefined : true"
     :align-top="$vuetify.breakpoint.smAndDown ? undefined : true"
   >
@@ -15,7 +15,7 @@
       >
         <div
           :id="`_${indexHeading(page)}`"
-          class="post-heading"
+          class="post-heading red--text"
         >
           <a
             :href="`#_${indexHeading(page)}`"
@@ -42,7 +42,7 @@
                 v-if="page.frontmatter.cover"
                 class="align-end"
                 height="180px"
-                :src="page.frontmatter.cover"
+                :src="$withBase(page.frontmatter.cover)"
               />
               <v-card-title
                 class="post-title"
@@ -146,7 +146,7 @@
                 <v-spacer />
                 <v-btn
                   v-if="sourceLink(page)"
-                  color="accent"
+                  color="primary"
                   :href="sourceLink(page)"
                   target="_blank"
                   text
@@ -154,7 +154,7 @@
                   {{ $site.themeConfig.viewSourceText || 'View Source' }}
                 </v-btn>
                 <v-btn
-                  color="accent"
+                  color="primary"
                   text
                   :to="page.path"
                 >
@@ -212,13 +212,14 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../styles/default';
 @import '~vuetify/src/styles/styles';
 
 .post {
+  .v-timeline-item__body {
+    z-index: 2;
+  }
 
   &-heading {
-    color: $accentColor;
     margin-top: -64px;
     padding-top: 72px;
     font-size: 1.2em;
@@ -227,7 +228,6 @@ export default {
   &-title {
     font-size: 1.6rem;
     a {
-      color: $primaryColor;
       text-decoration: none;
       &:hover {
         text-decoration: underline;
@@ -238,7 +238,6 @@ export default {
   &-author, &-date, &-tags, &-category {
     display: inline-block;
     font-size: 16px;
-    color: lighten($textColor, 25%);
     a {
       color: inherit;
       text-decoration: none;
@@ -249,7 +248,6 @@ export default {
   }
 
   &-link {
-    color: lighten($textColor, 25%);
   }
 
   &-tag + &-tag {

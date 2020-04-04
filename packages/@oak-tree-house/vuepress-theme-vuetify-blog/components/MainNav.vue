@@ -1,47 +1,46 @@
 <template>
   <div
     v-if="prev || next"
-    class="page-nav"
+    class="app-nav"
   >
     <v-divider />
-    <p class="inner">
-      <span
+    <div
+      class="d-flex py-4 flex-wrap"
+    >
+      <div
         v-if="prev"
-        class="prev"
       >
-        <v-icon
-          small
-          color="accent"
-        >
-          mdi-arrow-left
-        </v-icon>
         <router-link
           v-if="prev"
-          class="prev"
           :to="prev.path"
         >
+          <v-icon
+            small
+            color="primary"
+          >
+            mdi-arrow-left
+          </v-icon>
           {{ prev.title || prev.path }}
         </router-link>
-      </span>
-
-      <span
+      </div>
+      <v-spacer />
+      <div
         v-if="next"
-        class="next"
       >
         <router-link
           v-if="next"
           :to="next.path"
         >
           {{ next.title || next.path }}
+          <v-icon
+            small
+            color="primary"
+          >
+            mdi-arrow-right
+          </v-icon>
         </router-link>
-        <v-icon
-          small
-          color="accent"
-        >
-          mdi-arrow-right
-        </v-icon>
-      </span>
-    </p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -80,24 +79,10 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../styles/default';
-@import '~vuetify/src/styles/styles';
-
-.page-nav {
-  padding-bottom: 0;
-  a {
-    color: $accentColor;
-    text-decoration: none;
-  }
-
-  .inner {
-    min-height: 2rem;
-    margin-top: 0;
-    padding-top: 1rem;
-  }
-
-  .next {
-    float: right;
+.app-nav a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
   }
 }
 </style>

@@ -1,11 +1,8 @@
-@import "./default";
+@import "./default.scss";
 
 .v-application .content {
-  color: $textColor;
-
   a {
     font-weight: 500;
-    color: $accentColor;
     text-decoration: none;
     &:hover {
       text-decoration: underline;
@@ -14,7 +11,6 @@
 
   p a code {
     font-weight: 400;
-    color: $accentColor;
   }
 
   img {
@@ -82,7 +78,7 @@
   h2 {
     font-size: 1.65rem;
     padding-bottom: .3rem;
-    border-bottom: 1px solid $borderColor;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   }
 
   h3 {
@@ -129,4 +125,9 @@
 
 #gitalk-container .gt-container .gt-meta {
   z-index: 1;
+}
+
+.task-list {
+  list-style-type: none;
+  padding-left: 0;
 }

@@ -1,7 +1,6 @@
 <template>
   <v-list
     class="sidebar-links"
-    dense
   >
     <template v-for="item in $site.themeConfig.nav">
       <v-list-group

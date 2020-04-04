@@ -1,20 +1,5 @@
 <template>
-  <Layout
-    :content-width="840"
-  >
-    <template slot="sidebar">
-      <SidebarLinks
-        class="hidden-lg-and-up"
-      />
-      <v-divider v-if="$vuetify.breakpoint.mdAndDown" />
-      <IndexSidebarToc
-        :page-name="tocName"
-        class="mt-4"
-      />
-      <IndexSidebarWordCloud
-        v-if="$site.themeConfig.wordCloudFrontmatter"
-      />
-    </template>
+  <Layout>
     <IndexDummy />
     <ClientOnly>
       <v-container
@@ -22,10 +7,12 @@
       >
         <IndexBreadcrumbs
           :breadcrumbs="breadcrumbs"
-          class="mt-6"
+          class="mt-6 ml-0 ml-md-8"
         />
         <IndexPosts class="py-4" />
-        <IndexPagination />
+        <IndexPagination
+          class="pl-0 pl-md-8"
+        />
       </v-container>
     </ClientOnly>
   </Layout>
@@ -33,46 +20,23 @@
 
 <script>
 import Layout from '@theme/layouts/Layout.vue'
-import SidebarLinks from '@theme/components/SidebarLinks.vue'
+import IndexDummy from '@theme/components/IndexDummy.vue'
+import IndexBreadcrumbs from '@theme/components/IndexBreadcrumbs.vue'
 import IndexPosts from '@theme/components/IndexPosts.vue'
 import IndexPagination from '@theme/components/IndexPagination.vue'
-import IndexBreadcrumbs from '@theme/components/IndexBreadcrumbs.vue'
-import IndexSidebarToc from '@theme/components/IndexSidebarToc.vue'
-import IndexSidebarWordCloud from '@theme/components/IndexSidebarWordCloud.vue'
-import IndexDummy from '@theme/components/IndexDummy.vue'
-import { indexPageNumber } from '../util'
 
 export default {
   components: {
     Layout,
-    SidebarLinks,
-    IndexPosts,
-    IndexPagination,
+    IndexDummy,
     IndexBreadcrumbs,
-    IndexSidebarToc,
-    IndexSidebarWordCloud,
-    IndexDummy
+    IndexPosts,
+    IndexPagination
   },
   props: {
     breadcrumbs: {
       type: Array,
       default: null
-    },
-    pageName: {
-      type: String,
-      default: null
-    }
-  },
-  computed: {
-    tocName () {
-      return (this.pageName || this.$site.themeConfig.homepageText || 'Homepage')
-      + ' - '
-      + indexPageNumber(
-        this.$pagination.paginationIndex,
-        this.$pagination.length,
-        this.$pagination._matchedPages.length,
-        this.$site.themeConfig.pageNumberText
-      )
     }
   }
 }

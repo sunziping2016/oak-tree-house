@@ -518,7 +518,7 @@ yay -S visual-studio-code-bin clion intellij-idea-ultimate-edition
 #### 3.10.2 其他应用
 
 ```bash
-yay -S chromium pepper-flash birdtray thunderbird seafile-client telegram-desktop audacity celestia baidunetdisk-bin inkscape kazam netease-cloud-music openshot postman-bin qq-linux ttf-wps-fonts wps-office wxmaxima maxima wireshark-qt vlc xdot teamviewer
+yay -S chromium pepper-flash birdtray thunderbird seafile-client telegram-desktop audacity celestia baidunetdisk-bin inkscape kazam netease-cloud-music openshot postman-bin qq-linux ttf-wps-fonts wps-office wxmaxima maxima wireshark-qt vlc xdot teamviewer syncplay
 ```
 
 #### 3.10.3 游戏

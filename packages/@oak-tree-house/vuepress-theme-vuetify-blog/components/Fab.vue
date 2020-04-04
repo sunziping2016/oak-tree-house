@@ -168,7 +168,7 @@
                   :key="entry"
                 >
                   <router-link
-                    :to="$site.pages.find(page => page.regularPath === entry).path"
+                    :to="($site.pages.find(page => page.regularPath === entry) || { path: '/404' }).path"
                     class="indigo--text"
                   >
                     {{ entry }}
@@ -247,9 +247,9 @@ export default {
     },
     sharePageUrl () {
       if (this.shareFullPath) {
-        return location.origin + this.$route.fullPath
+        return location.origin + this.$router.options.base.slice(0, -1) + this.$route.fullPath
       }
-      return location.origin + this.$route.path
+      return location.origin + this.$router.options.base.slice(0, -1) + this.$route.path
     },
     sharePageDataUrl () {
       if (this.sharePageUrl) {
@@ -279,8 +279,7 @@ export default {
       return null
     },
     dialogWidth () {
-      return this.$vuetify.breakpoint.xsOnly ? 320
-        : this.$vuetify.breakpoint.smAndDown ? 400 : 500
+      return this.$vuetify.breakpoint.xsOnly ? 320 : 500
     }
   },
   methods: {

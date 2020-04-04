@@ -1,14 +1,5 @@
 <template>
-  <Layout
-    :content-width="720"
-  >
-    <template slot="sidebar">
-      <SidebarLinks
-        class="hidden-lg-and-up"
-      />
-      <v-divider v-if="$vuetify.breakpoint.mdAndDown" />
-      <IndexSidebarWordCloud />
-    </template>
+  <Layout>
     <ul style="display: none">
       <li
         v-for="word in $frontmatterKey.list"
@@ -50,17 +41,13 @@
 
 <script>
 import Layout from '@theme/layouts/Layout.vue'
-import SidebarLinks from '@theme/components/SidebarLinks.vue'
 import IndexBreadcrumbs from '@theme/components/IndexBreadcrumbs.vue'
-import IndexSidebarWordCloud from '@theme/components/IndexSidebarWordCloud.vue'
 import { frontmatterKeyHeading } from '../util'
 
 export default {
   components: {
     Layout,
-    SidebarLinks,
-    IndexBreadcrumbs,
-    IndexSidebarWordCloud
+    IndexBreadcrumbs
   },
   computed: {
     breadcrumbs () {
@@ -77,15 +64,17 @@ export default {
         this.$site.themeConfig.frontmatterKeyHeading
       )
     }
+  },
+  mounted () {
+    console.log(123)
   }
 }
 </script>
 
 <style lang="scss">
-.frontmatter-key-chip {
-  &:hover {
-    text-decoration: underline;
+  .frontmatter-key-chip {
+    &:hover {
+      text-decoration: underline;
+    }
   }
-}
 </style>
-
