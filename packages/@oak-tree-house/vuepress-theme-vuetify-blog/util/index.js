@@ -13,16 +13,17 @@ export function isTel (path) {
   return /^tel:/.test(path)
 }
 
-export function resolveHeaders (pages, currentPath, extractHeaders) {
+export function resolveHeaders (toc, pages, currentPath, extractHeaders) {
   extractHeaders = extractHeaders || ['h2', 'h3']
-  return pages.map(page => {
+  function resolvePageHeaders (page, parent) {
     const stack = [
       {
         id: page.path,
         name: page.title,
         link: page.path,
-        top: true,
-        children: []
+        parent,
+        children: [],
+        page: page
       }
     ]
     let headers
@@ -48,13 +49,54 @@ export function resolveHeaders (pages, currentPath, extractHeaders) {
             parent,
             children: []
           }
+          if (page.path === currentPath) {
+            child.hash = `${header.slug}`
+          }
           parent.children.push(child)
           stack[header.level - 1] = child
         }
       }
     }
     return stack[0]
-  })
+  }
+  function resolveArrayHeaders (items, parent = null) {
+    if (!Array.isArray(items)) {
+      return []
+    }
+    return items.map(item => {
+      if (typeof item === 'object') {
+        const name = Object.keys(item)
+        if (name.length !== 1) {
+          return null
+        }
+        const subToc = item[name[0]]
+        const result = {
+          id: name[0],
+          name: name[0],
+          parent
+        }
+        result.children = resolveArrayHeaders(subToc, result)
+        return result
+      } else if (typeof item === 'string') {
+        const page = pages.find(page => page.regularPath === item)
+        if (!page) {
+          return null
+        }
+        return resolvePageHeaders(page, parent)
+      } else {
+        return null
+      }
+    }).filter(x => x)
+  }
+  const result = resolveArrayHeaders(toc)
+  function addDepth (items, depth = 0) {
+    items.forEach(item => {
+      item.depth = depth
+      addDepth(item.children, depth + 1)
+    })
+  }
+  addDepth(result)
+  return result
 }
 
 export function indexHeading (page, indexHeading) {

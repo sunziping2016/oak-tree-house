@@ -1,6 +1,5 @@
 <template>
   <IndexPost
-    :page-name="pageName"
     :breadcrumbs="breadcrumbs"
   />
 </template>
@@ -25,11 +24,6 @@ export default {
     }
   },
   computed: {
-    pageName () {
-      return this.frontmatterText
-        + ' - '
-        + this.frontmatterKeyText
-    },
     breadcrumbs () {
       const items = [{
         text: this.frontmatterText,

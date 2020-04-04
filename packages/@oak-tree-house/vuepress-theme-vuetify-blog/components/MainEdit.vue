@@ -1,8 +1,8 @@
 <template>
-  <div class="page-edit">
+  <div class="d-flex flex-wrap py-4">
     <div
       v-if="editLink"
-      class="edit-link"
+      class="text-no-wrap app-page-edit-link"
     >
       <a
         :href="editLink"
@@ -10,17 +10,18 @@
         rel="noopener noreferrer"
       >
         {{ editLinkText }}
+        <v-icon small>
+          mdi-open-in-new
+        </v-icon>
       </a>
-      <v-icon x-small>
-        mdi-open-in-new
-      </v-icon>
     </div>
+    <v-spacer />
     <div
       v-if="lastUpdated"
-      class="last-updated"
+      class="text-no-wrap app-page-last-updated"
     >
-      <span class="prefix">{{ lastUpdatedText }}:</span>
-      <span class="time">{{ lastUpdated }}</span>
+      <span class="app-page-last-updated-prefix">{{ lastUpdatedText }}:</span>
+      <span class="app-page-last-updated-date">{{ lastUpdated }}</span>
     </div>
   </div>
 </template>
@@ -90,51 +91,18 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../styles/default';
-@import '~vuetify/src/styles/styles';
-
-.page-edit {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  overflow: auto;
-
-  .edit-link {
-    display: inline-block;
-
-    a {
-      text-decoration: none;
-      color: lighten($textColor, 25%);
-      margin-right: 0.25rem;
-    }
-  }
-
-  .last-updated {
-    float: right;
-    font-size: 0.9em;
-
-    .prefix {
-      font-weight: 500;
-      color: lighten($textColor, 25%);
-    }
-
-    .time {
-      font-weight: 400;
-      color: #aaa;
-    }
+.app-page-edit-link a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
   }
 }
-
-@media #{map-get($display-breakpoints, 'sm-and-down')} {
-  .page-edit {
-    .edit-link {
-      margin-bottom: 0.5rem;
-    }
-
-    .last-updated {
-      font-size: 0.8em;
-      float: none;
-      text-align: left;
-    }
+.theme--light {
+  .app-page-last-updated-prefix, .app-page-edit-link a {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .app-page-last-updated-date {
+    color: rgba(0, 0, 0, 0.5);
   }
 }
 </style>

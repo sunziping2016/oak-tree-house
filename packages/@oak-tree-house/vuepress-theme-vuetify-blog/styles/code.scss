@@ -1,8 +1,9 @@
-@import "./default";
+@import "./default.scss";
+
+$codeBgColor: #282c34 !default;
 
 .v-application .content {
   code {
-    color: lighten($textColor, 20%);
     padding: 0.25rem 0.5rem;
     margin: 0;
     font-size: 0.85em;
@@ -13,16 +14,6 @@
     display: inline;
     &::before, &::after {
       display: none;
-    }
-
-    .token {
-      &.deleted {
-        color: #EC5975;
-      }
-
-      &.inserted {
-        color: $accentColor;
-      }
     }
   }
 
@@ -182,6 +173,10 @@ div[class~="language-text"]:before {
 
 div[class~="language-matlab"]:before {
   content: "matlab"
+}
+
+div[class~="language-rust"]:before {
+  content: "rust"
 }
 
 @import '~vuetify/src/styles/styles';

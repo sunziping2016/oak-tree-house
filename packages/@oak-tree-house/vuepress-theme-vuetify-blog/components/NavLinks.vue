@@ -74,6 +74,7 @@
         :to="isExternal(item.link) ? undefined : item.link"
         :href="isExternal(item.link) ? item.link : undefined"
         :target="!isExternal(item.link) || isMailto(item.link) || isTel(item.link) ? undefined : '_blank'"
+        class="subtitle-1"
         text
       >
         {{ item.text }}

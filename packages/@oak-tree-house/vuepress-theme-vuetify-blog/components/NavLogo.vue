@@ -1,20 +1,44 @@
 <template>
   <router-link
     :to="$localePath"
-    class="d-flex align-center"
+    class="d-flex align-center app-logo"
   >
     <v-img
-      v-if="$site.themeConfig.logo"
+      v-if="logo"
       :alt="$siteTitle"
       class="shrink mr-2"
       contain
-      :src="$withBase($site.themeConfig.logo)"
+      :src="$withBase(logo)"
       transition="scale-transition"
       width="25"
     />
     <span
       v-if="$siteTitle"
-      class="white--text headline mt-1 shrink"
+      class="headline shrink"
     >{{ $siteTitle }}</span>
   </router-link>
 </template>
+
+<script>
+export default {
+  computed: {
+    logo () {
+      if (!this.$site.themeConfig.logo) {
+        return null
+      }
+      if (typeof this.$site.themeConfig.logo === 'object') {
+        return this.$vuetify.theme.dark
+          ? this.$site.themeConfig.logo.dark
+          : this.$site.themeConfig.logo.light
+      }
+      return this.$site.themeConfig.logo
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+.app-logo {
+  text-decoration: none;
+}
+</style>

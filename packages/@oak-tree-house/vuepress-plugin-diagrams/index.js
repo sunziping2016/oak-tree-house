@@ -42,7 +42,7 @@ module.exports = function (options, context) {
       const filename = `${hash}.png`
       const wholeFilename = path.join(tempDiagramPath, filename)
       fs.writeFileSync(wholeFilename, png)
-      src = `${diagramPath}/${filename}`
+      src = `${context.base.slice(0, -1)}${diagramPath}/${filename}`
     }
     return `<p${
       options['p-style'] ? ` style="${options['p-style']}"` : ''
@@ -156,7 +156,7 @@ module.exports = function (options, context) {
       }
     },
     beforeDevServer (app, server) {
-      app.get(`${diagramPath}/:id`, (req, res) => {
+      app.get(`${context.base.slice(0, -1)}${diagramPath}/:id`, (req, res) => {
         const filePath = path.join(tempDiagramPath, req.params.id)
         if (fs.existsSync(filePath)) {
           res.sendFile(filePath)

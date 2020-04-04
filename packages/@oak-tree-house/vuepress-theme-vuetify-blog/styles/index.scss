@@ -1,13 +1,4 @@
-@import "./content";
-@import "./code";
-@import "./custom-blocks";
-@import "./marp";
-
-.task-list {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-div[class~="language-rust"]:before {
-  content: "rust"
-}
+@import "./content.scss";
+@import "./code.scss";
+@import "./custom-blocks.scss";
+@import "./marp.scss";

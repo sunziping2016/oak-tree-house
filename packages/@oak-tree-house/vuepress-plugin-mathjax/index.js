@@ -208,7 +208,7 @@ module.exports = function (options, context) {
             const filename = `${hash}.png`
             const wholeFilename = path.join(tempFormulaPath, filename)
             fs.writeFileSync(wholeFilename, png)
-            src = `${formulaPath}/${filename}`
+            src = `${context.base.slice(0, -1)}${formulaPath}/${filename}`
           }
           const result = inline
             ? `<img class="mathjax-inline" style="vertical-align: ${verticalAlign}px; width: ${width}px" width="${width}" height="${height}" alt="formula" data-formula="${escapeHtml(content)}" src="${src}">`
@@ -239,7 +239,7 @@ module.exports = function (options, context) {
     },
     enhanceAppFiles: path.resolve(__dirname, 'enhanceApp.js'),
     beforeDevServer (app, server) {
-      app.get(`${formulaPath}/:id`, (req, res) => {
+      app.get(`${context.base.slice(0, -1)}${formulaPath}/:id`, (req, res) => {
         const filePath = path.join(tempFormulaPath, req.params.id)
         if (fs.existsSync(filePath)) {
           res.sendFile(filePath)
