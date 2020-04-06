@@ -5,7 +5,6 @@
     clipped
     disable-resize-watcher
     right
-    :temporary="$vuetify.breakpoint.smAndDown"
     :width="320"
     class="app-toc-drawer"
     :value="value"
@@ -193,8 +192,8 @@ export default {
   position: relative;
   & > div {
     margin-top: 12px;
-    .v-navigation-drawer--temporary & {
-      margin-top: 68px;
+    .v-navigation-drawer--is-mobile & {
+      margin-top: 76px;
     }
     visibility: visible;
     position: fixed;

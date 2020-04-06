@@ -14,10 +14,10 @@ All notable changes to this project will be documented in this file.
 - [x] **$vuepress-plugin-diagrams**: render Graphviz and Ditaa diagrams to PNGs at server side
 - [x] **$vuepress-plugin-diagrams**: support render flowchart, sequence and mermaid diagrams
 - [x] **$vuepress-theme-vuetify-blog**: add timeline to index page next to posts
+- [x] **$vuepress-theme-vuetify-blog**: refactor toc and support dark mode
 - [x] **$site**: update sass loader (wait for VuePress to solve issue #2148)
 - [ ] **$vuepress-plugin-diagrams**: support diagrams listed in [here](https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams)
 - [ ] reimplement medium zoom
-
 
 ### Content
 

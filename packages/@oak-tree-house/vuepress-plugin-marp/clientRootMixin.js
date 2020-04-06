@@ -177,6 +177,7 @@ export default {
       if (!this.marpitTouchPos) {
         return
       }
+      evt.stopPropagation()
       const xDiff = this.marpitTouchPos.x - evt.changedTouches[0].clientX
       const yDiff = this.marpitTouchPos.y - evt.changedTouches[0].clientY
       if (xDiff === 0 && yDiff === 0) {
@@ -364,7 +365,7 @@ export default {
         document.addEventListener('mousemove', this.marpitOnMouseMove)
         document.addEventListener('touchstart', this.marpitOnTouchStart)
         document.addEventListener('touchmove', this.marpitOnTouchMove, { passive: false })
-        document.addEventListener('touchend', this.marpitOnTouchEnd)
+        document.addEventListener('touchend', this.marpitOnTouchEnd, true)
         this.marpitResetMouseMoveTimeout()
         this.marpitSavedScrollPos = pageYOffset
         document.body.style.minHeight = `${this.marpitSections.length}00vh`
