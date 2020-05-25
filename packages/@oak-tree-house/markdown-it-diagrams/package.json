@@ -1,6 +1,6 @@
 {
   "name": "@oak-tree-house/markdown-it-diagrams",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MarkdownIt Plugin to Render Diagrams",
   "main": "index.js",
   "publishConfig": {

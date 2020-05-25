@@ -1,6 +1,6 @@
 {
   "name": "@oak-tree-house/vuepress-plugin-marp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "VuePress Plugin to Display Marp Slides",
   "main": "index.js",
   "publishConfig": {
