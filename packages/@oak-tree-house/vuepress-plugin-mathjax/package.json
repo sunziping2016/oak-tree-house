@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/sunziping2016/oak-tree-house/tree/master/packages/%40oak-tree-house/vuepress-plugin-mathjax#readme",
   "dependencies": {
-    "mathjax-full": "^3.0.1",
+    "mathjax-full": "3.0.1",
     "md5": "^2.2.1",
     "ncp": "^2.0.0",
     "rimraf": "^3.0.2"

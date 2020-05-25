@@ -6,7 +6,24 @@ All notable changes to this project will be documented in this file.
 
 ### Bug Fixed
 
+- [ ] fix MathJax `Cannot read property 'chars' of undefined`
+
+### Feature
+
+- [ ] **$vuepress-plugin-diagrams**: support diagrams listed in [here](https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams)
+- [ ] reimplement medium zoom
+
+### Content
+
+- [ ] write python tutorial 4
+
+## [1.0.1]
+
+### Bug Fixed
+
 - [x] **$vuepress-plugin-encrypt**: does not emit `contentReady` for decrypted content due to `ClientOnly`
+- [x] **$vuepress-plugin-encrypt**: change input type from text to password
+- [x] **$vuepress-plugin-encrypt**: fix `=` in base64 treated as heading
 
 ### Feature
 
@@ -16,8 +33,6 @@ All notable changes to this project will be documented in this file.
 - [x] **$vuepress-theme-vuetify-blog**: add timeline to index page next to posts
 - [x] **$vuepress-theme-vuetify-blog**: refactor toc and support dark mode
 - [x] **$site**: update sass loader (wait for VuePress to solve issue #2148)
-- [ ] **$vuepress-plugin-diagrams**: support diagrams listed in [here](https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams)
-- [ ] reimplement medium zoom
 
 ### Content
 
@@ -25,7 +40,6 @@ All notable changes to this project will be documented in this file.
 - [x] add more about Tsmart code review
 - [x] add pip configuration part to python tutorial 1
 - [x] finish python tutorial 3
-- [ ] write python tutorial 4
 
 ## [1.0.0]
 
@@ -65,5 +79,6 @@ All notable changes to this project will be documented in this file.
 - Refactor event system
 - Make PWA notification use snackbar
 
-[Unreleased]: https://github.com/sunziping2016/oak-tree-house/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/sunziping2016/oak-tree-house/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/sunziping2016/oak-tree-house/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/sunziping2016/oak-tree-house/releases/tag/v1.0.0

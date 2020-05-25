@@ -23,7 +23,7 @@
           <p>
             <input
               v-model.lazy="keyFromInput"
-              type="text"
+              type="password"
               @keyup.enter="onConfirm"
             >
             <button
@@ -126,7 +126,7 @@ export default {
     onContentReady () {
       this.$nextTick(() => {
         if (this.encrypted) {
-          this.encryptedContent = this.$refs.content.innerText.replace(/\s/g, '')
+          this.encryptedContent = this.$refs.content.innerText.replace(/\s/g, '').replace(/\*/g, '=')
         } else {
           event.$emit('decrypt-already')
         }

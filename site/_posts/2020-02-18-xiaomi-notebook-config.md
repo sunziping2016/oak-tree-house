@@ -304,7 +304,7 @@ xdg-user-dirs-update
 ### 2.10 输入法
 
 ```bash
-yay -S fcitx-lilydjwg-git fcitx-sogoupinyin fcitx-configtool fcitx-qt5
+yay -S fcitx-lilydjwg-git fcitx-baidupinyin fcitx-configtool fcitx-qt5
 ```
 
 在`~/.pam_environment`里面添加如下内容。
@@ -377,6 +377,33 @@ yay ttf-monaco
 
 ```bash
 yay -S gvfs gvfs-mtp gvfs-smb gvfs-afc ntfs-3g dosfstools udisks2
+```
+
+### 2.14 Swap
+
+```bash
+yay -S systemd-swap
+sudo systemctl enable systemd-swap
+sudo systemctl start systemd-swap
+# from https://github.com/Nefelim4ag/systemd-swap
+echo vm.swappiness=5 | sudo tee -a /etc/sysctl.d/99-sysctl.conf
+echo vm.vfs_cache_pressure=50 | sudo tee -a /etc/sysctl.d/99-sysctl.conf
+sudo sysctl -p /etc/sysctl.d/99-sysctl.conf
+sudo mkdir -p /var/lib/systemd-swap/swapfc/
+```
+
+修改`/etc/systemd/swap.conf`：
+
+```text
+...
+swapfc_enabled=1
+swapfc_force_use_loop=0     # Force usage of swapfile + loop
+swapfc_frequency=8s         # How often check free swap space
+swapfc_chunk_size=8G        # Allocate size of swap chunk
+swapfc_max_count=16         # 0 - unlimited, note: 32 is a kernel maximum
+swapfc_free_swap_perc=30    # Add new chunk if free < 30%
+                            # Remove chunk if free > 30+40% & chunk count > 2
+...
 ```
 
 ## 3 安装软件
@@ -498,7 +525,7 @@ yay -S bzip2 zip p7zip unzip-iconv unrar
 #### 3.9.3 其他应用
 
 ```bash
-yay -S htop wget tree w3m tmux ditaa graphviz dos2unix neofetch networkmanager-openconnect openconnect pwgen rsync you-get scrapy tensorboard
+yay -S htop wget tree w3m tmux ditaa graphviz dos2unix neofetch networkmanager-openconnect openconnect pwgen rsync you-get scrapy tensorboard cloc
 ```
 
 #### 3.9.4 游戏
@@ -518,7 +545,7 @@ yay -S visual-studio-code-bin clion intellij-idea-ultimate-edition
 #### 3.10.2 其他应用
 
 ```bash
-yay -S chromium pepper-flash birdtray thunderbird seafile-client telegram-desktop audacity celestia baidunetdisk-bin inkscape kazam netease-cloud-music openshot postman-bin qq-linux ttf-wps-fonts wps-office wxmaxima maxima wireshark-qt vlc xdot teamviewer syncplay
+yay -S chromium pepper-flash birdtray thunderbird seafile-client telegram-desktop audacity celestia baidunetdisk-bin inkscape kazam netease-cloud-music openshot postman-bin qq-linux ttf-wps-fonts wps-office wxmaxima maxima wireshark-qt vlc xdot teamviewer syncplay freecad zoom2 scrcpy
 ```
 
 #### 3.10.3 游戏
@@ -731,6 +758,8 @@ sudo groupadd android-sdk
 sudo gpasswd -a sun android-sdk
 sudo setfacl -R -m g:android-sdk:rwx /opt/android-sdk
 sudo setfacl -d -m g:android-sdk:rwX /opt/android-sdk
+sudo systemctl start adb
+sudo systemctl enable adb
 ```
 
 记得设置Android Studio的代理，它会提示设置代理，Gradle也会被提示需要设置代理，不要启用Gradle的https代理。
@@ -757,7 +786,7 @@ sed -i 's/plugins=(\(.*\))/plugins=(\1 pyenv)/' .zshrc
 安装一些常用的Python库。
 
 ```bash
-yay -S python-numpy python-scipy python-matplotlib python-pillow python-pytorch-cuda
+yay -S python-numpy python-scipy python-matplotlib python-pillow python-pytorch-cuda mypy
 ```
 
 ### 5.4 Node.js

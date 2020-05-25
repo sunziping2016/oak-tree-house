@@ -301,7 +301,7 @@ class App {
           + yaml.safeDump(frontmatter.data)
           + `---\n`
           + `::: encrypt encrypted key=${match.key} owners=${match.owners.join(',')}\n`
-          + encryptedText.toString('base64').match(/.{1,79}/g).map(x => `${x}\n`).join('')
+          + encryptedText.toString('base64').replace(/=/g, '*').match(/.{1,79}/g).map(x => `${x}\n`).join('')
           + `:::`
         console.log(chalk.green(`[INFO] Encrypt file with key "${match.key}"`))
         await util.promisify(fs.writeFile)(filename, output, 'utf8')
@@ -347,7 +347,7 @@ class App {
         const aesCtr = new aesjs.ModeOfOperation.ctr(aesjs.utils.hex.toBytes(md5(encryptKey)))
         const encryptedText = Buffer.from(aesCtr.encrypt(aesjs.utils.utf8.toBytes(plaintext)))
         const output = `${preamble} encrypt encrypted key=${match.key} owners=${match.owners.join(',')}\n`
-          + encryptedText.toString('base64').match(/.{1,79}/g).map(x => `${preambleSpace}${x}\n`).join('')
+          + encryptedText.toString('base64').replace(/=/g, '*').match(/.{1,79}/g).map(x => `${preambleSpace}${x}\n`).join('')
           + `${preamble}`
         console.log(chalk.green(`[INFO] Encrypt block with key "${match.key}"`))
         return output
@@ -380,7 +380,7 @@ class App {
         const encryptKey = aesjs.utils.hex.toBytes(md5(this.keyFile.keys[match.key]))
         // eslint-disable-next-line new-cap
         const aesCtr = new aesjs.ModeOfOperation.ctr(encryptKey)
-        const plaintext = aesjs.utils.utf8.fromBytes(aesCtr.decrypt(Buffer.from(file.replace(/\s/g, ''), 'base64')))
+        const plaintext = aesjs.utils.utf8.fromBytes(aesCtr.decrypt(Buffer.from(file.replace(/\s/g, '').replace(/\*/g, '='), 'base64')))
         const { markdown } = JSON.parse(plaintext)
         await util.promisify(fs.writeFile)(filename, markdown, 'utf8')
         console.log(chalk.green(`[INFO] Decrypt file with key "${match.key}"`))
@@ -404,7 +404,7 @@ class App {
         const encryptKey = aesjs.utils.hex.toBytes(md5(this.keyFile.keys[match.key]))
         // eslint-disable-next-line new-cap
         const aesCtr = new aesjs.ModeOfOperation.ctr(encryptKey)
-        const plaintext = aesjs.utils.utf8.fromBytes(aesCtr.decrypt(Buffer.from(block.replace(/\s/g, ''), 'base64')))
+        const plaintext = aesjs.utils.utf8.fromBytes(aesCtr.decrypt(Buffer.from(block.replace(/\s/g, '').replace(/\*/g, '='), 'base64')))
         const { markdown } = JSON.parse(plaintext)
         const preambleSpace = frontmatter.content.slice(sourceMap.begin, sourceMap.begin + sourceMap.shift)
         const preamble = preambleSpace + markerStr.repeat(sourceMap.markerCount)
