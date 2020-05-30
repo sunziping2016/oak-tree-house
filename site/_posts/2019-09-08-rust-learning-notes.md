@@ -1,5 +1,5 @@
 ---
-title: Rust学习笔记（未完待续）
+title: Rust学习笔记
 date: 2019-09-08T13:54:09Z
 tags: [Rust, 编程]
 ---
@@ -702,6 +702,623 @@ Rust提供了3条生命周期省略规则，那些函数或方法的参数的生
 
 ### 9.1 如何写测试
 
-Rust中的测试是一个被注解上`test`属性的函数。当用Cargo创建一个库项目的时候，一个包含着一个测试函数的测试模块。
+Rust中的测试是一个被注解上`test`属性的函数。当用Cargo创建一个库项目的时候，一个包含着一个测试函数的测试模块会被生成，就像下方的代码。每个测试都是独立的一个线程。默认情况下一个测试函数panic则代表测试出错，通过加入`#[should_panic]`注解使测试函数不panic表示出错，它有一个`expected`参数表示期待的错误内容。
 
-（未完待续）
+```rust
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn exploration() {
+        assert_eq!(2 + 2, 4);
+    }
+}
+```
+
+一般测试模块会使用`use super::*;`，方便测试，起可见性规则与一般模块一致。
+
+你可以使用`assert_eq!`、`assert_ne!`、`assert!`之类的宏断言。前两者能给出错误更详细的信息，其左右参数位置在Rust中并不重要，它们要求参数实现了`PartialEq`和`Debug` traits。这三个函数之后的参数会被传递给`format!`宏，用于更好地显示错误。
+
+测试函数可以返回`Result<T, E>`，当返回`Err(...)`时，测试失败。此时不应该使用`#[should_panic]`。
+
+### 9.2 控制测试是如何运行的
+
+`cargo test --`中，`--`前的参数是cargo的参数，之后的参数是测试程序的参数。测试程序的参数如下：
+
+|参数名|含义|
+|-|-|
+|`--test-threads`|并行线程数，设为1避免并行|
+|`--show-output`|不捕获程序的输出|
+
+`cargo test`可以跟位置参数，就会运行测试名字包含该参数的测试。使用`#[ignore]`注解可以标注测试函数被忽略，然后使用`cargo test -- --ignored`可以运行被忽略的测试。
+
+### 9.3 测试的组织
+
+测试一般分为两类，单元测试和集成测试。前者小而精，后者则测试整个库。
+
+使用`#[cfg(test)]`注解告诉Rust只在`cargo test`的时候编译代码。由于集成测试不和实际代码在同一目录，因而不需要该注解。
+
+集成测试通常放在`tests`目录下。每个文件都会被编译成独立的crate。通过`cargo test --test integration_test`可以只跑特定的集成测试。如果有共用的函数可以放到子目录下，如`tests/common/mod.rs`
+
+## 10 函数式语言特色：迭代器和闭包
+
+### 10.1 闭包
+
+通过`|param1, ... | { statements; ... }` 定义闭包。如果闭包只是一个表达式，花括号可以省略。闭包在可以推导类型的时候，并不需要像函数那样注解类型，不过也可以注解上类型`|param1: type1, ... | -> retType { ... }`。注意一个闭包只能有一个实际的类型。每个闭包都有它们独立的类型，即使签名一样类型也不一样。
+
+每个函数至少实现了以下trait中的一个：`Fn`、`FnMut`和`FnOnce`。可以使用trait限制。如下面的代码：
+
+```rust
+struct Caller<T: Fn(u32) -> u32> {
+    func: T,
+}
+```
+
+使用闭包可以捕获变量。闭包可以通过三种方式捕获变量：
+
+- `FnOnce`：消耗了捕获的对象，为了消耗，它获取了所有权，这种闭包只能被调用一次；
+- `FnMut`：获取了可变引用，这种闭包可以修改变量；
+- `Fn`：获取了不可变引用。
+
+其中`Fn`继承自`FnMut`，`FnMut`继承自`FnOnce`。当你创建一个闭包时，Rust根据闭包如何使用环境中的值来确定其类型。
+
+在参数列表前加入`move`能强制闭包获取所有权。
+
+### 10.2 迭代器
+
+迭代器是惰性遍历元素的。它们实现了这样一个trait。
+
+```rust
+pub trait Iterator {
+    type Item;
+
+    fn next(&mut self) -> Option<Self::Item>;
+
+    // methods with default implementations elided
+}
+```
+
+这里`Item`是关联类型，以后会涉及。当`next()`返回一个元素，如果迭代完成，返回`None`。
+
+如果你想获取被迭代对象的所有权，并返回其拥有的对象，可以使用`into_iter()`，如果想要遍历可变引用，可以使用`iter_mut()`。
+
+调用`next`的函数被称为消耗适配器（consuming adaptors），因为它们用完了一个迭代器，如`sum()`函数。另一些方法定义在`Iterator` trait上，它们被称为迭代器适配器（iterator adaptor）。它们可以被串联使用，由于迭代器是惰性的，所以需要被消耗适配器使用，才会计算，例如`map()`函数。
+
+只要实现了`next()`函数就可以定义自己的迭代器。
+
+## 11 关于Cargo和Crates.io
+
+### 11.1 自定义构建
+
+通过`cargo build`可以运行`dev` profile，通过`cargo build --release`可以运行`release` profile。
+
+通过在`Cargo.toml`中加入`[profile.dev]`或`[profile.build]`，可以配置选项。其中一个是`opt-level`，即优化程度，默认如下：
+
+```toml
+[profile.dev]
+opt-level = 0
+
+[profile.release]
+opt-level = 3
+```
+
+### 11.2 发布Crate到Crates.io
+
+使用`///`可以插入文档注释，文档注释支持Markdown格式。通过`cargo doc`构建文档，会输出到`target/doc`目录下。加上`--open`参数会打开文档。
+
+一般而言文档注释中有以下大家都会用的小节：
+
+- `# Examples`：示例；
+- `# Panics`：哪些情况函数会panic；
+- `# Errors`：如果一个函数返回`Result`，描述哪些错误会发生，以及在什么情况下发生；
+- `# Safety`：如果函数是`unsafe`的，描述原因以及调用者应当遵循的约定。
+
+文档中的代码块也会成为测试。
+
+使用`//!`注释会对包含它的东西进行注释，而非对它之后紧随的进行注释。这通常用于根crate。
+
+在[crates.io](https://crates.io)注册并且获取API token，可以使用`cargo login`登录。发布前，`Cargo.toml`中的`description`和`license`是必须的。使用`cargo publish`就可以发布。通过`cargo yank --veres 1.0.1`可以阻止这个版本被使用，再加上`--undo`可以撤销。
+
+### 11.3 Cargo工作区
+
+Cargo使用工作区来控制多个相关的包，它们共享`Cargo.lock`和输出目录。以下方的`Cargo.toml`为根，再通过`cargo new adder`等做法就可以创建包含多个包的工作区。
+
+```toml
+[workspace]
+
+members = [
+    "adder",
+    "add-one",
+    "add-two",
+]
+```
+
+通过添加下面的代码到`adder/Cargo.toml`，可以添加依赖：
+
+```toml
+[dependencies]
+
+add-one = { path = "../add-one" }
+```
+
+### 11.4 从Crates.io上安装二进制包
+
+使用`cargo install`即可。
+
+### 11.5 用自定义命令扩展Cargo
+
+如果`PATH`路径下有`cargo-something`，那么可以通过`cargo something`来运行它。通过`cargo --list`可以列出安装的命令。
+
+## 12 智能指针
+
+智能指针通常使用结构体完成，它们实现了`Deref`和`Drop` traits。
+
+### 12.1 使用`Box<T>`指向堆上的数据
+
+Box不提供性能以及额外的功能，你可能会在以下情况下使用它们：
+
+- 使用编译期大小未知的类型；
+- 确保大量数据不会因为改变所有权被复制；
+- 但你想拥有一个值，只关心它的某个trait而不是具体类型。
+
+使用`Box::new()`可以将对象放置在堆上。
+
+此外递归类型也需要用到box。
+
+### 12.2 `Deref` Trait
+
+普通的引用也是一种指针，你有时需要解引用`*p`来获取内容。Box也是类似的。通过下面的代码可以在栈上创建一个盒子对象：
+
+```rust
+struct MyBox<T>(T);
+
+impl<T> MyBox<T> {
+    fn new(x: T) -> MyBox<T> {
+        MyBox(x)
+    }
+}
+
+use std::ops::Deref;
+
+impl<T> Deref for MyBox<T> {
+    type Target = T;
+
+    fn deref(&self) -> &T {
+        &self.0
+    }
+}
+```
+
+这时候，`*y`会被替换成`*(y.deref())`，其中的`*`是普通解引用，不会递归替换。因而`deref()`函数需要返回引用。
+
+解引用强迫（Deref coercion）会把那些实现了`Deref` trait的类型转换为对应的类型。如`&String`会被转换为`&str`类型。解引用强迫会在你传递一个类型不一致的引用给函数时发生，而且可以发生多次。就像下面演示的那样。
+
+```rust
+fn hello(name: &str) {
+    println!("Hello, {}!", name);
+}
+
+fn main() {
+    let m = MyBox::new(String::from("Rust"));
+    hello(&m);
+}
+```
+
+使用`DerefMut` trait可以定义可变对象解引用的效果。发生下面三种情况，会有解引用强迫：
+
+- 从`&T`到`&U`，当`T: Deref<Target=U>`时；
+- 从`&mut T`到`&mut U`，当`T: DerefMut<Target=U>`时；
+- 从`&mut T`到`&U`，当`T: Deref<Target=U>`时。
+
+### 12.3 `Drop` Trait
+
+`Drop` trait有`fn drop(&mut self)`方法，实现后就可以自定义清理行为。变量以创造时相反的顺序被丢弃。
+
+使用`std::mem::drop`函数可以丢弃值，不能直接调用变量的`drop()`方法。
+
+### 12.4 `Rc<T>`引用计数智能指针
+
+`Rc<T>`不能够在多线程中使用。需要`use std::rc::Rc;`来引入`Rc`。通过`Rc::new()`可以创建引用计数的变量，通过`Rc::clone()`可以复制变量，使引用计数增加。通过`Rc::strong_count()`可以获得引用计数的个数。`Rc`<T>只能拥有不可变的引用。
+
+### 12.5 `RefCell<T>`和内部可变模式
+
+内部可变性使得你能通过不可变引用修改数据。这在底层使用了`unsafe`。使用`RefCell<T>`，引用规则会在运行时检查。打破引用规则会造成程序panic。`RefCell<T>`同样不能够在多线程中使用。
+
+可以通过`RefCell::new()`创建。再通过`.borrow_mut()`可以获取可变引用和`.borrow()`获取不可变引用。前者返回`RefMut<T>`类型，后者返回`Ref<T>`类型，它们都实现了`Deref` trait。通过这两种智能指针，`RefCell<T>`实现了计数。
+
+结合`Rc<T>`和`RefCell<T>`，也就是，`Rc<RefCell<T>>`，就可以有多个所有权的可变数据。
+
+### 12.6 循环引用会造成内存泄露
+
+使用`Weak<T>`可以避免出现循环引用，使用`.upgrade()`方法会返回`Option<Rc<T>>`，使用`Rc::downgrade()`函数可以降级引用。通过`Rc::weak_count()`可以获得弱引用计数的个数。
+
+## 13 无惧并发
+
+### 13.1 使用线程
+
+使用`thread::spawn`函数并传入闭包就可以启动一个线程。主线程结束后新线程也会结束。它会返回一个类型为`JoinHandle`的句柄，可以调用其`.join()`方法等待线程执行完毕。使用`thread::sleep`可以睡眠一定时间。
+
+如果传入`spawn`的闭包使用了外部的变量。由于无法确认闭包运行的时间和外部变量的生命周期谁更长，所以会报错。通过加入`move`关键字可以解决这个问题。
+
+### 13.2 使用消息传递来在线程间传输数据
+
+信道（channel）是Rust用于消息传递的重要设施。一个信道由两个部分组成：发送者和接受者。前者传递数据给后者。如果它们中的一个drop了，那么这个信道就认为是关闭了。
+
+使用`std::sync::mpsc::channel()`创建一个信道，其中mpsc是multiple producer, single consumer的简称。它会返回一个元组，即发送者和接受者。就像下面代码展示的那样。
+
+```rust
+use std::sync::mpsc;
+use std::thread;
+
+fn main() {
+    let (tx, rx) = mpsc::channel();
+
+    thread::spawn(move || {
+        let val = String::from("hi");
+        tx.send(val).unwrap();
+    });
+
+    let received = rx.recv().unwrap();
+    println!("Got: {}", received);
+}
+```
+
+如果`tx.send()`方法返回一个`Result<(), E>`，如果接收端关闭会报错。如果没有值发送，`rx.recv()`会阻塞住线程，其返回值实`Result<T, E>`类型，如果发送端关闭会报错。`rx.try_recv()`不会报错，它在没有值以及关闭的时候会返回错误。此外`rx`也是个迭代器，可以迭代输入的值，直到信道关闭。使用`mpsc::Sender::clone()`可以复制一个发送者。
+
+### 13.3 共享状态的并发
+
+为了访问mutex的数据，一个线程必须获得mutex的锁，使用完数据后，必须解锁，以使其他线程使用数据。
+
+```rust
+use std::sync::{Arc, Mutex};
+use std::thread;
+
+fn main() {
+    let counter = Arc::new(Mutex::new(0));
+    let mut handles = vec![];
+
+    for _ in 0..10 {
+        let counter = Arc::clone(&counter);
+        let handle = thread::spawn(move || {
+            let mut num = counter.lock().unwrap();
+
+            *num += 1;
+        });
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
+    println!("Result: {}", *counter.lock().unwrap());
+}
+```
+
+再访问数据前，我们使用`lock()`函数获取锁，这可能造成阻塞。如果获得锁的线程panic了，那么其他线程使用`lock()`函数会返回错误。获得锁之后就可以以可变引用的方式使用它。
+
+实际上，lock返回了一个`MutexGuard`的智能指针，它实现了`Deref` trait，它也实现了`Drop` trait来自动地解锁。
+
+`Arc<T>`和`Rc<T>`是类似的，只是它具有原子性，但会有性能损失。从某种角度来说`Mutex<T>`和`RefCell<T>`很像，它提供了内在可变性。
+
+### 13.4 使用`Sync`和`Send`扩展并发
+
+`Send` trait能够移交所有权到另一个线程中，几乎所有的类型都实现了`Send` trait，除了`Rc<T>`。如果一个类型是由`Send` trait组成的，那么它也实现了`Send` trait。
+
+`Sync` trait能让数据的引用在多个线程中使用。也就是说`T`是Sync当且仅当`&T`是`Send`。初等类型都是`Sync`的，哪些由`Sync`组成的类型也是`Sync`的。
+
+`Rc<T>`不是`Sync`。一般而言，具有内部可变性且非线程安全的类型不是`Sync`，`RefCell<T>`以及其他的`Cell<T>`也因此不是`Sync`。
+
+`Send`和`Sync`是自动的，它们作为标记trait也没有方法需要实现。手动实现这两个类型是不安全的。
+
+## 14 Rust的面向对象特性
+
+面向对象语言有以下特色：
+
+- 对象包括数据和方法；
+- 通过封装隐藏实现细节；
+- 以继承作为类型系统和代码复用，这其中包括了多态。
+
+可以使用trait对象完成多态。一个trait对象指向一个实现了该trait的实例和一个用于查找trait方法的表格。我们需要使用指针创建动态对象，如`&`引用和`Box<T>`智能指针，而后使用`dyn`关键字，最后跟我们要的trait。就像下面的代码那样：
+
+```rust
+pub trait Draw {
+    fn draw(&self);
+}
+
+pub struct Screen {
+    pub components: Vec<Box<dyn Draw>>,
+}
+```
+
+Trait对象使用动态分发，这区别于所有方法调用再编译器确定的静态分发。这会带来一些性能损失。
+
+只有对象安全的trait才能成为trait对象，它的所有方法需要遵循两条原则：
+
+- 返回类型不是Self；
+- 没有泛型参数。
+
+## 15 模式和匹配
+
+一个模式包含以下东西：
+
+- 字面量；
+- 解构的数组、枚举、结构体和元组；
+- 变量；
+- 通配符；
+- 占位符。
+
+### 15.1 模式匹配可以使用到的地方
+
+模式匹配可以出现在：
+
+- `match`分支；
+- `if let`表达式；
+- `while let`循环；
+- `for`循环；
+- `let`语句；
+- 函数参数。
+
+### 15.2 模式匹配是否永真
+
+一个永远能匹配的模式是永真的如`let x = 5;`，而有些可能不能匹配，称为不是永真的，如`if let Some(x) = a_value`。函数参数，`let`语句和`for`语句只能接受永真模式。
+
+### 15.3 模式语法
+
+模式中的命名变量是永真模式。可以使用`|`匹配多个模式。可以使用`..=`匹配一个两端包含的范围，如`1..=5`。此外支持各种解构，可以使用`_`忽略一些值，或者使用`_`开头的变量表示不使用的变量。可以使用`..`忽略剩余的部分（包括结构体、元组）。可以在Match守卫上增加`if`的条件，但其优先级较`|`低。可以使用`@`绑定正在测试的某个值，如`id_variable @ 3..=7`。
+
+## 16 高级特性
+
+### 16.1 不安全Rust
+
+使用`unsafe`关键字开启一个块，就可以使用不安全超能力，包括：
+
+- 解引用裸指针；
+- 调用不安全的函数和方法；
+- 访问或修改一个可变静态变量；
+- 实现一个不安全的trait；
+- 访问union。
+
+但这不包括关闭借用检查和其他检查。
+
+裸指针可以是不可变的或者可变的，分别用`*const T`和`*mut T`表示。不同于引用和智能指针，裸指针可以：
+
+- 同时拥有不可变和可变指针指向同一个区域；
+- 指向的内存可以不合法；
+- 可以为空；
+- 并不自动清理。
+
+```rust
+let mut num = 5;
+
+let r1 = &num as *const i32;
+let r2 = &mut num as *mut i32;
+
+let address = 0x012345usize;
+let r = address as *const i32;
+
+unsafe {
+    println!("r1 is: {}", *r1);
+    println!("r2 is: {}", *r2);
+}
+```
+
+向上面的方式可以创建裸指针，这不需要unsafe。
+
+在函数前加上`unsafe`可以创建不安全函数。你必须在`unsafe`块中调用它。
+
+```rust
+unsafe fn dangerous() {}
+
+unsafe {
+    dangerous();
+}
+```
+
+使用`extern`可以指定外部的函数，如外部C函数：
+
+```rust
+extern "C" {
+    fn abs(input: i32) -> i32;
+}
+```
+
+也可以以某种方式导出Rust函数成别的语言的，这里就不是使用`extern`块：
+
+```rust
+#[no_mangle]
+pub extern "C" fn call_from_c() {
+    println!("Just called a Rust function from C!");
+}
+```
+
+Rust中用静态变量指代全局变量。静态变量和常量很像，但实际上常量允许内容不在同一个内存区域。静态变量还可以是可变的，但这时候访问或修改变量就是不安全的。
+
+```rust
+static mut COUNTER: u32 = 0;
+
+fn add_to_count(inc: u32) {
+    unsafe {
+        COUNTER += inc;
+    }
+}
+
+fn main() {
+    add_to_count(3);
+
+    unsafe {
+        println!("COUNTER: {}", COUNTER);
+    }
+}
+```
+
+如果一个trait的某个方法不能被编译器验证其不变性，那么就是一个不安全的trait。实现这个trait也需要加上`unsafe`。比如`Sync`和`Send`就是。
+
+```rust
+unsafe trait Foo {
+    // methods go here
+}
+
+unsafe impl Foo for i32 {
+    // method implementations go here
+}
+```
+
+### 16.2 高级Trait
+
+通过在trait中加入形如`type Item;`的部分就可以制定一个关联类型。`trait`中的方法可以使用这个类型。而`trait`的实现必须指定这个具体的类型。关联类型和泛型很像，但是前者只能对某个类型实现一次trait，而后者可以针对类型实现多个不同泛型参数的同种trait。
+
+Rust支持默认的泛型参数，形如`<PlaceholderType=ConcreteType>`。这在运算符重载中用到。Rust不允许创建运算符。你可以通过实现`std::ops`下的trait完成运算符重载。如加法trait如下：
+
+```rust
+trait Add<RHS=Self> {
+    type Output;
+
+    fn add(self, rhs: RHS) -> Self::Output;
+}
+```
+
+Trait之间以及类型自带的方法都是可以重名的。默认情况下，编译器调用类型自带的方法。但有时可以显示调用某个方法，如`Trait::method(&instance)`。对于没有`self`参数，需要才用完全限定语法`<Type as Trait>::function(receiver_if_method, next_arg, ...);`。
+
+可以使用`trait ChildTrait: SuperTrait { ... }`，指定某个trait需要另一个trait。
+
+使用newtype模式，可以绕过实现trait必须和trait或类型在同一crate的限制。如下：
+
+```rust
+use std::fmt;
+
+struct Wrapper(Vec<String>);
+
+impl fmt::Display for Wrapper {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "[{}]", self.0.join(", "))
+    }
+}
+
+fn main() {
+    let w = Wrapper(vec![String::from("hello"), String::from("world")]);
+    println!("w = {}", w);
+}
+```
+
+此外`Wrapper`还可以实现`Deref` trait。
+
+### 16.3 高级类型
+
+通过`type Type1 = Type2;`可以创建类型别名。但这失去了类型检查。它也可以带有泛型参数。
+
+此外Rust有个特殊的类型`!`表使用不返回。`continue`就有`!`类型。
+
+`str`就是一种动态大小类型（DST）。Rust拥有`Sized` trait表示类型是否编译期知道大小。这个Trait是自动实现的。同时Rust默认对每个泛型函数的类型参数都加入了`Sized`。你可以通过`fn generic<T: ?Sized>(t: &T) { ... }`来取消这种行为，这样`T`可能是也可能不是`Sized`。
+
+### 16.4 高级函数和闭包
+
+通过`fn(type1, ...) -> retType`，可以定义函数指针类型。普通函数的名字就是函数指针值。`fn`是类型而非trait。函数指针实现了`Fn`、`FnMut`和`FnOnce`。实际上元组结构体和元组结构体枚举的构造器就是一个函数。
+
+如果你要返回闭包，可以才用`Box<dyn Fn(type1, ...) -> retType>`的形式。
+
+### 16.5 宏
+
+Rust的宏指使用`macro_rules!`的声明性宏和3种过程宏：
+
+- 自定义`#[derive]`宏；
+- 类似属性的宏；
+- 类似函数的宏。
+
+宏会被展开成为更多的代码。宏能有不同数目和类型的参数。宏由于是用代码产生代码，因而更难读懂和维护。宏必须在作用域内才能使用。
+
+声明性宏，如`vec!`宏：
+
+```rust
+#[macro_export]
+macro_rules! vec {
+    ( $( $x:expr ),* ) => {
+        {
+            let mut temp_vec = Vec::new();
+            $(
+                temp_vec.push($x);
+            )*
+            temp_vec
+        }
+    };
+}
+```
+
+`#[macro_export]`表示当这个宏可以被模块外导入。`vec!`内部的结构类似match表达式。完整的匹配格式见[Macros By Example - The Rust Reference](https://doc.rust-lang.org/reference/macros-by-example.html)
+
+过程宏以代码作为输入，输出代码。当创建宏的时候，这个代码必须位于自己的crate，并且有一个特殊的crate类型。如下：
+
+```rust
+use proc_macro;
+
+#[some_attribute]
+pub fn some_name(input: TokenStream) -> TokenStream {
+}
+```
+
+这里定义了一个`some_attribute`的过程宏，它们以TokenStream作为输入输出。
+
+一个为了自定义`derive`的crate需要在创建时的`Cargo.toml`中加入：
+
+```toml
+[lib]
+proc-macro = true
+```
+
+然后内容如下：
+
+```rust
+extern crate proc_macro;
+
+use proc_macro::TokenStream;
+use quote::quote;
+use syn;
+
+#[proc_macro_derive(HelloMacro)]
+pub fn hello_macro_derive(input: TokenStream) -> TokenStream {
+    // Construct a representation of Rust code as a syntax tree
+    // that we can manipulate
+    let ast = syn::parse(input).unwrap();
+
+    // Build the trait implementation
+    impl_hello_macro(&ast)
+}
+
+fn impl_hello_macro(ast: &syn::DeriveInput) -> TokenStream {
+    let name = &ast.ident;
+    let gen = quote! {
+        impl HelloMacro for #name {
+            fn hello_macro() {
+                println!("Hello, Macro! My name is {}!", stringify!(#name));
+            }
+        }
+    };
+    gen.into()
+}
+```
+
+属性过程宏的使用如下：
+
+```rust
+#[route(GET, "/")]
+fn index() {}
+```
+
+定义方法如下：
+
+```rust
+#[proc_macro_attribute]
+pub fn route(attr: TokenStream, item: TokenStream) -> TokenStream { ... }
+```
+
+函数的过程宏使用如下：
+
+```rust
+let sql = sql!(SELECT * FROM posts WHERE id=1);
+```
+
+定义方式如下：
+
+```rust
+#[proc_macro]
+pub fn sql(input: TokenStream) -> TokenStream { ... }
+```

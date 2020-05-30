@@ -12,9 +12,12 @@ All notable changes to this project will be documented in this file.
 
 - [ ] **$vuepress-plugin-diagrams**: support diagrams listed in [here](https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams)
 - [ ] reimplement medium zoom
+- [ ] **$vuepress-theme-vuetify-blog**: Add "Recently Updated" and "Suggestion" panels
+- [ ] Find a better solution for static files
 
 ### Content
 
+- [x] finish Rust learning notes
 - [ ] write python tutorial 4
 
 ## [1.0.1]
