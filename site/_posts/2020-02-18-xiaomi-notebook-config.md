@@ -398,12 +398,20 @@ sudo mkdir -p /var/lib/systemd-swap/swapfc/
 ...
 swapfc_enabled=1
 swapfc_force_use_loop=0     # Force usage of swapfile + loop
-swapfc_frequency=8s         # How often check free swap space
+swapfc_frequency=1          # How often check free swap space
 swapfc_chunk_size=8G        # Allocate size of swap chunk
-swapfc_max_count=16         # 0 - unlimited, note: 32 is a kernel maximum
+swapfc_max_count=8          # 0 - unlimited, note: 32 is a kernel maximum
 swapfc_free_swap_perc=30    # Add new chunk if free < 30%
                             # Remove chunk if free > 30+40% & chunk count > 2
 ...
+```
+
+### 2.15 打印机
+
+```bash
+yay -S cups samba
+sudo systemctl enable org.cups.cupsd.service
+sudo systemctl start org.cups.cupsd.service
 ```
 
 ## 3 安装软件
@@ -539,13 +547,13 @@ yay -S bsd-games curseofwar
 #### 3.10.1 开发相关
 
 ```bash
-yay -S visual-studio-code-bin clion intellij-idea-ultimate-edition
+yay -S visual-studio-code-bin clion intellij-idea-ultimate-edition clion-jre intellij-idea-ultimate-edition-jre datagrip datagrip-jre
 ```
 
 #### 3.10.2 其他应用
 
 ```bash
-yay -S chromium pepper-flash birdtray thunderbird seafile-client telegram-desktop audacity celestia baidunetdisk-bin inkscape kazam netease-cloud-music openshot postman-bin qq-linux ttf-wps-fonts wps-office wxmaxima maxima wireshark-qt vlc xdot teamviewer syncplay freecad zoom2 scrcpy
+yay -S chromium pepper-flash birdtray thunderbird seafile-client telegram-desktop audacity celestia baidunetdisk-bin inkscape simplescreenrecorder netease-cloud-music openshot postman-bin qq-linux ttf-wps-fonts wps-office wxmaxima maxima wireshark-qt vlc xdot teamviewer syncplay freecad zoom2 scrcpy aegisub
 ```
 
 #### 3.10.3 游戏
@@ -746,6 +754,32 @@ elasticsearch.password: "PASSWORD"
 ```bash
 sudo pacman -S docker
 sudo gpasswd -a sun docker
+```
+
+### 4.7 PostgreSQL
+
+```bash
+yay -S postgresql
+sudo -iu postgres
+initdb --locale=en_US.UTF-8 -E UTF8 -D /var/lib/postgres/data
+exit
+sudo systemctl start postgresql
+sudo -iu postgres
+createuser -s sun
+exit
+createdb sun
+```
+
+然后使用`\password USERNAME`指令修改postgres和sun的密码，再修改`/var/lib/postgres/data/pg_hba.conf`：
+
+```text
+...
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+local   all             all                                     md5
+local   all             all                                     md5
+host    all             all             127.0.0.1/32            md5
+host    all             all             ::1/128                 md5
+...
 ```
 
 ## 5 编程语言
