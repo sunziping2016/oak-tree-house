@@ -12,14 +12,14 @@ module.exports = {
     const basename = path.basename(params.name)
     if (lowercaseIgnore.indexOf(params.name) === -1) {
       // All Markdown file should be in kebab-case
-      if (!/^[a-z0-9]+(?:-[a-z0-9]+)*.md$/.test(basename)) {
+      if (!/^[a-z0-9+]+(?:-[a-z0-9+]+)*.md$/.test(basename)) {
         onError({
           lineNumber: 1
         })
       }
     }
     if (params.name.startsWith(postsPath)) {
-      if (!/^[0-9]{4}-[0-9]{2}-[0-9]{2}-[a-z0-9]+(?:-[a-z0-9]+)*.md$/.test(basename)) {
+      if (!/^[0-9]{4}-[0-9]{2}-[0-9]{2}-[a-z0-9+]+(?:-[a-z0-9+]+)*.md$/.test(basename)) {
         onError({
           lineNumber: 1
         })

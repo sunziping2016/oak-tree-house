@@ -129,6 +129,12 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 退出chroot并重启即可。
 
+在我amd微星主板的电脑上，随机数生成器有问题。可以考虑在linux参数中禁止硬件随机数生成器`/etc/default/grub`：
+
+```text
+GRUB_CMDLINE_LINUX_DEFAULT="nordrand"
+```
+
 ## 2 系统的配置
 
 首先连接WiFi：
@@ -335,6 +341,15 @@ yay -S proxychains-ng
 
 编辑`/etc/proxychains.conf`。解除`quiet_mode`的注释，最后一行由`socks4  127.0.0.1 9050`改为`socks5  127.0.0.1 1080`
 
+接着配置透明代理：
+
+```bash
+sudo sh -c "echo net.ipv4.ip_forward=1 > /etc/sysctl.d/10-ip_forward.conf"
+sudo sysctl --system
+```
+
+接下来v2ray配置文件见[透明代理(TPROXY) · V2Ray 配置指南|V2Ray 白话文教程](https://toutyrater.github.io/app/tproxy.html#%E4%B8%BA-v2ray-%E9%85%8D%E7%BD%AE%E9%80%8F%E6%98%8E%E4%BB%A3%E7%90%86%E7%9A%84%E5%85%A5%E7%AB%99%E5%92%8C-dns-%E5%88%86%E6%B5%81)。接下来配置失败，以后再尝试。
+
 ### 2.12 字体
 
 注意备份windows上的字体，应当存放到`/usr/local/share/fonts`目录下。同时安装monaco字体作为终端字体。安装我喜爱的终端字体。
@@ -482,7 +497,15 @@ sudo systemctl start earlyoom
 EARLYOOM_ARGS="-r 60 -N 'sudo -u sun DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send'"
 ```
 
-### 3.6 Tsinghua SSL VPN
+### 3.6 Tsinghua网络
+
+安装auth-thu：
+
+```bash
+yay -S auth-thu
+```
+
+对于VPN：
 
 ```bash
 yay -S networkmanager-openconnect openconnect
@@ -508,6 +531,36 @@ mkdir -p ~/.rtorrent.session
 ```text
 directory.default.set = ~/Torrents
 session.path.set = ~/.rtorrent.session
+```
+
+创建`/etc/systemd/system/rtorrent@.service`。
+
+```text
+[Unit]
+Description=rTorrent for %I
+After=network.target
+
+[Service]
+Type=forking
+User=%I
+Group=%I
+WorkingDirectory=/home/%I
+ExecStart=/usr/bin/tmux -L rt new-session -s rt -n rtorrent -d rtorrent
+ExecStop=/usr/bin/bash -c "/usr/bin/tmux -L rt send-keys -t rt:rtorrent.0 C-q; while pidof rtorrent > /dev/null; do sleep 0.5; done"
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+
+然后：
+
+```bash
+# 启动服务
+sudo systemctl enable rtorrent@sun
+sudo systemctl start rtorrent@sun
+# 连接上rtorrent
+tmux -L rt attach -t rt
 ```
 
 ### 3.8 LaTeX

@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 ### Content
 
 - [x] finish Rust learning notes
+- [x] finish GraphQL learning notes
 - [ ] write python tutorial 4
 
 ## [1.0.1]
