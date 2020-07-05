@@ -310,7 +310,7 @@ xdg-user-dirs-update
 ### 2.10 输入法
 
 ```bash
-yay -S fcitx-lilydjwg-git fcitx-baidupinyin fcitx-configtool fcitx-qt5
+yay -S fcitx-lilydjwg-git fcitx-sougoupinyin fcitx-configtool fcitx-qt5
 ```
 
 在`~/.pam_environment`里面添加如下内容。
@@ -348,7 +348,257 @@ sudo sh -c "echo net.ipv4.ip_forward=1 > /etc/sysctl.d/10-ip_forward.conf"
 sudo sysctl --system
 ```
 
-接下来v2ray配置文件见[透明代理(TPROXY) · V2Ray 配置指南|V2Ray 白话文教程](https://toutyrater.github.io/app/tproxy.html#%E4%B8%BA-v2ray-%E9%85%8D%E7%BD%AE%E9%80%8F%E6%98%8E%E4%BB%A3%E7%90%86%E7%9A%84%E5%85%A5%E7%AB%99%E5%92%8C-dns-%E5%88%86%E6%B5%81)。接下来配置失败，以后再尝试。
+接下来v2ray配置文件见[透明代理(TPROXY) · V2Ray 配置指南|V2Ray 白话文教程](https://toutyrater.github.io/app/tproxy.html#%E4%B8%BA-v2ray-%E9%85%8D%E7%BD%AE%E9%80%8F%E6%98%8E%E4%BB%A3%E7%90%86%E7%9A%84%E5%85%A5%E7%AB%99%E5%92%8C-dns-%E5%88%86%E6%B5%81)。这里给出我的配置，需要修改的东西用`$`标出。
+
+```json
+{
+  "inbounds": [{
+    "port": 1080,
+    "protocol": "socks",
+    "listen": "127.0.0.1",
+    "sniffing": {
+      "enabled": true,
+      "destOverride": ["http", "tls"]
+    },
+    "settings": {
+      "auth": "noauth",
+      "udp": true
+    }
+  }, {
+    "tag": "transparent",
+    "port": 2080,
+    "listen": "127.0.0.1",
+    "protocol": "dokodemo-door",
+    "settings": {
+      "network": "tcp,udp",
+      "followRedirect": true
+    },
+    "sniffing": {
+      "enabled": true,
+      "destOverride": ["http", "tls"]
+    },
+    "streamSettings": {
+      "sockopt": {
+        "tproxy": "tproxy"
+      }
+    }
+  }],
+  "outbounds": [{
+    "tag": "proxy",
+    "protocol": "vmess",
+    "settings": {
+      "vnext": [{
+        "address": "$your.server.domain",
+        "port": 443,
+        "users": [
+          {
+            "id": "$user-id",
+            "alterId": 64,
+            "security": "auto"
+          }
+        ]
+      }]
+    },
+    "streamSettings": {
+      "network": "ws",
+      "security": "tls",
+      "wsSettings": {
+        "connectionReuse": true,
+        "path": "$path"
+      },
+      "sockopt": {
+        "mark": 255
+      }
+    },
+    "mux": {
+      "enabled": true
+    }
+  }, {
+    "tag": "direct",
+    "protocol": "freedom",
+    "settings": {
+      "domainStrategy": "UseIP"
+    },
+    "streamSettings": {
+      "sockopt": {
+        "mark": 255
+      }
+    }
+  }, {
+    "tag": "block",
+    "protocol": "blackhole",
+    "settings": {
+      "response": {
+        "type": "http"
+      }
+    }
+  }, {
+    "tag": "dns-out",
+    "protocol": "dns",
+    "streamSettings": {
+      "sockopt": {
+        "mark": 255
+      }
+    }
+  }],
+  "dns": {
+    "servers": [
+      "8.8.8.8",
+      "1.1.1.1",
+      "114.114.114.114",
+      {
+        "address": "223.5.5.5",
+        "port": 53,
+        "domains": [
+          "geosite:cn",
+          "domain:ntp.org",
+          "domain:$your.server.domain"
+        ]
+      }
+    ]
+  },
+  "routing": {
+    "domainStrategy": "IPOnDemand",
+    "rules": [{
+      "type": "field",
+      "inboundTag": [
+        "transparent"
+      ],
+      "port": 53,
+      "network": "udp",
+      "outboundTag": "dns-out"
+    }, {
+      "type": "field",
+      "inboundTag": [
+        "transparent"
+      ],
+      "port": 123,
+      "network": "udp",
+      "outboundTag": "direct"
+    }, {
+    "type": "field",
+      "ip": [
+        "223.5.5.5",
+        "114.114.114.114"
+      ],
+      "outboundTag": "direct"
+    }, {
+    "type": "field",
+      "ip": [
+        "8.8.8.8",
+        "1.1.1.1"
+      ],
+      "outboundTag": "proxy"
+    }, {
+      "type": "field",
+      "domain": [
+        "geosite:category-ads-all"
+      ],
+      "outboundTag": "block"
+    }, {
+      "type": "field",
+      "protocol":["bittorrent"],
+      "outboundTag": "direct"
+    }, {
+      "type": "field",
+      "ip": [
+        "geoip:private",
+        "geoip:cn"
+      ],
+      "outboundTag": "direct"
+    }, {
+      "type": "field",
+      "domain": [
+        "geosite:cn"
+      ],
+      "outboundTag": "direct"
+    }]
+  }
+}
+```
+
+启用iptables。
+
+```bash
+# 设置策略路由
+ip rule add fwmark 1 table 100
+ip route add local 0.0.0.0/0 dev lo table 100
+
+# 新建表
+iptables -t mangle -N V2RAY
+iptables -t mangle -N V2RAY_MARK
+
+# 代理局域网设备
+iptables -t mangle -A V2RAY -d 0.0.0.0/8 -j RETURN
+iptables -t mangle -A V2RAY -d 127.0.0.0/8 -j RETURN
+iptables -t mangle -A V2RAY -d 169.254.0.0/16 -j RETURN
+iptables -t mangle -A V2RAY -d 224.0.0.0/4 -j RETURN
+iptables -t mangle -A V2RAY -d 240.0.0.0/4 -j RETURN
+iptables -t mangle -A V2RAY -d 255.255.255.255/32 -j RETURN
+
+iptables -t mangle -A V2RAY -d 10.0.0.0/8 -p tcp -j RETURN
+iptables -t mangle -A V2RAY -d 10.0.0.0/8 -p udp ! --dport 53 -j RETURN
+iptables -t mangle -A V2RAY -d 172.16.0.0/12 -p tcp -j RETURN
+iptables -t mangle -A V2RAY -d 172.16.0.0/12 -p udp ! --dport 53 -j RETURN
+iptables -t mangle -A V2RAY -d 192.168.0.0/16 -p tcp -j RETURN
+iptables -t mangle -A V2RAY -d 192.168.0.0/16 -p udp ! --dport 53 -j RETURN
+
+iptables -t mangle -A V2RAY -p udp -j TPROXY --on-port 2080 --tproxy-mark 1
+iptables -t mangle -A V2RAY -p tcp -j TPROXY --on-port 2080 --tproxy-mark 1
+
+# 代理网关本机
+iptables -t mangle -A V2RAY_MARK -d 0.0.0.0/8 -j RETURN
+iptables -t mangle -A V2RAY_MARK -d 127.0.0.0/8 -j RETURN
+iptables -t mangle -A V2RAY_MARK -d 169.254.0.0/16 -j RETURN
+iptables -t mangle -A V2RAY_MARK -d 224.0.0.0/4 -j RETURN
+iptables -t mangle -A V2RAY_MARK -d 240.0.0.0/4 -j RETURN
+iptables -t mangle -A V2RAY_MARK -d 255.255.255.255/32 -j RETURN
+
+iptables -t mangle -A V2RAY_MARK -d 10.0.0.0/8 -p tcp -j RETURN
+iptables -t mangle -A V2RAY_MARK -d 10.0.0.0/8 -p udp ! --dport 53 -j RETURN
+iptables -t mangle -A V2RAY_MARK -d 172.16.0.0/12 -p tcp -j RETURN
+iptables -t mangle -A V2RAY_MARK -d 172.16.0.0/12 -p udp ! --dport 53 -j RETURN
+iptables -t mangle -A V2RAY_MARK -d 192.168.0.0/16 -p tcp -j RETURN
+iptables -t mangle -A V2RAY_MARK -d 192.168.0.0/16 -p udp ! --dport 53 -j RETURN
+
+iptables -t mangle -A V2RAY_MARK -j RETURN -m mark --mark 0xff
+iptables -t mangle -A V2RAY_MARK -p udp -j MARK --set-mark 1
+iptables -t mangle -A V2RAY_MARK -p tcp -j MARK --set-mark 1
+
+# 应用规则
+iptables -t mangle -A PREROUTING -j V2RAY
+iptables -t mangle -A OUTPUT -j V2RAY_MARK
+```
+
+取消代理可以通过：
+
+```bash
+iptables -t mangle -D PREROUTING -j V2RAY
+iptables -t mangle -D OUTPUT -j V2RAY_MARK
+```
+
+持久化设置，首先编辑`/etc/systemd/system/tproxyrule.service`：
+
+```text
+[Unit]
+Description=Tproxy rule
+After=network.target
+Wants=network.target
+
+[Service]
+
+Type=oneshot
+ExecStart=/sbin/ip rule add fwmark 1 table 100 ; /sbin/ip route add local 0.0.0.0/0 dev lo table 100 ; /sbin/iptables-restore /etc/iptables/rules.v4
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```bash
+sudo iptables-save -f /etc/iptables/rules.v4
+sudo systemctl daemon-reload
+sudo systemctl enable tproxyrule
+```
 
 ### 2.12 字体
 
