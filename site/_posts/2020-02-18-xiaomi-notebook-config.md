@@ -107,7 +107,7 @@ echo xiaomi-notebook-sun > /etc/hostname
 ```text
 127.0.0.1       localhost
 ::1             localhost
-127.0.1.1       xiaomi-notebook-sun.localdomain1 xiaomi-notebook-sun
+127.0.1.1       xiaomi-notebook-sun.localdomain xiaomi-notebook-sun
 ```
 
 安装`NetworkManager`：
@@ -289,9 +289,9 @@ yay -S xfce4-pulseaudio-plugin xfce4-whiskermenu-plugin mousepad xfce4-notifyd x
 ```bash
 yay -S accountsservice mugshot
 mkdir -p ~/Pictures/avatars
-sudo mkdir -p /usr/local/share/bacgrounds/sun\'s-wallpaper
-sudo chown sun:sun /usr/local/share/bacgrounds/sun\'s-wallpaper
-ln -s /usr/local/share/bacgrounds/sun\'s-wallpaper ~/Pictures/backgrounds
+sudo mkdir -p /usr/local/share/backgrounds/sun\'s-wallpaper
+sudo chown sun:sun /usr/local/share/backgrounds/sun\'s-wallpaper
+ln -s /usr/local/share/backgrounds/sun\'s-wallpaper ~/Pictures/backgrounds
 ```
 
 然后配置XDG用户目录：
