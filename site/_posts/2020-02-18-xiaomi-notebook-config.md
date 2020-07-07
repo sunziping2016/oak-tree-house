@@ -367,7 +367,7 @@ sudo sysctl --system
   }, {
     "tag": "transparent",
     "port": 2080,
-    "listen": "127.0.0.1",
+    "listen": "0.0.0.0",
     "protocol": "dokodemo-door",
     "settings": {
       "network": "tcp,udp",
@@ -517,7 +517,7 @@ sudo sysctl --system
 }
 ```
 
-启用iptables。
+其中`dokodemo-door`如果只是代理本机连接可以只监听在`127.0.0.1`。启用iptables。
 
 ```bash
 # 设置策略路由
