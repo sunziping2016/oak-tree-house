@@ -120,3 +120,9 @@ export function frontmatterKeyHeading (name, number, frontmatterKeyHeading) {
     number
   )
 }
+
+export function recentChip (page, recentChip) {
+  return Function('date', `"use strict";return (${recentChip});`)(
+    new Date(page.lastUpdated)
+  )
+}

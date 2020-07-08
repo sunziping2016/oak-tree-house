@@ -15,6 +15,7 @@ import Vuetify, {
   VListItemIcon,
   VListItemContent,
   VListItemTitle,
+  VListItemSubtitle,
   VNavigationDrawer,
   VListGroup,
   VSkeletonLoader,
@@ -40,7 +41,11 @@ import Vuetify, {
   VSpeedDial,
   VDialog,
   VSnackbar,
-  VFooter
+  VFooter,
+  VExpansionPanels,
+  VExpansionPanel,
+  VExpansionPanelHeader,
+  VExpansionPanelContent
 } from 'vuetify/lib'
 import { Scroll } from 'vuetify/lib/directives'
 import goTo from 'vuetify/es5/services/goto'
@@ -62,6 +67,7 @@ export default ({ Vue, options, router, siteData }) => {
       VListItemIcon,
       VListItemContent,
       VListItemTitle,
+      VListItemSubtitle,
       VNavigationDrawer,
       VListGroup,
       VSkeletonLoader,
@@ -87,7 +93,11 @@ export default ({ Vue, options, router, siteData }) => {
       VSpeedDial,
       VDialog,
       VSnackbar,
-      VFooter
+      VFooter,
+      VExpansionPanels,
+      VExpansionPanel,
+      VExpansionPanelHeader,
+      VExpansionPanelContent
     },
     directives: {
       Scroll

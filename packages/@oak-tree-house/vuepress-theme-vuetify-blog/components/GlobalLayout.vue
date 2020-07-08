@@ -6,6 +6,7 @@
       <!-- Header -->
       <v-app-bar
         app
+        clipped-left
         clipped-right
       >
         <v-app-bar-nav-icon
@@ -15,7 +16,7 @@
         <v-spacer />
         <NavSearch />
         <NavLinks
-          v-if="$vuetify.breakpoint.lgAndUp"
+          v-if="$vuetify.breakpoint.smAndUp"
           class="ml-4"
         />
       </v-app-bar>
@@ -23,17 +24,20 @@
       <VNavigationDrawer
         v-model="drawer"
         app
-        temporary
-        :width="300"
+        clipped
+        :mobile-break-point="$vuetify.breakpoint.thresholds.xs"
+        :width="$vuetify.breakpoint.lgAndUp ? 320 : undefined"
       >
         <SidebarHeader />
         <v-divider />
         <SidebarLinks
-          v-if="$vuetify.breakpoint.smAndDown"
+          v-if="$vuetify.breakpoint.xsOnly"
         />
         <v-divider
-          v-if="$vuetify.breakpoint.smAndDown"
+          v-if="$vuetify.breakpoint.xsOnly"
         />
+        <SidebarRecent />
+        <v-divider />
         <SidebarWordCloud />
         <template v-slot:append>
           <v-divider />
@@ -76,6 +80,7 @@ import NavLinks from '@theme/components/NavLinks.vue'
 import SidebarHeader from '@theme/components/SidebarHeader.vue'
 import SidebarLinks from '@theme/components/SidebarLinks.vue'
 import SidebarWordCloud from '@theme/components/SidebarWordCloud.vue'
+import SidebarRecent from '@theme/components/SidebarRecent.vue'
 import SidebarFooter from '@theme/components/SidebarFooter.vue'
 import SidebarToc from '@theme/components/SidebarToc.vue'
 import Fab from '@theme/components/Fab.vue'
@@ -98,6 +103,7 @@ function findPageForPath (pages, path) {
 export default {
   name: 'GlobalLayout',
   components: {
+    SidebarRecent,
     NavLogo,
     NavSearch,
     NavLinks,
@@ -131,6 +137,7 @@ export default {
     }
   },
   mounted () {
+    this.drawer = this.$vuetify.breakpoint.smAndUp && this.$frontmatter.layout !== 'Post'
     this.$router.beforeEach((to, from, next) => {
       if (to.path !== from.path && !Vue.component(to.name)) {
         this.loading = true
@@ -143,6 +150,7 @@ export default {
     })
     this.$router.afterEach(() => {
       this.loading = false
+      this.drawer = this.$vuetify.breakpoint.smAndUp && this.$frontmatter.layout !== 'Post'
     })
     event.$on('notify', this.openSnackbar)
   },

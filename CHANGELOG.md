@@ -10,9 +10,9 @@ All notable changes to this project will be documented in this file.
 
 ### Feature
 
+- [x] **$vuepress-theme-vuetify-blog**: Add "Recently Updated" panels
 - [ ] **$vuepress-plugin-diagrams**: support diagrams listed in [here](https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams)
 - [ ] reimplement medium zoom
-- [ ] **$vuepress-theme-vuetify-blog**: Add "Recently Updated" and "Suggestion" panels
 - [ ] Find a better solution for static files
 
 ### Content
@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 - [x] finish Rust learning notes
 - [x] finish GraphQL learning notes
 - [ ] write python tutorial 4
+- [ ] write "C++ Templates" notes
 
 ## [1.0.1]
 

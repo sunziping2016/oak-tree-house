@@ -160,7 +160,10 @@ module.exports = {
       'category': { id: 'category' },
       'author': { id: 'author' },
       'series': { id: 'series' }
-    }
+    },
+    recentlyUpdatedName: '最近更新',
+    recentlyUpdatedNumber: 5,
+    recentlyUpdatedChip: "date.toISOString().replace(/\\..*/, '').replace('T', ' ')"
   },
   plugins: [
     ['@vuepress/pwa'],

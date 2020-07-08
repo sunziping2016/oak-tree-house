@@ -45,3 +45,8 @@ export default {
   }
 }
 </script>
+
+<style lang="sass">
+.v-navigation-drawer__border
+  z-index: 1
+</style>

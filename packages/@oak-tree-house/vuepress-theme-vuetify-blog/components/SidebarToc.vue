@@ -155,7 +155,6 @@ export default {
       }
     },
     updateTocActive () {
-      // TODO
       const list = this.tocFlattenHashes.slice().reverse()
       const item = list.find(item => {
         const section = document.getElementById(item.hash)
