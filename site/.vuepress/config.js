@@ -71,7 +71,6 @@ module.exports = {
       dark: '/assets/icons/icon-light.png'
     },
     nav: [
-      { text: '索引', link: '/', icon: 'mdi-format-list-bulleted' },
       {
         type: 'menu', text: '归档', items: [
           { text: '检索页面', subheader: true },

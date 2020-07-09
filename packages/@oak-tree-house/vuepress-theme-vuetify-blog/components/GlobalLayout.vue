@@ -26,7 +26,7 @@
         app
         clipped
         :mobile-break-point="$vuetify.breakpoint.thresholds.xs"
-        :width="$vuetify.breakpoint.lgAndUp ? 320 : undefined"
+        :width="$vuetify.breakpoint.lgAndUp ? 320 : 300"
       >
         <SidebarHeader />
         <v-divider />

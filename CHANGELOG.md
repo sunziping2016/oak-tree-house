@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file.
 
 - [x] finish Rust learning notes
 - [x] finish GraphQL learning notes
+- [x] finish iptables tutorial
 - [ ] write python tutorial 4
 - [ ] write "C++ Templates" notes
 

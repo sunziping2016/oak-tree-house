@@ -1,5 +1,5 @@
 ---
-title: C++模板
+title: C++模板（未完待续）
 author: 孙子平
 date: 2020-07-03T09:52:39Z
 cover: /assets/blog/cpp-templates/cpp.png
