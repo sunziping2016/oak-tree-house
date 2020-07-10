@@ -112,10 +112,15 @@ export default {
       width: 6rem;
     }
   }
-  .app-search {
+  .app-search .algolia-autocomplete.algolia-autocomplete-right {
     .ds-dropdown-menu {
       min-width: calc(100vw - 32px) !important;
       max-width: calc(100vw - 32px) !important;
+    }
+  }
+  .app-search .v-input--is-focused .algolia-autocomplete.algolia-autocomplete-right {
+    .ds-dropdown-menu {
+      right: -24px !important;
     }
   }
 }
