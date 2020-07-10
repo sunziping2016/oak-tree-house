@@ -24,6 +24,7 @@
             <input
               v-model.lazy="keyFromInput"
               type="password"
+              autocomplete="off"
               @keyup.enter="onConfirm"
             >
             <button
@@ -169,7 +170,7 @@ export default {
   font-size: 1.4em;
   margin-top: 0.6em !important;
 }
-.encrypted-header input[type=text] {
+.encrypted-header input[type=password] {
   border-radius: 5px;
   padding: 2px 8px;
   background-color: #e8ffff;
