@@ -186,7 +186,7 @@ module.exports = function (options, context) {
       const cache = {}
       function mathRender (content, inline, env) {
         try {
-          if (cache[content]) {
+          if (!env.forceInline && cache[content]) {
             return cache[content]
           }
           const node = adaptor.firstChild(html.convert(content, {
@@ -213,7 +213,9 @@ module.exports = function (options, context) {
           const result = inline
             ? `<img class="mathjax-inline" style="vertical-align: ${verticalAlign}px; width: ${width}px" width="${width}" height="${height}" alt="formula" data-formula="${escapeHtml(content)}" src="${src}">`
             : `<p class="mathjax-block"><img style="vertical-align: ${verticalAlign}px; width: ${width}px" width="${width}" height="${height}" alt="formula" data-formula="${escapeHtml(content)}" src="${src}"></p>`
-          cache[content] = result
+          if (!env.forceInline) {
+            cache[content] = result
+          }
           return result
         } catch (e) {
           console.error(`Failed to render formula: ${content}`)
