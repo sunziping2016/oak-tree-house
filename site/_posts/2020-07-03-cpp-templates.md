@@ -263,6 +263,172 @@ class Stack {
 
 在C++17前，类模板的参数必须显式给出。模板函数和模板成员函数只有在被调用时才会实例化。如果一个类模板有static成员，对每一个用到这个类模板的类型，相应的静态成员也只会被实例化一次。
 
-被实例化的类模板类型可以被cv限定，可以被创建它的数组及应用，可以被typedef或者using。
+被实例化的类模板类型可以被cv限定，可以被创建它的数组及应用，可以被typedef或者using，也可以作为类型参数。
+
+C++11之前两个相邻的模板闭合括号之间需要有空格，如`Stack<Stack<int> >`，否则会被解析成右移运算符。
+
+### 2.3 部分地使用类模板
+
+模板参数只需要提供那些会被用到的操作。也就是说模板的成员函数只有被调用才会实例化并检查非语法层面的错误。
+
+#### 2.3.1 Concept
+
+Concept指定了为了需要实例化模板，参数需要支持的操作。C++标准库是基于Concept的，比如可随机访问迭代器和可默认构造等等。
+
+C++11开始，你可以使用`static_assert`和其他的预定的类型trait完成检查：
+
+```cpp
+template<typename T>
+class C {
+  static_assert(std::is_default_constructible<T>::value,
+                "Class C requires default-constructible elements");
+  ...
+};
+```
+
+从C++20引入了Concept，使用方法大致如下：
+
+```cpp
+template<typename T>
+concept Hashable = requires(T a) {
+    { std::hash<T>{}(a) } -> std::convertible_to<std::size_t>;
+};
+
+template<Hashable T>
+void f(T);
+```
+
+有机会我会出一个关于C++20的新文章，这里不再多做介绍。
+
+### 2.4 友元
+
+```cpp
+template<typename T>
+class Stack {
+  friend std::ostream& operator<< (std::ostream &strm, const Stack<T>& s) {
+    // ...
+    return strm;
+  }
+};
+```
+
+这里定义的`operator<<`是一个普通函数，确切讲是templated entity。如果你尝试先声明后定义，那么有两种选择。
+
+1. 使之成为函数模板，但它必须使用新的模板参数。
+
+    ```cpp
+    template<typename T>
+    class Stack {
+      ...
+      template<typename U>
+      friend std::ostream& operator<< (std::ostream&, Stack<U> const&);
+    };
+    ```
+
+2. 前向声明一个模板函数，并特例化它：
+
+    ```cpp
+    template<typename T>
+    class Stack;
+    template<typename T>
+    std::ostream& operator<< (std::ostream&, Stack<T> const&);
+
+    template<typename T>
+    class Stack {
+      ...
+      friend std::ostream& operator<< <T> (std::ostream&, Stack<T>
+    const&);
+    };
+    ```
+
+    注意这里`operator<<`之后的`<T>`，它代表我们声明了一个特例化的非成员模板函数作为友元，如果没有`<T>`，我们会声明一个新的非模板函数。
+
+但无论是上面的三种情况的哪一种，你都可以将Stack用于没有定义`operator<<`的元素，前提是你不会用到这个操作。
+
+### 2.5 类模板的特化
+
+函数模板不支持特化，但支持重载。类似于函数的重载，我们可以特化类模板。如果对类模板进行了特化，你也需要特化所有的成员函数：
+
+```cpp
+template<>
+class Stack<std::string> {
+  ...
+};
+
+void Stack<std::string>::push (std::string const& elem)
+{
+  elems.push_back(elem); // append copy of passed elem
+}
+```
+
+这里`push`如果采用转发引用会更好。
+
+### 2.6 偏特化
+
+类模板可以只是被部分特例化。
+
+```cpp
+template<typename T>
+class Stack<T*> {
+  ...
+};
+```
+
+#### 多参数模板特例化
+
+```cpp
+template<typename T1, typename T2>
+class MyClass { ... };
+```
+
+对于上面的类模板可以有以下的偏特化：
+
+```cpp
+template<typename T>
+class MyClass<T,T> { ... };
+
+template<typename T>
+class MyClass<T,int> { ... };
+
+template<typename T1, typename T2>
+class MyClass<T1*,T2*> { ... };
+```
+
+这里如果出现匹配得同样好的偏特化时，就会报错：
+
+```cpp
+MyClass<int*,int*> m; // matches MyClass<T,T> and MyClass<T1*,T2*>
+```
+
+为了解决歧义，可以添加一个额外的偏特化：
+
+```cpp
+template<typename T>
+class MyClass<T*,T*> { ... };
+```
+
+### 2.7 默认类模板参数
+
+与函数模板类似，类模板也可以有默认模板参数。类模板成员函数定义之处不必加上默认参数。
+
+### 2.8 类型别名
+
+#### Typedef和Alias声明
+
+1. 可以使用关键字`typedef`给类型声明别名，其产生的别名我们称为typedef-name：
+
+    ```cpp
+    typedef Stack<int> IntSack;
+    ```
+
+2. 或者C++11开始可以使用`using`：
+
+    ```cpp
+    using IntStack = Stack <int>;
+    ```
+
+以上两种给一个已存在类型新名字的方式，我们统一称为type alias declaration，新的名字称为type alias。
+
+#### 别名模板
 
 （未完待续）
