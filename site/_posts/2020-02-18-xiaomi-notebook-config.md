@@ -679,6 +679,189 @@ sudo systemctl enable org.cups.cupsd.service
 sudo systemctl start org.cups.cupsd.service
 ```
 
+### 2.16 Conky
+
+安装`conky-git`（`conky`拥有负内存的bug）和`nerd-fonts-hack`。
+
+创建`~/.local/bin/wttr.in`，用以获取天气，并添加可执行权限：
+
+```bash
+#!/bin/sh
+
+curl -s "wttr.in?2MTFn" | sed 's/\(┌\|┐\|└\|┘\|┬\|┴\|├\|┤\|┼\|─\|│\)\+/${color3}\0${color0}/g' | sed '1 s/^.*$/${color2}\0${color0}/' | sed 's/\(Mon\|Tue\|Wed\|Thu\|Fri\|Sat\|Sun\) [0-9]\+ \(Jan\|Feb\|Mar\|Apr\|May\|Jun\|Jul\|Aug\|Sep\|Sept\|Oct\|Nov\|Dec\)/${color2}\0${color0}/g' | sed 's/Noon\|Night/${color2}\0${color0}/g'
+```
+
+之后创建几个`conky`的面板。天气面板`~/.conky/Weather.conf`：
+
+```text
+conky.config = {
+  background = true,
+  double_buffer = true,
+
+  alignment = 'top_right',
+
+  border_width = 1,
+  cpu_avg_samples = 2,
+  default_color = 'white',
+  default_outline_color = 'white',
+  default_shade_color = 'white',
+  draw_borders = false,
+  draw_graph_borders = true,
+  draw_outline = false,
+  draw_shades = false,
+
+  gap_x = 32,
+  gap_y = 64,
+  net_avg_samples = 2,
+  no_buffers = true,
+  out_to_console = false,
+  out_to_stderr = false,
+  extra_newline = false,
+
+  minimum_width = 255,
+  border_inner_margin = 10,
+
+  own_window = true,
+  own_window_type = 'normal',
+  own_window_colour = '000000',
+  own_window_argb_visual = true,
+  own_window_argb_value = 80,
+  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
+  stippled_borders = 0,
+  update_interval = 1.0,
+  uppercase = false,
+  use_spacer = none,
+
+  show_graph_scale = false,
+  show_graph_range = false,
+
+  use_xft = true,
+  xftalpha = 0.1,
+  override_utf8_locale = true,
+  color0 = 'white',
+  color1 = 'EAEAEA',
+  color2 = 'FFA300',
+  color3 = 'grey',
+}
+
+conky.text = [[
+${font Droid Sans:size=18}Weather${font}
+${font Hack Nerd Font Mono:size=9}${texecpi 1800 .local/bin/wttr.in}
+]]
+```
+
+CPU和RAM面板`~/.conky/CPU&RAM.conf`：
+
+```text
+conky.config = {
+  ...
+  gap_x = 272,
+  gap_y = 535,
+  minimum_width = 200,
+  ...
+}
+
+conky.text = [[
+${font Droid Sans:size=18}CPU & RAM${font}
+${font Droid Sans:size=10}${color2}CPU ${alignr}${color0}${cpu cpu0}% ${hwmon 0 temp 1}°C
+${cpugraph cpu0 50,}
+${top name 1} $alignr ${top cpu 1}%
+${top name 2} $alignr ${top cpu 2}%
+${top name 3} $alignr ${top cpu 3}%
+${top name 4} $alignr ${top cpu 4}%
+${top name 5} $alignr ${top cpu 5}%
+${color2}RAM ${color0}${alignr}${mem}/${memmax}
+${memgraph 50,}
+${top_mem name 1} $alignr ${top_mem mem_res 1}
+${top_mem name 2} $alignr ${top_mem mem_res 2}
+${top_mem name 3} $alignr ${top_mem mem_res 3}
+${top_mem name 4} $alignr ${top_mem mem_res 4}
+${top_mem name 5} $alignr ${top_mem mem_res 5}
+]]
+```
+
+网络面板`~/.conky/Network.conf`：
+
+```text
+conky.config = {
+  ...
+  gap_x = 32,
+  gap_y = 535,
+  minimum_width = 200,
+  ...
+}
+
+conky.text = [[
+${font Droid Sans:size=18}Network
+${font Droid Sans:size=14}enp39s0
+${font Droid Sans:size=10}${color2}Download ${color0}${alignr}${downspeedf enp39s0} KiB/s
+${downspeedgraph enp39s0 50,}
+${color2}Upload ${color0}${alignr}${upspeedf enp39s0} KiB/s
+${upspeedgraph enp39s0 50,}
+${color2}IPv4${color0}${alignr}${addrs enp39s0}
+]]
+```
+
+磁盘面板`~/.conky/Disks.conf`：
+
+```text
+conky.config = {
+  ...
+  gap_x = 32,
+  gap_y = 820,
+  minimum_width = 200,
+  ...
+}
+
+conky.text = [[
+${font Droid Sans:size=18}Disks
+${font Droid Sans:size=14}/dev/sda
+${font Droid Sans:size=10}${color2}Read ${color0}${alignr}${diskio_read /dev/sda} KiB/s
+${diskiograph_read /dev/sda 50,}
+${color2}Write ${color0}${alignr}${diskio_write /dev/sda} KiB/s
+${diskiograph_write /dev/sda 50,}
+]]
+```
+
+最后是可选的英伟达GPU面板`~/.conky/GPU.conf`：
+
+```text
+conky.config = {
+  ...
+  gap_x = 272,
+  gap_y = 935,
+  minimum_width = 200,
+  ...
+}
+
+conky.text = [[
+${font Droid Sans:size=18}NVIDIA GPU${font}
+${font Droid Sans:size=10}${color2}GPU Temp ${alignr}${color0}${nvidia temp}°C
+${color2}Fan Speed ${alignr}${color0}${execi 5 nvidia-settings -q [fan:0]/GPUCurrentFanSpeed -t} %
+${color2}GPU Clock ${alignr}${color0}${nvidia gpufreq} MHz
+${color2}Mem Clock ${alignr}${color0}${nvidia memfreq} MHz
+${color2}Mem Used ${alignr}${color0}${execi 5 nvidia-settings -q [gpu:0]/UsedDedicatedGPUMemory -t} / ${exec nvidia-settings -q [gpu:0]/TotalDedicatedGPUMemory -t} MiB${font}
+]]
+```
+
+### 2.17 auth-thu
+
+安装`auth-thu`。然后创建`~/.config/auth-thu/config`：
+
+```json
+{
+  "username": "*****",
+  "password": "********",
+  "host": "auth4.tsinghua.edu.cn"
+}
+```
+
+```bash
+systemctl enable auth-thu --user
+systemctl start auth-thu --user
+```
+
 ## 3 安装软件
 
 ### 3.1 Git

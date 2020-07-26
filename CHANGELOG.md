@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Bug Fixed
 
 - [x] **$vuepress-plugin-mathjax**: wrong cache for dataurl formula
-- [ ] fix MathJax `Cannot read property 'chars' of undefined`
+- [ ] fix MathJax `Cannot read property 'chars' of undefined` (Will be fixed in MathJax 3.1.0)
 
 ### Feature
 

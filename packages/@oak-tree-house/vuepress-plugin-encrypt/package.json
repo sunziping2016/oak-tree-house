@@ -27,8 +27,8 @@
   "homepage": "https://github.com/sunziping2016/oak-tree-house/tree/master/packages/%40oak-tree-house/vuepress-plugin-encrypt#readme",
   "dependencies": {
     "aes-js": "^3.1.2",
-    "chalk": "^4.0.0",
-    "commander": "^5.1.0",
+    "chalk": "^4.1.0",
+    "commander": "^6.0.0",
     "js-yaml": "^3.14.0",
     "md5": "^2.2.1"
   }

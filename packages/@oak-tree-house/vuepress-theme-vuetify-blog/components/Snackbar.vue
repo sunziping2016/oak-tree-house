@@ -6,7 +6,7 @@
     <v-btn
       :color="snackbarButtonColor"
       text
-      @click="snackbarButtonAction"
+      v-on="snackbarButtonAction ? { 'click': snackbarButtonAction } : {}"
     >
       {{ snackbarButtonText }}
     </v-btn>
@@ -49,4 +49,3 @@ export default {
   }
 }
 </script>
-

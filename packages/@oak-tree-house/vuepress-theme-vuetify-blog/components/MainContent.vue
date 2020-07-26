@@ -1,12 +1,12 @@
 <template>
-  <v-content>
+  <v-main>
     <v-responsive
       class="mx-auto overflow-auto"
       :max-width="contentWidth"
     >
       <slot />
     </v-responsive>
-  </v-content>
+  </v-main>
 </template>
 
 <script>

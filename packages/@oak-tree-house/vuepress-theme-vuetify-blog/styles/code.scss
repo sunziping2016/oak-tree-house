@@ -183,6 +183,10 @@ div[class~="language-cpp"]:before {
   content: "c++"
 }
 
+div[class~="language-c"]:before {
+  content: "c"
+}
+
 @import '~vuetify/src/styles/styles';
 
 @media #{map-get($display-breakpoints, 'xs-only')} {

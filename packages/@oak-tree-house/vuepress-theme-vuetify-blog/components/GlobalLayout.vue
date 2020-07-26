@@ -25,7 +25,7 @@
         v-model="drawer"
         app
         clipped
-        :mobile-break-point="$vuetify.breakpoint.thresholds.xs"
+        :mobile-breakpoint="$vuetify.breakpoint.thresholds.xs"
         :width="$vuetify.breakpoint.lgAndUp ? 320 : 300"
       >
         <SidebarHeader />
