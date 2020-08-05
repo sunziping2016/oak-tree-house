@@ -3,13 +3,16 @@
     v-model="snackbar"
   >
     {{ snackbarText }}
-    <v-btn
-      :color="snackbarButtonColor"
-      text
-      v-on="snackbarButtonAction ? { 'click': snackbarButtonAction } : {}"
-    >
-      {{ snackbarButtonText }}
-    </v-btn>
+    <template v-slot:action="{ attrs }">
+      <v-btn
+        :color="snackbarButtonColor"
+        text
+        v-bind="attrs"
+        v-on="snackbarButtonAction ? { 'click': snackbarButtonAction } : {}"
+      >
+        {{ snackbarButtonText }}
+      </v-btn>
+    </template>
   </v-snackbar>
 </template>
 

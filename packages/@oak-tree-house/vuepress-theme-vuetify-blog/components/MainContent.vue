@@ -6,6 +6,19 @@
     >
       <slot />
     </v-responsive>
+    <v-footer
+      v-if="$site.themeConfig.footer"
+      inset
+      dark
+      absolute
+      color="indigo"
+    >
+      <!-- eslint-disable vue/no-v-html -->
+      <div
+        class="mx-auto text-center"
+        v-html="$site.themeConfig.footer"
+      />
+    </v-footer>
   </v-main>
 </template>
 

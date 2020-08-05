@@ -53,20 +53,6 @@
     <ClientOnly>
       <Fab />
       <Snackbar ref="snackbar" />
-      <v-footer
-        v-if="$site.themeConfig.footer"
-        inset
-        dark
-        app
-        color="indigo"
-        style="position: absolute"
-      >
-        <!-- eslint-disable vue/no-v-html -->
-        <div
-          class="mx-auto text-center"
-          v-html="$site.themeConfig.footer"
-        />
-      </v-footer>
     </ClientOnly>
   </v-app>
 </template>
@@ -134,6 +120,11 @@ export default {
     },
     tocLayouts () {
       return this.$site.themeConfig.tocLayouts || ['Layout']
+    }
+  },
+  watch: {
+    '$vuetify.breakpoint.smAndUp' () {
+      this.drawer = this.$vuetify.breakpoint.smAndUp && this.$frontmatter.layout !== 'Post'
     }
   },
   mounted () {
