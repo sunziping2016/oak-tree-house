@@ -4,7 +4,8 @@
   >
     <slot>
       <v-container
-        class="pa-6 mb-10"
+        class="pa-6"
+        style="margin-bottom: 80px"
       >
         <h1
           style="display: none"

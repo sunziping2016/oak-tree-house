@@ -223,6 +223,7 @@ export default {
     margin-top: -64px;
     padding-top: 72px;
     font-size: 1.2em;
+    pointer-events: none;
   }
 
   &-title {

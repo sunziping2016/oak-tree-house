@@ -3,7 +3,8 @@
     :content-width="720"
   >
     <v-container
-      class="py-0 mb-10"
+      class="py-0"
+      style="margin-bottom: 80px"
     >
       <h1 class="my-4">
         404 Not Found
