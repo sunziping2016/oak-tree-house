@@ -4,6 +4,12 @@ author: 孙子平
 date: 2020-07-20T10:02:46Z
 category: Tsmart
 tags: [Tsmart, 静态分析]
+series: Tsmart工作报告
+sidebar:
+  - /_posts/2020-07-10-tsmart-report.html
+  - /_posts/2020-07-20-tsmart-report.html
+  - /_posts/2020-08-23-tsmart-report.html
+  - /_posts/2020-08-30-tsmart-report.html
 ---
 
 这篇文章是2020年7月20日我在Tsmart项目上的工作报告，这周的主要工作是实现了对VFG的Checker，并解决CallSite参数不匹配的问题。对于输入参数不匹配，我已经在我的测试集上完全消除了12442个错误；对于输出参数不匹配，我解决了大部分问题，从22819下降到了34个。

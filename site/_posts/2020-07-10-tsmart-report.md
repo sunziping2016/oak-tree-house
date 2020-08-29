@@ -4,6 +4,12 @@ author: 孙子平
 date: 2020-07-10T09:57:13Z
 category: Tsmart
 tags: [Tsmart, 静态分析]
+series: Tsmart工作报告
+sidebar:
+  - /_posts/2020-07-10-tsmart-report.html
+  - /_posts/2020-07-20-tsmart-report.html
+  - /_posts/2020-08-23-tsmart-report.html
+  - /_posts/2020-08-30-tsmart-report.html
 ---
 
 这篇文章是2020年7月10日我在Tsmart项目上的工作报告，这周的主要工作是搜寻了一些测试集，并且寻找了一些潜在的漏洞。

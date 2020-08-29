@@ -4,6 +4,12 @@ author: 孙子平
 date: 2020-08-22T16:47:21Z
 category: Tsmart
 tags: [Tsmart, 静态分析]
+series: Tsmart工作报告
+sidebar:
+  - /_posts/2020-07-10-tsmart-report.html
+  - /_posts/2020-07-20-tsmart-report.html
+  - /_posts/2020-08-23-tsmart-report.html
+  - /_posts/2020-08-30-tsmart-report.html
 ---
 
 这篇文章是2020年8月22日我在Tsmart项目上的工作报告，这两周的主要工作是整理并理解了`VfgSolver`的代码，改进了Juliet测试代码，并在测试的帮助下，对`VfgSolver`相关的代码做一些优化和修补。
