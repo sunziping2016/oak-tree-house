@@ -82,15 +82,11 @@
 
   section {
     align-items: stretch;
-    background: #fff;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     font-size: 29px;
-    height: 720px;
-    justify-content: center;
     padding: 78.5px;
-    width: 1280px;
 
     > *:last-child,
     &[data-footer] > :nth-last-child(2) {
