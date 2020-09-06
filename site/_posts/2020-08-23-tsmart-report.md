@@ -1,5 +1,5 @@
 ---
-title: 2020年7月22日Tsmart工作报告
+title: 2020年8月22日Tsmart工作报告
 author: 孙子平
 date: 2020-08-22T16:47:21Z
 category: Tsmart

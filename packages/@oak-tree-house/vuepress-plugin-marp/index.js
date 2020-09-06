@@ -33,6 +33,7 @@ function enableOrDisableMarp (md, enable, original, modified) {
   md.block.ruler[enableText]([
     'marpit_comment',
     'marpit_style_parse'
+    // 'marp_math_block', conflict to my mathjax plugin
   ])
   md.inline.ruler[enableText]([
     'marpit_inline_comment'
@@ -42,7 +43,6 @@ function enableOrDisableMarp (md, enable, original, modified) {
     'marpit_parse_image',
     'marpit_apply_image',
     'marpit_background_image'
-    // 'marp_math_block', conflict to my mathjax plugin
   ])
   md.core.process = enable ? modified.core_process : original.core_process
   md.renderer.rules.html_inline = enable ? modified.renderer_rules_html_inline : original.renderer_rules_html_inline
@@ -87,6 +87,10 @@ module.exports = (options) => ({
       renderer_rules_code_fence: md.renderer.rules.fence
     }
     const render = md.render
+    // conflict to my mathjax plugin
+    md.core.ruler.disable('marp_math_initialize')
+    md.block.ruler.disable('marp_math_block')
+    md.inline.ruler.disable('marp_math_inline')
     md.render = (src, env) => {
       env = env || {}
       if (env.frontmatter.marp) {

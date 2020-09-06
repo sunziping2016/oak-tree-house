@@ -210,9 +210,11 @@ module.exports = function (options, context) {
             fs.writeFileSync(wholeFilename, png)
             src = `${context.base.slice(0, -1)}${formulaPath}/${filename}`
           }
+          const relativeVerticalAlign = verticalAlign / 16
+          const relativeWidth = width / 16
           const result = inline
-            ? `<img class="mathjax-inline" style="vertical-align: ${verticalAlign}px; width: ${width}px" width="${width}" height="${height}" alt="formula" data-formula="${escapeHtml(content)}" src="${src}">`
-            : `<p class="mathjax-block"><img style="vertical-align: ${verticalAlign}px; width: ${width}px" width="${width}" height="${height}" alt="formula" data-formula="${escapeHtml(content)}" src="${src}"></p>`
+            ? `<img class="mathjax-inline" style="vertical-align: ${relativeVerticalAlign}em; width: ${relativeWidth}em" width="${width}" height="${height}" alt="formula" data-formula="${escapeHtml(content)}" src="${src}">`
+            : `<p class="mathjax-block"><img style="vertical-align: ${relativeVerticalAlign}em; width: ${relativeWidth}em" width="${width}" height="${height}" alt="formula" data-formula="${escapeHtml(content)}" src="${src}"></p>`
           if (!env.forceInline) {
             cache[content] = result
           }
