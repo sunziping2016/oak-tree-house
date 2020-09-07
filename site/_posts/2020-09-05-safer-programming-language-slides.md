@@ -265,7 +265,7 @@ Person& operator=(const Person& that)
 
 （续）
 
-使用Copy-And-Swap模式就能解决这个问题，这需要类实现**拷贝构造函数**和**移动构造函数**，后者在C++中不应该抛出内存：
+使用Copy-And-Swap模式就能解决这个问题，这需要类实现**拷贝构造函数**和**移动构造函数**，后者在C++中不应该抛出异常：
 
 ```cpp
 Person& operator=(Person that)
