@@ -101,3 +101,31 @@ $$
 注：这里$p$矩阵范数就是$L_p$向量范数的组合，我采用形象化的方式来解释这3种范数。先考虑第2个范数，它将球拉伸成椭球，长径拉伸最大值也就是其最大的奇异值；再考虑第1个范数，它将一个立方体拉伸成长方体，其中立方体的顶点是$[0,\dots,0,1,0,\dots,0]^T$，映射完后，相当于挨个取出列向量，求他们的$L_1$范数（求和），再取出最大的；最后考虑第3个范数，它同样将一个立方体拉伸成长方体，其中立方体的顶点是$[1,\dots,1]^T$，映射完后，相当于将行向量求和，最后取出最大的。
 
 #### 1.3.2 序列的极限
+
+**定义1.3.4** $\{\vec{x}^{(k)}\}$是$\mathbb{R}^n$中的向量序列，$\vec{x}'\in\mathbb{R}^n$，若：
+
+$$\forall\epsilon(\epsilon\in\mathbb{R}^+\rightarrow\exists N(N\in\mathbb{N}^+\land\forall n(n\in\mathbb{N}^+\land n>N\rightarrow \|\vec{x}^{(n)}-\vec{x}'\|<\epsilon))$$
+
+则称序列**收敛**到$\vec{x}'$，或序列以$\vec{x}'$为**极限**，记作$\lim\limits_{k\to\infty}\vec{x}^{(k)}=\vec{x}'$。
+
+序列若存在极限，则任何子序列有相同的极限（选取适当的$N$即可证明），序列的极限是唯一的。
+
+**序列的极限是唯一的 证：**
+
+反证法，若存在两极限，则$\lim\limits_{k\to\infty}\vec{x}^{(k)}=\vec{a}$同时$\lim\limits_{k\to\infty}\vec{x}^{(k)}=\vec{b}$，且$\vec{a}\neq\vec{b}$。取$\epsilon_0=\frac{\|\vec{b}-\vec{a}\|}{2}$，由假设知道：
+
+$$
+\begin{aligned}
+&\begin{aligned}
+&\exists N_1(N_1\in\mathbf{N}^+\land\forall n(n\in\mathbb{N}^+\land n>N_1\rightarrow \|\vec{x}^{(n)}-\vec{a}\|<\epsilon_0))) \\
+\land &\exists N_2(N_2\in\mathbf{N}^+\land\forall n(n\in\mathbb{N}^+\land n>N_2\rightarrow \|\vec{x}^{(n)}-\vec{b}\|<\epsilon_0)))
+\end{aligned} \\
+\Rightarrow & \exists N_1,N_2(N_1,N_2\in\mathbf{N}^+\land \forall n (n\in\mathbb{N}^+\land n>\max(N_1,N_2)\rightarrow \|\vec{x}^{(n)}-\vec{a}\|<\epsilon_0 \land \|\vec{x}^{(n)}-\vec{b}\|<\epsilon_0)) \\
+\Rightarrow & \exists N_1,N_2(N_1,N_2\in\mathbf{N}^+\land \forall n (n\in\mathbb{N}^+\land n>\max(N_1,N_2)\rightarrow \|\vec{x}^{(n)}-\vec{a}\| + \|\vec{x}^{(n)}-\vec{b}\|<\|\vec{b}-\vec{a}\|)) \\
+\Rightarrow & \bot \;(\texttt{违反三角不等式})
+\end{aligned}
+$$
+
+**定义1.3.5** $\{\vec{x}^{(k)}\}$是$\mathbb{R}^n$中的向量序列，若存在子序列$\{\vec{x}^{(k_j)}\}$，$\lim\limits_{k_j\to\infty}\vec{x}^{(k_j)}=\hat{\vec{x}}$，则称$\hat{\vec{x}}$是$\{\vec{x}^{(k)}\}$的一个聚点。
+
+**Bolzano-Weierstrass定理**：有界序列必有聚点。即有界序列必有收敛子列。（证明详见[波尔查诺-魏尔斯特拉斯定理 - 维基百科，自由的百科全书](https://zh.wikipedia.org/wiki/%E6%B3%A2%E7%88%BE%E6%9F%A5%E8%AB%BE-%E9%AD%8F%E7%88%BE%E6%96%AF%E7%89%B9%E6%8B%89%E6%96%AF%E5%AE%9A%E7%90%86)）
