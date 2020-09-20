@@ -24,14 +24,14 @@
   },
   "homepage": "https://github.com/sunziping2016/oak-tree-house/tree/master/packages/%40oak-tree-house/vuepress-theme-vuetify-blog#readme",
   "dependencies": {
-    "@vuepress/plugin-active-header-links": "^1.5.2",
+    "@vuepress/plugin-active-header-links": "^1.5.4",
     "deepmerge": "^4.2.2",
     "fibers": "^5.0.0",
-    "prismjs": "^1.20.0",
+    "prismjs": "^1.21.0",
     "qrcode-generator": "^1.4.4",
-    "sass": "^1.26.10",
-    "sass-loader": "^9.0.2",
-    "vuetify": "^2.3.6",
+    "sass": "^1.26.11",
+    "sass-loader": "^9.0.3",
+    "vuetify": "^2.3.10",
     "vuetify-loader": "^1.6.0"
   }
 }

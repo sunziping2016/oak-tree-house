@@ -31,14 +31,14 @@
   "homepage": "https://github.com/sunziping2016/oak-tree-house#readme",
   "devDependencies": {
     "@vuepress/plugin-blog": "^1.9.2",
-    "@vuepress/plugin-medium-zoom": "^1.5.2",
-    "@vuepress/plugin-pwa": "^1.5.2",
-    "eslint": "^7.5.0",
+    "@vuepress/plugin-medium-zoom": "^1.5.4",
+    "@vuepress/plugin-pwa": "^1.5.4",
+    "eslint": "^7.9.0",
     "eslint-plugin-vue-libs": "^4.0.0",
     "fs-extra": "^9.0.1",
-    "husky": "^4.2.5",
+    "husky": "^4.3.0",
     "lerna": "^3.22.1",
-    "markdown-it": "^11.0.0",
+    "markdown-it": "^11.0.1",
     "markdown-it-attrs": "3.0.3",
     "markdown-it-footnote": "^3.0.2",
     "markdown-it-mathjax": "^2.0.0",
@@ -46,9 +46,9 @@
     "markdown-it-task-checkbox": "^1.0.6",
     "markdownlint": "^0.20.4",
     "markdownlint-cli": "^0.23.2",
-    "vue-feather-icons": "^5.0.0",
-    "vuepress": "^1.5.2",
-    "vuepress-plugin-container": "^2.1.4"
+    "vue-feather-icons": "^5.1.0",
+    "vuepress": "^1.5.4",
+    "vuepress-plugin-container": "^2.1.5"
   },
   "husky": {
     "hooks": {

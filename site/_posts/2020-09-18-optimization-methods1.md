@@ -4,9 +4,13 @@ author: 孙子平
 date: 2020-09-17T16:38:14Z
 category: 数学
 tags: [最优化, 数学]
+series: 最优化方法
+sidebar:
+  - /_posts/2020-09-18-optimization-methods1.html
+  - /_posts/2020-09-20-optimization-methods2.html
 ---
 
-本文的内容主要来自陈宝林的《最优化理论与算法（第2版）》第一章。
+本文的内容主要来自陈宝林的《最优化理论与算法（第2版）》第1章《引言》。
 
 <!-- more -->
 
@@ -64,8 +68,8 @@ $\mathbb{R}^n$中任何两个范数等价（这里必须是有限维，这个定
 $$
 \begin{aligned}
             &\|\mathbf{A}\|=\max\limits_{\|\vec{x}\|_\beta=1}\|\mathbf{A}\vec{x}\|_\alpha \\
-\Rightarrow &\|\mathbf{A}\|=\max\limits_{\|\frac{\vec{x}}{\|\vec{x}\|}_\beta\|_\beta=1}\|\mathbf{A}\frac{\vec{x}}{\|\vec{x}\|}_\beta\|_\alpha\;(\texttt{变量代换}) \\
-\Rightarrow &\|\mathbf{A}\|=\max\frac{\|\mathbf{A}\vec{x}\|_\alpha}{\|\vec{x}\|_\beta}\;(\texttt{利用齐次性，并去掉了恒成立的max条}) \\
+\Rightarrow &\|\mathbf{A}\|=\max\limits_{\|\frac{\vec{x}}{\|\vec{x}\|}_\beta\|_\beta=1}\|\mathbf{A}\frac{\vec{x}}{\|\vec{x}\|}_\beta\|_\alpha\;(\text{变量代换}) \\
+\Rightarrow &\|\mathbf{A}\|=\max\frac{\|\mathbf{A}\vec{x}\|_\alpha}{\|\vec{x}\|_\beta}\;(\text{利用齐次性，并去掉了恒成立的max条}) \\
 \Rightarrow &\|\mathbf{A}\|\geq\frac{\|\mathbf{A}\vec{x}\|_\alpha}{\|\vec{x}\|_\beta}
 \end{aligned}
 $$
@@ -75,7 +79,7 @@ $$
 $$
 \begin{aligned}
 |\mathbf{A}+\mathbf{B}\|&=\max\limits_{\|\vec{x}\|_\beta=1}\|(\mathbf{A}+\mathbf{B})\vec{x}\|_\alpha \\
-&\leq\max\limits_{\|\vec{x}\|_\beta=1}\|\mathbf{A}\vec{x}\|_\alpha + \|\mathbf{B}\vec{x}\|_\alpha\;(\texttt{三角不等式}) \\
+&\leq\max\limits_{\|\vec{x}\|_\beta=1}\|\mathbf{A}\vec{x}\|_\alpha + \|\mathbf{B}\vec{x}\|_\alpha\;(\text{三角不等式}) \\
 &=\|\mathbf{A}\|+\|\mathbf{B}\|
 \end{aligned}
 $$
@@ -85,7 +89,7 @@ $$
 $$
 \begin{aligned}
 \|\mathbf{A}\mathbf{D}\|&=\max\limits_{\|\vec{x}\|_\beta=1}\|\mathbf{A}\mathbf{D}\vec{x}\|_\alpha \\
-&\leq\max\limits_{\|\vec{x}\|_\beta=1}\|\mathbf{A}\|\cdot\|\mathbf{D}\vec{x}\|_\gamma\;(\texttt{性质1}) \\
+&\leq\max\limits_{\|\vec{x}\|_\beta=1}\|\mathbf{A}\|\cdot\|\mathbf{D}\vec{x}\|_\gamma\;(\text{性质1}) \\
 &=\|\mathbf{A}\|\cdot\|\mathbf{D}\|
 \end{aligned}
 $$
@@ -120,7 +124,7 @@ $$
 \end{aligned} \\
 \Rightarrow & \exists N_1,N_2(N_1,N_2\in\mathbf{N}^+\land \forall n (n\in\mathbb{N}^+\land n>N_1\land n>N_2\rightarrow \|\vec{x}^{(n)}-\vec{a}\|<\epsilon_0 \land \|\vec{x}^{(n)}-\vec{b}\|<\epsilon_0)) \\
 \Rightarrow & \exists N_1,N_2(N_1,N_2\in\mathbf{N}^+\land \forall n (n\in\mathbb{N}^+\land n>\max(N_1,N_2)\rightarrow \|\vec{x}^{(n)}-\vec{a}\| + \|\vec{x}^{(n)}-\vec{b}\|<\|\vec{b}-\vec{a}\|)) \\
-\Rightarrow & \bot \;(\texttt{违反三角不等式})
+\Rightarrow & \bot \;(\text{违反三角不等式})
 \end{aligned}
 $$
 
@@ -239,7 +243,7 @@ $$\vec{h}'(\vec{x})=\vec{h}'(\vec{g}(\vec{x}))\vec{g}'(\vec{x})$$
 
 有界集不存在方向和极方向。
 
-考虑平面直角坐标系中的半平面$x\geq \alpha$，可以发现有3个极方向，分别是$(0, \lambda_+)^T,(0, \lambda_\_)^T,(\lambda, \lambda_+)^T$，且不存在极点。
+考虑平面直角坐标系中的半平面$x\geq \alpha$，可以发现有3个极方向，分别是$(0, \lambda_+)^T,(0, \lambda_\_)^T,(\lambda_+, \lambda)^T$，且不存在极点。
 
 特别地，对于$S=\{x|\;\mathbf{A}\vec{x}=\vec{b},\vec{x}\geq\vec{0}\}$，$\vec{d}$为$S$的方向等价于$\vec{d}\geq\vec{0}\land\mathbf{A}\vec{d}=\vec{0}$。
 
