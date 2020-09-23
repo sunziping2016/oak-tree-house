@@ -26,7 +26,7 @@ $$\begin{aligned}
              \;\;\;\;& \vec{x}\geq\vec{0}
 \end{aligned}$$
 
-其中$\vec{c},\vec{x}\in\mathbb{R}^n$，$\mathbf{A}\in\mathbb{R}_{mn}$，$\vec{b}\in\mathbb{R}^m$。同时一般假定$\vec{b}\geq\vec{0}$。
+其中$\vec{c},\vec{x}\in\mathbb{R}^n$，$\mathbf{A}\in\mathbb{R}^{m\times n}$，$\vec{b}\in\mathbb{R}^m$。同时一般假定$\vec{b}\geq\vec{0}$。
 
 **极大化转换**：若优化目标为$\max$，则另$\vec{c}'=-\vec{c}$。
 
@@ -146,7 +146,7 @@ $$\min\sum_{j=1}^k\lambda_j\vec{c}^T\vec{x}_j=\vec{c}^T\vec{x}_p\;\;\;\;\text{�
 
 ### 2.3 最优基本可行解
 
-对标准形式的线性规划，若$r(\mathbf{A})=m$，可将$\mathbf{A}$列调换后，得到矩阵$\mathbf{A}=[\mathbf{B},\mathbf{N}]$，其中$\mathbf{B}\in\mathbb{R}_{mm}$为满秩方阵。$\vec{x}$进行对应的行变换，可以得到$\vec{x}=\begin{bmatrix}\vec{x}_\mathbf{B}\\\vec{x}_\mathbf{N}\end{bmatrix}$，于是约束条件可以写为：
+对标准形式的线性规划，若$r(\mathbf{A})=m$，可将$\mathbf{A}$列调换后，得到矩阵$\mathbf{A}=[\mathbf{B},\mathbf{N}]$，其中$\mathbf{B}\in\mathbb{R}^{m\times m}$为满秩方阵。$\vec{x}$进行对应的行变换，可以得到$\vec{x}=\begin{bmatrix}\vec{x}_\mathbf{B}\\\vec{x}_\mathbf{N}\end{bmatrix}$，于是约束条件可以写为：
 
 $$\begin{aligned}
 & [\mathbf{B},\mathbf{N}]\begin{bmatrix}\vec{x}_\mathbf{B}\\\vec{x}_\mathbf{N}\end{bmatrix}=\vec{b} \\
@@ -166,7 +166,7 @@ $$\vec{x}=\begin{bmatrix}\vec{x}_\mathbf{B}\\\vec{x}_\mathbf{N}\end{bmatrix}=\be
 
 由于基矩阵只有有限个（$\leq\begin{pmatrix}n\\m\end{pmatrix}=\frac{n!}{m!(n-m)!}$），基本解也只有有限个，基本可行解也为有限个。
 
-**定理2.2.3** 令$K=\{\vec{x}|\;\mathbf{A}\vec{x}=\vec{b}, \vec{x}\geq\vec{0}\}$的极点集与$\mathbf{A}\vec{x}=\vec{b}, \vec{x}\geq\vec{0}$基本可行解集等价。
+**定理2.2.3** 令$K=\{\vec{x}\mid\mathbf{A}\vec{x}=\vec{b}, \vec{x}\geq\vec{0}\}$的极点集与$\mathbf{A}\vec{x}=\vec{b}, \vec{x}\geq\vec{0}$基本可行解集等价。
 
 注：其实线性规划的标准形式可以看作超平面与第一象限（闭集）的交，所有变量的个数$n$就是整个空间的维度，而非基变量的个数$n-m$是超平面的维度。与坐标轴、坐标平面之类的东西（这些东西的维度为$m$）交点就是那些非基变量为$0$的点，这些交点如果分量都大于$0$，那么就位于第一象限内，也就是极点。退化的基本可行解是指基本可行解本来交于类似坐标平面的高维事物，却交于类似于坐标轴的低维事物，即同时交于两个坐标平面，这种情况会出现重复的基本解。
 

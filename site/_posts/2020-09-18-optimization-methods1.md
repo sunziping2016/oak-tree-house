@@ -26,7 +26,7 @@ sidebar:
 
 **定义1.2.1** $f:\mathbb{R}^n\rightarrow\mathbb{R}$为目标函数，$S$为可行域，$\vec{x}'\in S$，若$\forall \vec{x}(\vec{x}\in S\rightarrow f(\vec{x})\geq f(\vec{x}'))$，则称$\vec{x}'$为$f$在$S$上的**全局极小点**。
 
-**定义1.2.2** $f:\mathbb{R}^n\rightarrow\mathbb{R}$为目标函数，$S$为可行域，$\vec{x}'\in S$，若$\exists\epsilon(\epsilon\in\mathbb{R}^+\land\forall \vec{x}(\vec{x}\in N(\vec{x}',\epsilon)\rightarrow f(\vec{x})\geq f(\vec{x}')))$，则称$\vec{x}'$为$f$在$S$上的**局部极小点**。其中$N(\vec{x}',\epsilon)=\{\vec{x}|\;\|\vec{x}-\vec{x}'\|<\epsilon\}$为邻域。
+**定义1.2.2** $f:\mathbb{R}^n\rightarrow\mathbb{R}$为目标函数，$S$为可行域，$\vec{x}'\in S$，若$\exists\epsilon(\epsilon\in\mathbb{R}^+\land\forall \vec{x}(\vec{x}\in N(\vec{x}',\epsilon)\rightarrow f(\vec{x})\geq f(\vec{x}')))$，则称$\vec{x}'$为$f$在$S$上的**局部极小点**。其中$N(\vec{x}',\epsilon)=\{\vec{x}\mid\|\vec{x}-\vec{x}'\|<\epsilon\}$为邻域。
 
 注：全局极小点不需要用到距离和范数，它和函数的最值定义几乎是一样的，只是定义域成了可行域。而局部极小点用到了邻域，需要距离也就是范数，它和函数的极小值定义也几乎是一样的。
 
@@ -52,7 +52,7 @@ sidebar:
 
 $\mathbb{R}^n$中任何两个范数等价（这里必须是有限维，这个定理的证明我尚不能掌握，需要参考泛函分析）。
 
-**定义1.3.3** $\mathbf{A}\in\mathbb{R}_{mn}$为矩阵，$\|\cdot\|_\alpha$为$\mathbb{R}^m$上的向量范数，$\|\cdot\|_\beta$为$\mathbb{R}^n$上的向量范数，定义**矩阵范数**$\|\mathbf{A}\|=\max\limits_{\|\vec{x}\|_\beta=1}\|\mathbf{A}\vec{x}\|_\alpha$。
+**定义1.3.3** $\mathbf{A}\in\mathbb{R}^{m\times n}$为矩阵，$\|\cdot\|_\alpha$为$\mathbb{R}^m$上的向量范数，$\|\cdot\|_\beta$为$\mathbb{R}^n$上的向量范数，定义**矩阵范数**$\|\mathbf{A}\|=\max\limits_{\|\vec{x}\|_\beta=1}\|\mathbf{A}\vec{x}\|_\alpha$。
 
 注：这里可以想像成矩阵的范数，是其对应的线性映射，能够将一个向量拉长的最大倍数。
 
@@ -218,36 +218,36 @@ $$\vec{h}'(\vec{x})=\vec{h}'(\vec{g}(\vec{x}))\vec{g}'(\vec{x})$$
 
 **定义1.4.1** 设$S\subseteq\mathbb{R}^n$，若$\forall\vec{x}_1,\vec{x}_2,\lambda(x_1,x_2\in S\land\lambda\in[0,1]\rightarrow\lambda\vec{x}_1+(1-\lambda)\vec{x}_2\in S)$，则称$S$为**凸集**。其中$\lambda\vec{x}_1+(1-\lambda)\vec{x}_2$称为凸组合。
 
-常见的凸集有**超平面**$\{\vec{x}|\;\vec{p}^T\vec{x}=\alpha\}$、**半空间**$\{\vec{x}|\;\vec{p}^T\vec{x}\leq\alpha\}$、**射线**$\{\vec{x}|\;\vec{x}_0+\lambda\vec{d},\lambda\geq 0\}$（其中$\vec{x}_0$为顶点，$\vec{d}$为方向向量)。
+常见的凸集有**超平面**$\{\vec{x}\mid\vec{p}^T\vec{x}=\alpha\}$、**半空间**$\{\vec{x}\mid\vec{p}^T\vec{x}\leq\alpha\}$、**射线**$\{\vec{x}\mid\vec{x}_0+\lambda\vec{d},\lambda\geq 0\}$（其中$\vec{x}_0$为顶点，$\vec{d}$为方向向量)。
 
 设$S_1,S_2\subseteq\mathbb{R}^n$为凸集，$\beta\in\mathbb{R}$，则：
 
-1. $\beta S_1=\{\beta\vec{x}|\;\vec{x}\in S_1\}$为凸集；
+1. $\beta S_1=\{\beta\vec{x}\mid\vec{x}\in S_1\}$为凸集；
 2. $S_1\cap S_2$为凸集；
-3. $S_1+S_2=\{\vec{x}_1+\vec{x}_2|\;\vec{x}_1\in S_1,\vec{x}_2\in S_2\}$为凸集；
-4. $S_1-S_2=\{\vec{x}_1-\vec{x}_2|\;\vec{x}_1\in S_1,\vec{x}_2\in S_2\}$为凸集。
+3. $S_1+S_2=\{\vec{x}_1+\vec{x}_2\mid\vec{x}_1\in S_1,\vec{x}_2\in S_2\}$为凸集；
+4. $S_1-S_2=\{\vec{x}_1-\vec{x}_2\mid\vec{x}_1\in S_1,\vec{x}_2\in S_2\}$为凸集。
 
 凸集的线性组合也是凸集，但凸集的并不是凸集。
 
 **定义1.4.2**  设$C\subseteq\mathbb{R}^n$，若$\forall\vec{x},\lambda(\vec{x}\in C\land\lambda\in\mathbb{R}^*\rightarrow\lambda\vec{x}\in C)$，则称$C$为**锥**。若$C$又为凸集，则称$C$为**凸锥**。
 
-向量集$\{\vec{x}_1,\vec{x}_2,\cdots,\vec{x}_n\}$的非负线性组合$\{\sum\limits_{i=1}^n\lambda_i\vec{x}_i|\;\lambda_i\geq 0,i=1,\cdots,n\}$。
+向量集$\{\vec{x}_1,\vec{x}_2,\cdots,\vec{x}_n\}$的非负线性组合$\{\sum\limits_{i=1}^n\lambda_i\vec{x}_i\mid\lambda_i\geq 0,i=1,\cdots,n\}$。
 
-**定义1.4.3** 有限个半空间的交$\{\vec{x}|\;\mathbf{A}\vec{x}\leq\vec{b}\}$称为**多面集**，若$\vec{b}=\vec{0}$，则多面集成为凸锥。
+**定义1.4.3** 有限个半空间的交$\{\vec{x}\mid\mathbf{A}\vec{x}\leq\vec{b}\}$称为**多面集**，若$\vec{b}=\vec{0}$，则多面集成为凸锥。
 
 **定义1.4.4** 设$S$为非空凸集，$\vec{x}\in S$，若$\forall\vec{x}_1,\vec{x}_2,\lambda(\vec{x}_1,\vec{x}_2\in S\land\lambda\in(0,1)\land\vec{x}=\lambda\vec{x}_1+(1-\lambda)\vec{x}_2\rightarrow\vec{x}=\vec{x}_1=\vec{x}_2)$，则称$\vec{x}$为凸集$S$的**极点**。
 
 紧凸集中的点可以表示为极点的线性组合，但对无界集并不成立。
 
-**定义1.4.5** 设$S\subseteq\mathbb{R}^n$为闭凸集，$\vec{d}\in\mathbb{R}^n$非零，若$\forall\vec{x}(\vec{x}\in S\rightarrow\{\vec{x}+\lambda\vec{d}|\;\lambda\in\mathbb{R}^+\}\subseteq S)$，则称$\vec{d}$为$S$的**方向**。又设$\vec{d}_1,\vec{d}_2$是$S$的两个方向，若$\forall\lambda(\lambda\in\mathbb{R}^+\rightarrow\vec{d}_1\neq\lambda\vec{d}_2)$，则称$\vec{d}_1,\vec{d}_2$是不同的方向。若$S$的方向$\vec{d}$不能表示成两个不同方向的正的线性组合，则称$\vec{d}$是$S$的极方向。
+**定义1.4.5** 设$S\subseteq\mathbb{R}^n$为闭凸集，$\vec{d}\in\mathbb{R}^n$非零，若$\forall\vec{x}(\vec{x}\in S\rightarrow\{\vec{x}+\lambda\vec{d}\mid\lambda\in\mathbb{R}^+\}\subseteq S)$，则称$\vec{d}$为$S$的**方向**。又设$\vec{d}_1,\vec{d}_2$是$S$的两个方向，若$\forall\lambda(\lambda\in\mathbb{R}^+\rightarrow\vec{d}_1\neq\lambda\vec{d}_2)$，则称$\vec{d}_1,\vec{d}_2$是不同的方向。若$S$的方向$\vec{d}$不能表示成两个不同方向的正的线性组合，则称$\vec{d}$是$S$的极方向。
 
 有界集不存在方向和极方向。
 
 考虑平面直角坐标系中的半平面$x\geq \alpha$，可以发现有3个极方向，分别是$(0, \lambda_+)^T,(0, \lambda_\_)^T,(\lambda_+, \lambda)^T$，且不存在极点。
 
-特别地，对于$S=\{x|\;\mathbf{A}\vec{x}=\vec{b},\vec{x}\geq\vec{0}\}$，$\vec{d}$为$S$的方向等价于$\vec{d}\geq\vec{0}\land\mathbf{A}\vec{d}=\vec{0}$。
+特别地，对于$S=\{x\mid\mathbf{A}\vec{x}=\vec{b},\vec{x}\geq\vec{0}\}$，$\vec{d}$为$S$的方向等价于$\vec{d}\geq\vec{0}\land\mathbf{A}\vec{d}=\vec{0}$。
 
-**定理1.4.1** 表示定理：设$S=\{x|\;\mathbf{A}\vec{x}=\vec{b},\vec{x}\geq\vec{0}\}$为非空多面集（它一定是多面集），则：
+**定理1.4.1** 表示定理：设$S=\{x\mid\mathbf{A}\vec{x}=\vec{b},\vec{x}\geq\vec{0}\}$为非空多面集（它一定是多面集），则：
 
 1. 极点集非空且为有限个$\vec{x}_1,\cdots,\vec{x}_k$；
 2. 极方向为空当且仅当$S$有界，$S$无界，则有有限个极方向$\vec{d}_1,\cdots,\vec{d}_l$；
