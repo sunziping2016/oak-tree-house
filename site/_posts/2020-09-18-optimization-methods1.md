@@ -97,7 +97,7 @@ $$
 常见的矩阵范数有：
 
 1. $\|\mathbf{A}\|_1=\max_j\sum\limits_{i=1}^m |a_{ij}|$；
-2. $\|\mathbf{A}\|_2=\sqrt[]{\lambda_{\mathbf{A}^T\mathbf{A}}}$，（$\lambda$是最大特征值，这被称为$谱范数$）；
+2. $\|\mathbf{A}\|_2=\sqrt[]{\lambda_{\mathbf{A}^T\mathbf{A}}}$，（$\lambda$是最大特征值，这被称为**谱范数**）；
 3. $\|\mathbf{A}\|_\infty=\max_i\sum\limits_{j=1}^n |a_{ij}|$。
 
 注：这里$p$矩阵范数就是$L_p$向量范数的组合，我采用形象化的方式来解释这3种范数。先考虑第2个范数，它将球拉伸成椭球，长径拉伸最大值也就是其最大的奇异值；再考虑第1个范数，它将一个立方体拉伸成长方体，其中立方体的顶点是$[0,\dots,0,1,0,\dots,0]^T$，映射完后，相当于挨个取出列向量，求他们的$L_1$范数（求和），再取出最大的；最后考虑第3个范数，它同样将一个立方体拉伸成长方体，其中立方体的顶点是$[1,\dots,1]^T$，映射完后，相当于将行向量求和，最后取出最大的。
@@ -142,13 +142,15 @@ $$\forall\epsilon(\epsilon\in\mathbb{R}^+\rightarrow\exists N(N\in\mathbb{N}^+\l
 
 **定理1.3.2** $\{\vec{x}^{(k)}\}$是$\mathbb{R}^n$中的柯西序列，则其聚点为极限点。
 
-注：$\mathbb{R}^n$中，收敛序列（即柯西序列）必有唯一聚点，且该聚点为极限点。一个序列可能有多个聚点；一个序列可能只有一个聚点，但它不收敛，甚至即使它是有界的。
+注：$\mathbb{R}^n$中，收敛序列（即柯西序列）必有唯一聚点，且该聚点为极限点。一个序列可能有多个聚点。
 
 设$S\subseteq\mathbb{R}^n$：
 
 1. 若$S$中每个收敛序列的极限均在$S$，则称$S$为**闭集**；
-2. 若$\forall\hat{\vec{x}}(\hat{\vec{x}}\in S\rightarrow\exists\epsilon(\epsilon\in\mathbb{R}^+\land N(\hat{\vec{x}},\epsilon)\subseteq S))$，则称$S$为**开集**；
+2. 若$\forall\hat{\vec{x}}(\hat{\vec{x}}\in S\rightarrow\exists\epsilon(\epsilon\in\mathbb{R}^+\land N(\hat{\vec{x}},\epsilon)\subseteq S))$，则称$S$为**开集**，这样的$\hat{\vec{x}}$称为**内点**；
 3. 若$S$是有界闭集，则称$S$为**紧集**。
+
+闭集的另一个定义是：一个补集是开集的集合称为闭集。这里集合$S$的补集定义为$S^C=\{x\mid x\notin S,x\in\mathbb{N}\}$。
 
 紧集的一个等价定义是：集合中的序列都有收敛子序列。由Bolzano–Weierstrass定理可证$S\subseteq\mathbb{R}^n$紧致，当且仅当，$S$为有界闭集。
 
@@ -212,11 +214,40 @@ $$\vec{h}'(\vec{x})=\vec{h}'(\vec{g}(\vec{x}))\vec{g}'(\vec{x})$$
 2. $\vec{a}^{(0)}=\phi(\vec{b}^{(0)})$；
 3. $\vec{h}([\vec{\phi}(\vec{b}^{(0)})\,|\,\vec{b}^{(0)}])=\vec{0}$。
 
+### 3.5 二次型的正定性与半正定性
+
+**正定二次型的定义** 对实二次型$f(\vec{x})=\vec{x}^T\mathbf{A}\vec{x}$，若：
+
+$$\forall\vec{x}(\vec{x}\in\mathbb{R}^n\land\vec{x}\neq\vec{0}\rightarrow f(\vec{x})\geq 0)$$
+
+则称$f(x)$为**正定二次型**，$\mathbf{A}$为**正定矩阵**。
+
+**正定二次型的判断** 对于$\mathbf{A}\in\mathbb{R}^{n\times n}$，下列命题等价：
+
+1. $\vec{x}^T\mathbf{A}\vec{x}$是正定二次型；
+2. $\mathbf{A}$是正定矩阵；
+3. $\mathbf{A}$的$n$个顺序主子式都大于零；
+4. $\mathbf{A}$的$n$个特征值都大于零；
+5. 存在可逆矩阵$\mathbf{P}$，使得$A=P^TP$。
+
+**半正定二次型的定义** 对实二次型$f(\vec{x})=\vec{x}^T\mathbf{A}\vec{x}$，若：
+
+$$\forall\vec{x}(\vec{x}\in\mathbb{R}^n\land\vec{x}\neq\vec{0}\rightarrow f(\vec{x})\geq 0)\land\exists\vec{x}(\vec{x}\in\mathbb{R}^n\land\vec{x}\neq\vec{0}\land f(\vec{x})=0)$$
+
+则称$f(x)$为**半正定二次型**，$\mathbf{A}$为**半正定矩阵**。
+
+**半正定二次型的判断** 对于$\mathbf{A}\in\mathbb{R}^{n\times n}$，下列命题等价：
+
+1. $\vec{x}^T\mathbf{A}\vec{x}$是半正定二次型；
+2. $\mathbf{A}$是半正定矩阵；
+3. $\mathbf{A}$的所有主子式都大于等于零，且至少有一个等于零；
+4. $\mathbf{A}$的$n$个特征值都大于等于零，且至少有一个等于零。
+
 ## 4 凸集和凸函数
 
 ### 4.1 凸集
 
-**定义1.4.1** 设$S\subseteq\mathbb{R}^n$，若$\forall\vec{x}_1,\vec{x}_2,\lambda(x_1,x_2\in S\land\lambda\in[0,1]\rightarrow\lambda\vec{x}_1+(1-\lambda)\vec{x}_2\in S)$，则称$S$为**凸集**。其中$\lambda\vec{x}_1+(1-\lambda)\vec{x}_2$称为凸组合。
+**定义1.4.1** 设$S\subseteq\mathbb{R}^n$，若$\forall\vec{x}_1,\vec{x}_2,\lambda(x_1,x_2\in S\land\lambda\in[0,1]\rightarrow\lambda\vec{x}_1+(1-\lambda)\vec{x}_2\in S)$，则称$S$为**凸集**。其中$\lambda\vec{x}_1+(1-\lambda)\vec{x}_2$称为**凸组合**。
 
 常见的凸集有**超平面**$\{\vec{x}\mid\vec{p}^T\vec{x}=\alpha\}$、**半空间**$\{\vec{x}\mid\vec{p}^T\vec{x}\leq\alpha\}$、**射线**$\{\vec{x}\mid\vec{x}_0+\lambda\vec{d},\lambda\geq 0\}$（其中$\vec{x}_0$为顶点，$\vec{d}$为方向向量)。
 
