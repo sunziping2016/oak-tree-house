@@ -8,6 +8,7 @@ series: 最优化方法
 sidebar:
   - /_posts/2020-09-18-optimization-methods1.html
   - /_posts/2020-09-20-optimization-methods2.html
+  - /_posts/2020-09-27-optimization-methods3.html
 ---
 
 本文的内容主要来自陈宝林的《最优化理论与算法（第2版）》第1章《引言》。

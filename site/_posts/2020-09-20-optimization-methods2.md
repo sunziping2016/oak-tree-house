@@ -8,6 +8,7 @@ series: 最优化方法
 sidebar:
   - /_posts/2020-09-18-optimization-methods1.html
   - /_posts/2020-09-20-optimization-methods2.html
+  - /_posts/2020-09-27-optimization-methods3.html
 ---
 
 本文的内容主要来自陈宝林的《最优化理论与算法（第2版）》第2章《线性规划的基本性质》。
@@ -180,9 +181,9 @@ $$\vec{x}=\begin{bmatrix}\vec{x}_B\\\vec{x}_N\end{bmatrix}=\begin{bmatrix}\mathb
 
 定理2.2.3 证：不妨假设$\vec{x}^{(0)}$的前$k$个分量大于$0$，余下的$n-k$个分量为$0$，即$\vec{x}^{(0)}=[x_1^{(0)},\cdots,x_k^{(0)},0,\cdots,0]^T$
 
-“$\Rightarrow$”。由反证法，接下来证明，若$\vec{x}^{(0)}$是极点，且$\vec{x}^{(0)}$不是基本可行解，即$\vec{x}^{(0)}$前$k$个正分量$\vec{x}_j^{(0)}$对应的$\mathbf{A}$的列向量$\vec{P}_j$线性相关，会推导出矛盾。
+“$\Rightarrow$”。由反证法，接下来证明，若$\vec{x}^{(0)}$是极点，且$\vec{x}^{(0)}$不是基本可行解，即$\vec{x}^{(0)}$前$k$个正分量$\vec{x}_j^{(0)}$对应的$\mathbf{A}$的列向量$\vec{p}_j$线性相关，会推导出矛盾。
 
-存在不全为零的$y_1,y_2,\cdots,y_k\in\mathbb{R}$，满足$\sum\limits_{j=1}^k y_j\vec{P}_j=\vec{0}$，取$\lambda$满足$0<\lambda<\min\{|\frac{\vec{x}_i^{(0)}}{y_i}|\mid y_i\neq 0,0\leq i\leq k\}$，令：
+存在不全为零的$y_1,y_2,\cdots,y_k\in\mathbb{R}$，满足$\sum\limits_{j=1}^k y_j\vec{p}_j=\vec{0}$，取$\lambda$满足$0<\lambda<\min\{|\frac{\vec{x}_i^{(0)}}{y_i}|\mid y_i\neq 0,0\leq i\leq k\}$，令：
 
 $$\vec{x}_j^{(1)}=\begin{cases}
   x_j^{(0)}+\lambda y_j,&1\leq j\leq k\\
@@ -212,7 +213,7 @@ $$\begin{bmatrix}
 
 证：
 
-“$\Leftarrow$”。$\mathbf{A}$为行满秩矩阵，故$k\leq m+1$。不妨假设$\vec{d}$的$k$个非零分量分别是$d_1,d_2,\cdots,d_{k-1}$和$d_{m+1}$，并且$\vec{d}$对应的列向量的一个极大线性无关组是$\vec{P}_1,\vec{P}_2,\cdots,\vec{P}_{k-1}$。这$k-1$个线性无关向量可以在$A$的列向量中扩充成$m$个线性无关的向量，$\mathbf{B}=[\vec{P}_1,\vec{P}_2,\cdots,\vec{P}_{m}]$。
+“$\Leftarrow$”。$\mathbf{A}$为行满秩矩阵，故$k\leq m+1$。不妨假设$\vec{d}$的$k$个非零分量分别是$d_1,d_2,\cdots,d_{k-1}$和$d_{m+1}$，并且$\vec{d}$对应的列向量的一个极大线性无关组是$\vec{p}_1,\vec{p}_2,\cdots,\vec{p}_{k-1}$。这$k-1$个线性无关向量可以在$A$的列向量中扩充成$m$个线性无关的向量，$\mathbf{B}=[\vec{p}_1,\vec{p}_2,\cdots,\vec{p}_{m}]$。
 
 假设存在$\vec{d}^{(1)}$和$\vec{d}^{(2)}$是$S$的方向（即$\mathbf{A}\vec{d}^{(1)}=\vec{0}$且$\mathbf{A}\vec{d}^{(2)}=\vec{0}$且$\vec{d}^{(1)},\vec{d}^{(2)}\geq\vec{0}$）且存在$\lambda_1,\lambda_2>0$，满足$\vec{d}=\lambda_1\vec{d}^{(1)}+\lambda_2\vec{d}^{(2)}$。则$d_{m+2}^{(1)},\cdots,d_n^{(1)}$与$d_{m+2}^{(2)},\cdots,d_n^{(2)}$均为$0$。因而$\vec{d}^{(1)},\vec{d}^{(2)}$可以记为：
 
@@ -232,13 +233,13 @@ $$
 故：
 
 $$\begin{cases}
-  \vec{d}_B^{(1)}=-d_{m+1}^{(1)}\mathbf{B}^{-1}\vec{P}_{m+1}\\
-  \vec{d}_B^{(2)}=-d_{m+1}^{(2)}\mathbf{B}^{-1}\vec{P}_{m+1}
+  \vec{d}_B^{(1)}=-d_{m+1}^{(1)}\mathbf{B}^{-1}\vec{p}_{m+1}\\
+  \vec{d}_B^{(2)}=-d_{m+1}^{(2)}\mathbf{B}^{-1}\vec{p}_{m+1}
 \end{cases}$$
 
 若$d_{m+1}^{(1)}$为$0$，则$\vec{d}_B^{(1)}=\vec{0}$不是方向，故$d_{m+1}^{(1)}\neq 0$，同理$d_{m+1}^{(2)}\neq 0$，所以有$\vec{d}^{(1)}=\frac{d_{m+1}^{(1)}}{d_{m+1}^{(2)}}\vec{d}^{(2)}$，故$\vec{d}$是极方向。
 
-“$\Rightarrow$”。不妨设$d_{m+1}>0$。若$k=1$，则$d_{m+1}\vec{P}_{m+1}=0$，$\vec{P}_{m+1}=\vec{0}$，结论成立。若$k>1$，设$d_1,d_2,\cdots,d_{k-1},d_{m+1}>0$，可以知道$\vec{P}_1,\vec{P}_2,\dots,\vec{P}_{k-1},\vec{P}_{m+1}$线性相关，故对应的列向量组秩$<k$。假设$\vec{P}_1,\vec{P}_2,\dots,\vec{P}_{k-1}$线性相关，则存在不全为零的$y_1,y_2,\cdots,y_{k-1}\in\mathbb{R}$，满足$\sum\limits_{j=1}^{k-1}y_j\vec{P}_j=\vec{0}$，取$\lambda$满足$0<\lambda<\min\{|\frac{\vec{x}_i^{(0)}}{y_i}|\mid y_i\neq 0,0\leq i\leq k-1\}$，令：
+“$\Rightarrow$”。不妨设$d_{m+1}>0$。若$k=1$，则$d_{m+1}\vec{p}_{m+1}=0$，$\vec{p}_{m+1}=\vec{0}$，结论成立。若$k>1$，设$d_1,d_2,\cdots,d_{k-1},d_{m+1}>0$，可以知道$\vec{p}_1,\vec{p}_2,\dots,\vec{p}_{k-1},\vec{p}_{m+1}$线性相关，故对应的列向量组秩$<k$。假设$\vec{p}_1,\vec{p}_2,\dots,\vec{p}_{k-1}$线性相关，则存在不全为零的$y_1,y_2,\cdots,y_{k-1}\in\mathbb{R}$，满足$\sum\limits_{j=1}^{k-1}y_j\vec{p}_j=\vec{0}$，取$\lambda$满足$0<\lambda<\min\{|\frac{\vec{x}_i^{(0)}}{y_i}|\mid y_i\neq 0,0\leq i\leq k-1\}$，令：
 
 $$\vec{d}_j^{(1)}=\begin{cases}
   d_j^{(0)}+\lambda y_j,&1\leq j\leq k-1\\
@@ -258,9 +259,9 @@ $$\vec{d}_j^{(1)}=\begin{cases}
 
 **定理2.2.4** 如果$\mathbf{A}\vec{x}=\vec{b}, \vec{x}\geq\vec{0}$有可行解，则一定存在基本可行解。
 
-证：证明思路是不断构造更多$0$分量的可行解，直到可行解对应的向量组线性无关。设$A=[\vec{P}_1,\vec{P}_2,\cdots,\vec{P}_n]$，$\vec{x}=[x_1,\cdots,x_s,0,\cdots,0]^T$是一个可行解，且$x_j>0,j=1,\cdots,s$。若$\vec{P}_1,\vec{P}_2,\cdots,\vec{P}_s$线性无关，则由引理，$\vec{x}$为基本可行解。若$\vec{P}_1,\vec{P}_2,\cdots,\vec{P}_s$线性相关，则存在不全为$0$，且至少有一个正数的$y_1,\cdots,y_s$（如果都是负的，等式同时取相反数即可），满足：
+证：证明思路是不断构造更多$0$分量的可行解，直到可行解对应的向量组线性无关。设$A=[\vec{p}_1,\vec{p}_2,\cdots,\vec{p}_n]$，$\vec{x}=[x_1,\cdots,x_s,0,\cdots,0]^T$是一个可行解，且$x_j>0,j=1,\cdots,s$。若$\vec{p}_1,\vec{p}_2,\cdots,\vec{p}_s$线性无关，则由引理，$\vec{x}$为基本可行解。若$\vec{p}_1,\vec{p}_2,\cdots,\vec{p}_s$线性相关，则存在不全为$0$，且至少有一个正数的$y_1,\cdots,y_s$（如果都是负的，等式同时取相反数即可），满足：
 
-$$\sum_{j=1}^sy_j\vec{P}_j=\vec{0}$$
+$$\sum_{j=1}^sy_j\vec{p}_j=\vec{0}$$
 
 取$\lambda=\min\{\frac{x_j}{y_j}\mid y_j>0\}=\frac{x_k}{y_k}$，定义$x_j'=\begin{cases}x_j-\lambda y_j,&j=1,2,\cdots,s\\0,&j=1,\cdots,n\end{cases}$。则我们有$x_j'\geq 0, (j=1,\cdots,n)$且$x_k' = 0$。$\mathbf{A}\vec{x}'=\vec{b}$，故$\vec{x}'$是可行解，且正分量减少了，不断重复这个步骤，就可以获得基本可行解。
 
