@@ -35,68 +35,47 @@ $$\begin{aligned}
 
 ### 1.2 欧几里得算法的实现
 
-<v-card class="mt-2">
-<v-toolbar flat><v-toolbar-title>代码</v-toolbar-title><v-spacer /><v-select dense solo hide-details class="mr-2" style="max-width: 150px" :items="['自定义', '递归', '循环', '二进制', '平衡']" v-model="gcdMode"></v-select><v-btn color="primary" v-on:click="onGcdFuncBodyUpdated">提交</v-btn></v-toolbar>
-<div id="euclidean-code" class="elevation-1"></div>
-</v-card>
-
-<v-card v-if="gcdFuncError !== null" class="mt-2">
-<v-toolbar flat class="red--text"><v-toolbar-title>编译错误</v-toolbar-title></v-toolbar>
-<v-card-text class="error-panel pt-0">{{ gcdFuncError }}</v-card-text>
-</v-card>
-<v-card v-else class="mt-2">
-<v-toolbar flat><v-toolbar-title>测试结果</v-toolbar-title></v-toolbar>
-<v-tabs show-arrows :vertical="$vuetify.breakpoint.lgAndUp">
-<v-tabs-slider></v-tabs-slider>
-<v-tab v-for="testResult, index in gcdTestResults" class="justify-space-between">
-<div class="text-lowercase" :class="[testResult[5] ? 'green--text' : testResult[2] ? 'orange--text' : 'red--text']">gcd({{ testResult[0][0] }}, {{ testResult[0][1] }}) = {{ testResult[1] }}</div><div><v-btn icon color="gray" v-on:click.stop="gcdTestCases.splice(index, 1)"><v-icon>mdi-close</v-icon></v-btn></div>
-</v-tab>
-<v-tab-item v-for="testResult in gcdTestResults">
-<v-card v-if="gcdChanged" flat style="max-width: 500px" class="mx-auto"><v-card-text class="pt-0">
-<div class="text-center text-h6">还未测试</div>
-</v-card-text></v-card>
-<v-card v-else flat style="max-width: 500px" class="mx-auto"><v-card-text class="pt-0">
+<java-script-editor-with-tests function-name="gcd" :function-parameters="['a', 'b']" :predefined="gcdPredefined" :initial-test-cases="gcdTestCases" :test-result-width="500" can-add-test>
+<template v-slot:test-result="{ result, exception, success, correctness, time, results }">
+<!-- 运行结果 -->
 <div class="d-flex justify-space-between align-center">
 <div class="subtitle-1 pr-4 primary--text text-no-wrap">运行结果：</div>
-<div class="overflow-auto green--text" v-if="testResult[5]">正确，返回 {{testResult[1]}}</div>
-<div class="overflow-auto orange--text" v-else-if="testResult[2]">错误，返回 {{testResult[3][0] && testResult[3][0][1]}}</div>
-<div class="overflow-auto red--text" v-else>异常，抛出 {{testResult[3]}}</div>
+<div v-if="correctness" class="overflow-auto green--text">正确，返回 {{ result }}</div>
+<div v-else-if="success" class="overflow-auto orange--text">错误，返回 {{ result }}</div>
+<div v-else class="overflow-auto red--text">异常，抛出 {{ exception }}</div>
 </div>
+<!-- 运行时间 -->
 <div class="d-flex justify-space-between align-center">
 <div class="subtitle-1 pr-4 primary--text text-no-wrap">运行时间：</div>
-<div class="overflow-auto">{{(Math.round(testResult[4] * 1000) / 1000).toFixed(3)}} ms</div>
+<div class="overflow-auto">{{ (Math.round(time * 1000) / 1000).toFixed(3) }} ms</div>
 </div>
+<!-- 调用栈 -->
 <div class="subtitle-1 pr-4 primary--text text-no-wrap">调用栈：</div>
-<v-simple-table v-if="testResult[2]" dense class="stack-table">
-<template v-slot:default>
+<v-simple-table v-if="results" dense class="stack-table"><template v-slot:default>
 <thead><tr>
 <th class="text-left">深度</th>
 <th class="text-left">参数a</th>
 <th class="text-left">参数b</th>
 <th class="text-left">返回值d</th>
 </tr></thead>
-<tbody><tr v-for="frame, index in testResult[3]" :key="index">
+<tbody><tr v-for="(frame, index) in results" :key="index">
 <td>{{ index + 1 }}</td>
 <td>a = {{ frame[0][0] }}</td>
 <td>b = {{ frame[0][1] }}</td>
 <td>d = {{ frame[1] }}</td>
 </tr></tbody>
+</template></v-simple-table>
 </template>
-</v-simple-table>
-</v-card-text></v-card>
-</v-tab-item>
-</v-tabs>
-</v-card>
-<v-card class="mt-2">
-<v-toolbar flat><v-toolbar-title>添加测试</v-toolbar-title></v-toolbar>
-<v-form v-model="gcdFormValid" v-on:submit.prevent="gcdTestSubmit">
+<template v-slot:test-more="{ add }">
+<v-form v-model="gcdFormValid" v-on:submit.prevent="gcdTestSubmit(add)">
 <div class="pb-4 px-4 d-flex align-center">
 <v-text-field class="mr-2" v-model="gcdTestA" :rules="[val => !isNaN(parseInt(val, 10)) || '必须是合法的数字']" color="primary" label="参数a" required></v-text-field>
 <v-text-field class="mr-2" v-model="gcdTestB" :rules="[val => !isNaN(parseInt(val, 10)) || '必须是合法的数字']" color="primary" label="参数b" required></v-text-field>
 <v-btn :disabled="!gcdFormValid" color="primary" type="submit">添加</v-btn>
 </div>
 </v-form>
-</v-card>
+</template>
+</java-script-editor-with-tests>
 
 ### 1.3 欧几里得算法的复杂性估计
 
@@ -164,40 +143,23 @@ $$\forall a,b(a,b\in\mathbb{Z}\rightarrow\exists u,v(u,v\in\mathbb{Z}\land\mathr
 
 ### 3.2 扩展欧几里得算法的实现
 
-<v-card class="mt-2">
-<v-toolbar flat><v-toolbar-title>代码</v-toolbar-title><v-spacer /><v-select dense solo hide-details class="mr-2" style="max-width: 150px" :items="['自定义', '递归', '循环']" v-model="extendedGcdMode"></v-select><v-btn color="primary" v-on:click="onExtendedGcdFuncBodyUpdated">提交</v-btn></v-toolbar>
-<div id="extended-euclidean-code" class="elevation-1"></div>
-</v-card>
-
-<v-card v-if="extendedGcdFuncError !== null" class="mt-2">
-<v-toolbar flat class="red--text"><v-toolbar-title>编译错误</v-toolbar-title></v-toolbar>
-<v-card-text class="error-panel pt-0">{{ extendedGcdFuncError }}</v-card-text>
-</v-card>
-<v-card v-else class="mt-2">
-<v-toolbar flat><v-toolbar-title>测试结果</v-toolbar-title></v-toolbar>
-<v-tabs show-arrows :vertical="$vuetify.breakpoint.lgAndUp">
-<v-tabs-slider></v-tabs-slider>
-<v-tab v-for="testResult, index in extendedGcdTestResults" class="justify-space-between">
-<div class="text-lowercase" :class="[testResult[5] ? 'green--text' : testResult[2] ? 'orange--text' : 'red--text']">gcd({{ testResult[0][0] }}, {{ testResult[0][1] }}) = {{ testResult[1] }}</div><div><v-btn icon color="gray" v-on:click.stop="extendedGcdTestCases.splice(index, 1)"><v-icon>mdi-close</v-icon></v-btn></div>
-</v-tab>
-<v-tab-item v-for="testResult in extendedGcdTestResults">
-<v-card v-if="extendedGcdChanged" flat style="max-width: 500px" class="mx-auto"><v-card-text class="pt-0">
-<div class="text-center text-h6">还未测试</div>
-</v-card-text></v-card>
-<v-card v-else flat style="max-width: 500px" class="mx-auto"><v-card-text class="pt-0">
+<java-script-editor-with-tests function-name="gcd" :function-parameters="['a', 'b']" :predefined="extendedGcdPredefined" :initial-test-cases="gcdTestCases" :test-result-width="500" can-add-test :correct="extendedGcdCorrect">
+<template v-slot:test-result="{ result, exception, success, correctness, time, results }">
+<!-- 运行结果 -->
 <div class="d-flex justify-space-between align-center">
 <div class="subtitle-1 pr-4 primary--text text-no-wrap">运行结果：</div>
-<div class="overflow-auto green--text" v-if="testResult[5]">正确，返回 {{testResult[1]}}</div>
-<div class="overflow-auto orange--text" v-else-if="testResult[2]">错误，返回 {{testResult[3][0] && testResult[3][0][1]}}</div>
-<div class="overflow-auto red--text" v-else>异常，抛出 {{testResult[3]}}</div>
+<div v-if="correctness" class="overflow-auto green--text">正确，返回 {{ result }}</div>
+<div v-else-if="success" class="overflow-auto orange--text">错误，返回 {{ result }}</div>
+<div v-else class="overflow-auto red--text">异常，抛出 {{ exception }}</div>
 </div>
+<!-- 运行时间 -->
 <div class="d-flex justify-space-between align-center">
 <div class="subtitle-1 pr-4 primary--text text-no-wrap">运行时间：</div>
-<div class="overflow-auto">{{(Math.round(testResult[4] * 1000) / 1000).toFixed(3)}} ms</div>
+<div class="overflow-auto">{{ (Math.round(time * 1000) / 1000).toFixed(3) }} ms</div>
 </div>
+<!-- 调用栈 -->
 <div class="subtitle-1 pr-4 primary--text text-no-wrap">调用栈：</div>
-<v-simple-table v-if="testResult[2]" dense class="stack-table">
-<template v-slot:default>
+<v-simple-table v-if="results" dense class="stack-table"><template v-slot:default>
 <thead><tr>
 <th class="text-left">深度</th>
 <th class="text-left">参数a</th>
@@ -206,7 +168,7 @@ $$\forall a,b(a,b\in\mathbb{Z}\rightarrow\exists u,v(u,v\in\mathbb{Z}\land\mathr
 <th class="text-left">返回值u</th>
 <th class="text-left">返回值v</th>
 </tr></thead>
-<tbody><tr v-for="frame, index in testResult[3]" :key="index">
+<tbody><tr v-for="(frame, index) in results" :key="index">
 <td>{{ index + 1 }}</td>
 <td>a = {{ frame[0][0] }}</td>
 <td>b = {{ frame[0][1] }}</td>
@@ -214,22 +176,18 @@ $$\forall a,b(a,b\in\mathbb{Z}\rightarrow\exists u,v(u,v\in\mathbb{Z}\land\mathr
 <td>u = {{ frame[1] && frame[1][1] }}</td>
 <td>v = {{ frame[1] && frame[1][2] }}</td>
 </tr></tbody>
+</template></v-simple-table>
 </template>
-</v-simple-table>
-</v-card-text></v-card>
-</v-tab-item>
-</v-tabs>
-</v-card>
-<v-card class="mt-2">
-<v-toolbar flat><v-toolbar-title>添加测试</v-toolbar-title></v-toolbar>
-<v-form v-model="extendedGcdFormValid" v-on:submit.prevent="extendedGcdTestSubmit">
+<template v-slot:test-more="{ add }">
+<v-form v-model="extendedGcdFormValid" v-on:submit.prevent="gcdTestSubmit(add)">
 <div class="pb-4 px-4 d-flex align-center">
 <v-text-field class="mr-2" v-model="extendedGcdTestA" :rules="[val => !isNaN(parseInt(val, 10)) || '必须是合法的数字']" color="primary" label="参数a" required></v-text-field>
 <v-text-field class="mr-2" v-model="extendedGcdTestB" :rules="[val => !isNaN(parseInt(val, 10)) || '必须是合法的数字']" color="primary" label="参数b" required></v-text-field>
 <v-btn :disabled="!extendedGcdFormValid" color="primary" type="submit">添加</v-btn>
 </div>
 </v-form>
-</v-card>
+</template>
+</java-script-editor-with-tests>
 
 ### 3.3 欧几里得算法的矩阵诠释
 
@@ -271,46 +229,6 @@ $$\begin{cases}
 
 <!-- markdownlint-disable -->
 <script>
-function loadScript (src, id) {
-  return new Promise((resolve, reject) => {
-    if (document.getElementById(id)) {
-      resolve()
-    } else {
-      const script = document.createElement('script')
-      script.src = src
-      script.id = id
-      script.addEventListener('load', resolve)
-      document.body.appendChild(script)
-    }
-  })
-}
-
-function loadStyle (src, id) {
-  return new Promise((resolve, reject) => {
-    if (document.getElementById(id)) {
-      resolve()
-    } else {
-      const style = document.createElement('link')
-      style.rel = 'stylesheet'
-      style.href = src
-      style.id = id
-      style.addEventListener('load', resolve)
-      document.body.appendChild(style)
-    }
-  })
-}
-
-function frozenFirstAndLastLine(doc) {
-  doc.markText(
-    { line: doc.firstLine(), ch: 0 },
-    { line: doc.firstLine() + 1, ch: 0 },
-    { readOnly: true, atomic: true, selectLeft: false, css: 'opacity: 0.5' })
-  doc.markText(
-    { line: doc.lastLine() - 1, ch: doc.getLine(doc.lastLine() - 1).length },
-    { line: doc.lastLine(), ch: 1 },
-    { readOnly: true, atomic: true, selectRight: false, css: 'opacity: 0.5' })
-}
-
 const gcdImplHeader = 'function gcd(a, b) {\n'
 const gcdImplFooter = '\n}'
 
@@ -387,9 +305,19 @@ function gcd(a, b) {
 
 export default {
   data: () => ({
-    /* GCD */
-    gcdFunc: null,
-    gcdFuncError: null,
+    /* Constants */
+    gcdPredefined: [
+      { name: '递归', code: gcdRecursiveImpl },
+      { name: '循环', code: gcdLoopImpl },
+      { name: '二进制', code: gcdBinaryImpl },
+      { name: '平衡', code: gcdBalancedImpl }
+    ],
+    extendedGcdPredefined: [
+      { name: '递归', code: extendedGcdRecursiveImpl },
+      { name: '循环', code: extendedGcdLoopImpl }
+    ],
+    gcdImplHeader,
+    gcdImplFooter,
     gcdTestCases: [
       [[6, 0], 6],
       [[6, 4], 2],
@@ -397,256 +325,41 @@ export default {
       [[101, 31], 1],
       [[11, 121], 11]
     ],
-    gcdMode: '',
-    gcdChanged: false,
+    /* GCD */
     gcdTestA: '',
     gcdTestB: '',
     gcdFormValid: false,
     /* Extended GCD */
-    extendedGcdFunc: null,
-    extendedGcdFuncError: null,
-    extendedGcdTestCases: [
-      [[6, 0], 6],
-      [[6, 4], 2],
-      [[4, 6], 2],
-      [[101, 31], 1],
-      [[11, 121], 11]
-    ],
-    extendedGcdMode: '',
-    extendedGcdChanged: false,
     extendedGcdTestA: '',
     extendedGcdTestB: '',
     extendedGcdFormValid: false
   }),
-  mounted () {
-    Promise.all([
-      loadScript('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.js', 'script-codemirror'),
-      loadStyle('//cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.css', 'style-codemirror')
-    ])
-      .then(() => loadScript('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/javascript/javascript.min.js', 'script-codemirror-mode-javascript'))
-      .then(() => {
-        const element = document.getElementById('euclidean-code')
-        this.$options.gcdCode = CodeMirror((elt) => {
-          element.appendChild(elt, element)
-        }, {
-          mode: 'javascript',
-          lineNumbers: true,
-          viewportMargin: Infinity
-        })
-        this.$options.gcdCode.on('change', this.onGcdValueChanged)
-        this.gcdMode = '递归'
-
-        const element2 = document.getElementById('extended-euclidean-code')
-        this.$options.extendedGcdCode = CodeMirror((elt) => {
-          element2.appendChild(elt, element)
-        }, {
-          mode: 'javascript',
-          lineNumbers: true,
-          viewportMargin: Infinity
-        })
-        this.$options.extendedGcdCode.on('change', this.onExtendedGcdValueChanged)
-        this.extendedGcdMode = '递归'
-      })
-  },
-  computed: {
-    gcdTestResults () {
-      return this.gcdTestCases.map(test => {
-        // [input, answer, status, call stack/exception, time]
-        if (this.gcdFunc === null || this.gcdChanged) {
-          return [...test, true, [], 0, false]
-        }
-        const start = performance.now()
-        try {
-          const result = this.gcdFunc(...test[0]).reverse()
-          const end = performance.now()
-          return [...test, true, result, end - start, result[0] && test[1] === result[0][1]]
-        } catch (e) {
-          const end = performance.now()
-          return [...test, false, e, end - start, false]
-        }
-      })
-    },
-    extendedGcdTestResults () {
-      return this.extendedGcdTestCases.map(test => {
-        // [input, answer, status, call stack/exception, time]
-        if (this.extendedGcdFunc === null || this.extendedGcdChanged) {
-          return [...test, true, [], 0, false]
-        }
-        const start = performance.now()
-        try {
-          const result = this.extendedGcdFunc(...test[0]).reverse()
-          const end = performance.now()
-          return [...test, true, result, end - start, result[0] && Array.isArray(result[0][1]) && test[1] === result[0][1][0]
-            && test[1] === result[0][0][0] * result[0][1][1] + result[0][0][1] * result[0][1][2]]
-        } catch (e) {
-          const end = performance.now()
-          return [...test, false, e, end - start, false]
-        }
-      })
-    }
-  },
-  watch: {
-    gcdFuncError () {
-      const element = document.getElementById('euclidean-code').firstChild
-      element.classList[this.gcdFuncError === null ? 'remove' : 'add']('CodeMirror-error')
-    },
-    extendedGcdFuncError () {
-      const element = document.getElementById('extended-euclidean-code').firstChild
-      element.classList[this.extendedGcdFuncError === null ? 'remove' : 'add']('CodeMirror-error')
-    },
-    gcdMode () {
-      let code = ''
-      switch (this.gcdMode) {
-        case '递归':
-          code = gcdRecursiveImpl
-          break
-        case '循环':
-          code = gcdLoopImpl
-          break
-        case '二进制':
-          code = gcdBinaryImpl
-          break
-        case '平衡':
-          code = gcdBalancedImpl
-          break
-        default:
-          return
-      }
-
-      this.$options.gcdCode.off('change', this.onGcdValueChanged)
-      const doc = this.$options.gcdCode.getDoc()
-      doc.setValue(gcdImplHeader + code + gcdImplFooter)
-      frozenFirstAndLastLine(this.$options.gcdCode)
-      this.onGcdFuncBodyUpdated()
-      this.$options.gcdCode.on('change', this.onGcdValueChanged)
-    },
-    extendedGcdMode () {
-      let code = ''
-      switch (this.extendedGcdMode) {
-        case '递归':
-          code = extendedGcdRecursiveImpl
-          break
-        case '循环':
-          code = extendedGcdLoopImpl
-          break
-        default:
-          return
-      }
-      this.$options.extendedGcdCode.off('change', this.onExtendedGcdValueChanged)
-      const doc = this.$options.extendedGcdCode.getDoc()
-      doc.setValue(gcdImplHeader + code + gcdImplFooter)
-      frozenFirstAndLastLine(this.$options.extendedGcdCode)
-      this.onExtendedGcdFuncBodyUpdated()
-      this.$options.extendedGcdCode.on('change', this.onExtendedGcdValueChanged)
-    }
-  },
   methods: {
-    onGcdValueChanged () {
-      this.gcdMode = '自定义'
-      this.gcdChanged = true
-    },
-    onExtendedGcdValueChanged () {
-      this.extendedGcdMode = '自定义'
-      this.extendedGcdChanged = true
-    },
-    onGcdFuncBodyUpdated () {
-      const gcdFuncBody = this.$options.gcdCode.getDoc().getValue()
-      let first = gcdFuncBody.indexOf('\n')
-      first = first < 0 ? 0 : first + 1
-      let last = gcdFuncBody.lastIndexOf('\n') || 0
-      last = last < 0 ? gcdFuncBody.length : last
-      const funcBody = `\
-function __gcdInner(a, b) {${gcdFuncBody.slice(first, last)}}
-const __calls = []
-function gcd() {
-  const __call = [arguments, __gcdInner(...arguments)];
-  __calls.push(__call);
-  return __call[1];
-}
-gcd(a, b);
-return __calls;`
-      try {
-        this.gcdFunc = new Function('a', 'b', funcBody)
-        this.gcdFuncError = null
-      } catch (e) {
-        this.gcdFunc = null
-        this.gcdFuncError = e.stack
-      } finally {
-        this.gcdChanged = false
-      }
-    },
-    onExtendedGcdFuncBodyUpdated () {
-      const extendedGcdFuncBody = this.$options.extendedGcdCode.getDoc().getValue()
-      let first = extendedGcdFuncBody.indexOf('\n')
-      first = first < 0 ? 0 : first + 1
-      let last = extendedGcdFuncBody.lastIndexOf('\n') || 0
-      last = last < 0 ? extendedGcdFuncBody.length : last
-      const funcBody = `\
-function __gcdInner(a, b) {${extendedGcdFuncBody.slice(first, last)}}
-const __calls = []
-function gcd() {
-  const __call = [arguments, __gcdInner(...arguments)];
-  __calls.push(__call);
-  return __call[1];
-}
-gcd(a, b);
-return __calls;`
-      try {
-        this.extendedGcdFunc = new Function('a', 'b', funcBody)
-        this.extendedGcdFuncError = null
-      } catch (e) {
-        this.extendedGcdFunc = null
-        this.extendedGcdFuncError = e.stack
-      } finally {
-        this.extendedGcdChanged = false
-      }
-    },
-    gcdTestSubmit () {
+    gcdTestSubmit (add) {
       if (!this.gcdFormValid) {
         return
       }
       const a = parseInt(this.gcdTestA, 10)
       const b = parseInt(this.gcdTestB, 10)
-      this.gcdTestCases.push([[a, b], gcd(a, b)])
+      add([[a, b], gcd(a, b)])
     },
-    extendedGcdTestSubmit () {
+    extendedGcdTestSubmit (add) {
       if (!this.extendedGcdFormValid) {
         return
       }
       const a = parseInt(this.extendedGcdTestA, 10)
       const b = parseInt(this.extendedGcdTestB, 10)
-      this.extendedGcdTestCases.push([[a, b], gcd(a, b)])
+      add([[a, b], gcd(a, b)])
+    },
+    extendedGcdCorrect (test, result) {
+      return [Array.isArray(result) && test[1] === result[0]
+        && test[1] === test[0][0] * result[1] + test[0][1] * result[2]]
     }
   }
 }
 </script>
 
 <style>
-.CodeMirror {
-  font-size: 16px;
-  height: auto !important;
-  font-family: monospace;
-  border: 1px solid #eee;
-  transition: all 0.3s ease-in-out;
-}
-.CodeMirror.CodeMirror-error {
-  border: 1px solid rgba(255,0,0,0.5);
-}
-.CodeMirror.CodeMirror-focused {
-  border: 1px solid rgba(0,0,255,0.5);
-  box-shadow: 0 0 5px rgba(0,0,255,0.5);
-}
-.CodeMirror.CodeMirror-focused.CodeMirror-error {
-  border: 1px solid rgba(255,0,0,0.5);
-  box-shadow: 0 0 5px rgba(255,0,0,0.5);
-}
-
-.error-panel {
-  white-space: pre-wrap;
-  font-family: monospace;
-  font-size: 14px;
-  overflow: auto;
-}
 .v-application .content .stack-table table {
     margin: 0;
     display: table;

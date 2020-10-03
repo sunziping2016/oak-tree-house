@@ -165,6 +165,12 @@ module.exports = {
     recentlyUpdatedChip: "date.toISOString().replace(/\\..*/, '').replace('T', ' ')"
   },
   plugins: [
+    () => ({
+      name: 'aliases',
+      alias: {
+        '@util': path.resolve(__dirname, 'util')
+      }
+    }),
     ['@vuepress/pwa'],
     ['@vuepress/last-updated'],
     ['@vuepress/medium-zoom', {
