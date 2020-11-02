@@ -92,7 +92,7 @@ $$z_j-c_j=\vec{c}_B^T\mathbf{B}^{-1}\vec{p}_j-c_j, j=1,\cdots,n$$
 1. 求$\vec{x}_B=\mathbf{B}^{-1}\vec{b}$；
 2. 求单纯形子$\vec{w}^T=\vec{c}_B\mathbf{B}^{-1}$，对于所有非基变量，计算判别数$z_j-c_j=\vec{w}^T\vec{p}_j-c_j$，令：
 
-    $$z_k-c_k=\max_{j\in\text{非基变量下表集}} z_j-c_j$$
+    $$z_k-c_k=\max_{j\in\text{非基变量下标集}} z_j-c_j$$
 
     若$z_k-c_k\leq 0$，则找到最优解，退出。否则进入下一步；
 

@@ -179,7 +179,7 @@ $$\forall a,b(a,b\in\mathbb{Z}\rightarrow\exists u,v(u,v\in\mathbb{Z}\land\mathr
 </template></v-simple-table>
 </template>
 <template v-slot:test-more="{ add }">
-<v-form v-model="extendedGcdFormValid" v-on:submit.prevent="gcdTestSubmit(add)">
+<v-form v-model="extendedGcdFormValid" v-on:submit.prevent="extendedGcdTestSubmit(add)">
 <div class="pb-4 px-4 d-flex align-center">
 <v-text-field class="mr-2" v-model="extendedGcdTestA" :rules="[val => !isNaN(parseInt(val, 10)) || '必须是合法的数字']" color="primary" label="参数a" required></v-text-field>
 <v-text-field class="mr-2" v-model="extendedGcdTestB" :rules="[val => !isNaN(parseInt(val, 10)) || '必须是合法的数字']" color="primary" label="参数b" required></v-text-field>
