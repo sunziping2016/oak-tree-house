@@ -332,7 +332,7 @@ $Search(X: CFGNode)$实现如下：
 
 这等价于$X$的某条出边使得$Y$一定被执行，但也存在一些从$X$出发的路径$Y$不被执行。
 
-$X,Y$是CFG节点，那么$Y$控制依赖于$X$，当且仅当在RCFG中$X\in DF(Y)$。因而计算$CD: MultiMap<CFGNode, CFGNode>$控制依赖算法如下：
+$X,Y$是CFG节点，那么$Y$控制依赖于$X$，当且仅当在RCFG中$X\in DF(Y)$。因而计算$CD: MultiMap\langle CFGNode, CFGNode\rangle$控制依赖算法如下：
 
 1. 对每个CFG节点$Y$：
    1. 对每个$X\in RDF(Y)$：
