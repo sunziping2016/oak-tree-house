@@ -131,7 +131,7 @@ module.exports = {
     editLinks: true,
     editLinkText: '在 GitHub 上编辑此页',
     lastUpdated: '上次更新',
-    footer: `<i class="mdi mdi-copyright"></i>2016-2020 Ziping Sun<br>京ICP备 17062397号`,
+    footer: `<i class="mdi mdi-copyright"></i>2016-2020 Ziping Sun<br><a href="https://beian.miit.gov.cn">京ICP备 17062397号-2</a>`,
     snackbarCloseText: '关闭',
     notFoundText: '回到主页',
     indexHeading: '`${date.getFullYear()}年${date.getMonth() + 1}月`',
